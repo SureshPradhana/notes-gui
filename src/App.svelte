@@ -6,11 +6,14 @@
 	import Search from "./components/Search.svelte";
 	import Modal from "./components/Modal.svelte";
 	import UserProfile from "./components/UserProfile.svelte";
+	import LoginForm from './components/LoginForm.svelte';
+	import SignupForm from './components/SignupForm.svelte';
 	import { jwtDecode } from "jwt-decode";
 	import { onMount } from "svelte";
 	import { derived } from "svelte/store";
 
 	import { addNote, getNote, updateNote } from "./utils/db.js";
+
 
 	//stores
 	import {
@@ -23,7 +26,7 @@
 		user,
 		userdetails,
 	} from "./stores.js";
-	var path = 'https://notes-api-3xdk.onrender.com';
+	var path = 'https://notes-api-3xdk.onrender.com'
 	let modalNote = null;
 	let modalAction = null;
 	let userModal = false;
@@ -37,15 +40,13 @@
 		loading.set(data);
 	};
 
-	let email = "";
-	let password = "";
-	let Semail = "";
-	let Stpassword = "";
-	let Spassword = "";
 	let status = "";
 	let pageswitch = "login";
+	let logindata={ email: '', password:'' };
+	let signupdata={ email:'',password:'',cpassword:''};
+	async function login(logindata) {
 
-	async function login() {
+		let {email,password}=logindata;	
 		const response = await fetch(`${path}/login`, {
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
@@ -55,16 +56,13 @@
 		localStorage.setItem("token", data.token);
 		token.set(data.token);
 		console.log(data);
-		email = "";
-		password = "";
+		logindata={email:'',password:''};
 		pageStatus = "logedin";
 	}
 
-	async function signup() {
-		let email = Semail;
-		let temppassword = Stpassword;
-		let password = Spassword;
-		if (temppassword !== password) {
+	async function signup(signupdata) {
+		let {email,password,cpassword}=signupdata
+		if (cpassword !== password) {
 			console.log("Password does not match");
 			return;
 		} else {
@@ -83,17 +81,12 @@
 				}
 
 				const data = await response.json();
-				console.log(data);
-				console.log("Signup successful!");
-				status = "Signup successful!";
-
-				Semail = "";
-				Spassword = "";
-				Stpassword = "";
-				// Redirect to another page, display a success message, etc.
-			} catch (error) {
-				console.error("Error signing up:", error);
-				// Handle the error: display an error message to the user, log it, etc.
+					console.log(data);
+					console.log("Signup successful!");
+					status = "Signup successful!";
+					signupdata={email:'',passsword:'',cpassword:''}
+				} catch (error) {
+					console.error("Error signing up:", error);
 			}
 		}
 	}
@@ -274,35 +267,12 @@
 			>
 		</div>
 		<div class="form">
-			{#if pageswitch == "login"}
-
-				<input type="email" bind:value={email} placeholder="Email" />
-				<input
-					type="password"
-					bind:value={password}
-					placeholder="Password"
-				/>
-				<button on:click={login}>Login</button>
-			{:else if pageswitch == "signup"}
-				<input type="email" bind:value={Semail} placeholder="Email"
-				autocomplete="off" />
-				<input
-					type="password"
-					bind:value={Stpassword}
-					placeholder="create Password"
-					autocomplete="off"
-					required
-
-				/>
-				<input
-					type="password"
-					bind:value={Spassword}
-					placeholder="confirm Password"
-					autocomplete="off"
-					required
-				/>
-				<button on:click={signup}>Signup  </button>
-			{/if}
+		
+	{#if pageswitch =="login"}
+		<LoginForm data={logindata} login={async (logindata) =>await  login(logindata)} />
+	{:else if pageswitch == "signup"}
+		<SignupForm data={signupdata} signup={async (signupdata)=>await signup(signupdata)}/>
+	{/if}
 		</div>
 	</div>
 {:else if pageStatus == "logedin"}
@@ -357,6 +327,7 @@
 		margin: none;
 		padding: none;
 	}
+	
 	.tag-wrapper {
 		display: flex;
 		justify-content: center;
@@ -366,12 +337,7 @@
 		display: flex;
 		justify-content: center;
 	}
-	input {
-		padding: 10px;
-		margin: 10px;
-		border-radius: 5px;
-		border: 1px solid #ccc;
-	}
+	
 	.active {
 		/* Styles for active state */
 		background-color: #72d86a;
@@ -401,27 +367,21 @@
 		background-color: #1a1a1a;
 		color: #ccc;
 	}
-	.form {
-		display: flex;
-		justify-content: center;
-		flex-direction: column;
-	}
-	.form button {
-		padding: 10px;
-		margin: 10px;
-		border-radius: 5px;
-		border: 1px solid #ccc;
-		background-color: #1a1a1a;
-		color: #ccc;
-	}
+	
 	.login-form {
-		width: 300px;
+		width: 400px;
 		margin: 10px auto;
 		background-color: #242424;
-		padding: 30px;
+		padding: 40px;
 	}
 	.login-form h1 {
 		text-align: center;
 		font-size: 24px;
+	}
+	input {
+		padding: 10px;
+		margin: 10px;
+		border-radius: 5px;
+		
 	}
 </style>
