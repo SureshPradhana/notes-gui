@@ -8,13 +8,16 @@
 	import UserProfile from "./components/UserProfile.svelte";
 	import LoginForm from './components/LoginForm.svelte';
 	import SignupForm from './components/SignupForm.svelte';
+	import Loading from './components/Loading.svelte';
+	import MessagePopup from './components/MessagePopup.svelte';
+
 	import { jwtDecode } from "jwt-decode";
 	import { onMount } from "svelte";
 	import { derived } from "svelte/store";
 
 	import { addNote, getNote, updateNote } from "./utils/db.js";
-
-
+	let loadingStatus = false;
+	let message = '';
 	//stores
 	import {
 		notesStore,
@@ -45,8 +48,9 @@
 	let logindata={ email: '', password:'' };
 	let signupdata={ email:'',password:'',cpassword:''};
 	async function login(logindata) {
-
+		loadingStatus= true;
 		let {email,password}=logindata;	
+		try{
 		const response = await fetch(`${path}/login`, {
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
@@ -55,12 +59,24 @@
 		const data = await response.json();
 		localStorage.setItem("token", data.token);
 		token.set(data.token);
-		console.log(data);
 		logindata={email:'',password:''};
 		pageStatus = "logedin";
+		message ="Login successful!";
+		
+		}catch(error){
+		message="User not found";
+		} finally{
+		 loadingStatus =false;
+		 setTimeout(() => {
+        message = '';
+      }, 2000);
+		}
+		
+	
 	}
 
 	async function signup(signupdata) {
+		loadingStatus= true;
 		let {email,password,cpassword}=signupdata
 		if (cpassword !== password) {
 			console.log("Password does not match");
@@ -84,9 +100,25 @@
 					console.log(data);
 					console.log("Signup successful!");
 					status = "Signup successful!";
-					signupdata={email:'',passsword:'',cpassword:''}
+					signupdata.email = '';
+            signupdata.password = '';
+            signupdata.cpassword = '';
+					message="signed up successful";
+					pageswitch="login";
+
 				} catch (error) {
+					message="signup fail";
+	signupdata.email = '';
+            signupdata.password = '';
+            signupdata.cpassword = '';
 					console.error("Error signing up:", error);
+			}
+			finally{
+				loadingStatus =false;
+		 setTimeout(() => {
+        message = '';
+      }, 2000);
+
 			}
 		}
 	}
@@ -95,6 +127,7 @@
 		localStorage.removeItem("token");
 		token.set("");
 		pageStatus = "home";
+		closeModal()
 	}
 
 	$: {
@@ -229,7 +262,16 @@
 		}
 	});
 </script>
+<div class="status">
 
+{#if loadingStatus}
+  <Loading />
+{/if}
+
+{#if message}
+  <MessagePopup message={message} />
+{/if}
+</div>
 <div class="header">
 	<h1>Notes</h1>
 	{#if pageStatus == "logedin"}
