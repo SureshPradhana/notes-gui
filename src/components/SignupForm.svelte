@@ -1,98 +1,95 @@
 <script>
-	import Input from './Input.svelte';
-	import Button from './Button.svelte';
-	
+	import Input from "./Input.svelte";
+	import Button from "./Button.svelte";
+
 	export let data = {};
 	export let signup = () => {};
 
-	let email = data.email ?? '';
-	let password= data.password ?? '';
-	let cpassword=data.cpassword ?? '';
+
 	let errors = {};
 	let touchedFields = {};
-	
-	$: result = {
-		email, password,cpassword
-	};
-	
-	$: errors = validate(touchedFields, result);
 
 	const validate = () => {
-    const errors = {};
+		const errors = {};
 
-    // Email validation using regex
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (touchedFields.email && !emailRegex.test(email)) {
-        errors.email = 'Invalid email address';
-    }
+		// Email validation using regex
+		const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+		if (touchedFields.email && !emailRegex.test(data.email)) {
+			errors.email = "Invalid email address";
+		}
 
-    if (touchedFields.email && email === '') {
-        errors.email = 'Email is required';
-    }
+		if (touchedFields.email && data.email === "") {
+			errors.email = "Email is required";
+		}
 
-    // Password validation using regex
-	  const passwordRegex = /^(?=.*\d)(?=.*[a-z]).{5,}$/;
-    if (touchedFields.password && !passwordRegex.test(password)) {
-        errors.password = 'Password should be at least 5 characters long and contain at least one lowercase letter and one digit';
-    }
+		// Password validation using regex
+		const passwordRegex = /^(?=.*\d)(?=.*[a-z]).{5,}$/;
+		if (touchedFields.password && !passwordRegex.test(data.password)) {
+			errors.password =
+				"Password should be at least 5 characters long and contain at least one lowercase letter and one digit";
+		}
 
-		if (touchedFields.password && password === '') {
-        errors.password = 'Password is required';
-    }
-	
-    if (touchedFields.cpassword && !passwordRegex.test(cpassword)) {
-        errors.cpassword = 'Password should be at least 5 characters long and contain at least one lowercase letter and one digit';
-    }
+		if (touchedFields.password && data.password === "") {
+			errors.password = "Password is required";
+		}
 
-		if (touchedFields.cpassword && cpassword === '') {
-        errors.cpassword = 'Please confirm the password';
-    }
-	if (touchedFields.cpassword && password !=='' && cpassword !=='' &&  cpassword !==password ) {
-        errors.cpassword = 'Password doesn\'t match';
-    }
-		
-    return errors;
-};
-	
+		if (touchedFields.cpassword && !passwordRegex.test(data.cpassword)) {
+			errors.cpassword =
+				"Password should be at least 5 characters long and contain at least one lowercase letter and one digit";
+		}
+
+		if (touchedFields.cpassword && data.cpassword === "") {
+			errors.cpassword = "Please confirm the password";
+		}
+		if (
+			touchedFields.cpassword &&
+			data.password !== "" &&
+			data.cpassword !== "" &&
+			data.cpassword !== data.password
+		) {
+			errors.cpassword = "Password doesn't match";
+		}
+
+		return errors;
+	};
+
 	const validateAndSubmit = () => {
-		touchedFields = { email: true, password:true ,cpassword:true} ;
-        console.log(result)
+		touchedFields = { email: true, password: true, cpassword: true };
+		errors=validate()
 		if (!Object.keys(errors).length) {
-			signup(result);
+			signup(data);
 		}
 	};
 </script>
 
 <div class="form">
-		<Input
-			type="text"
-			placeholder="email"
-			bind:value={email}
-			on:blur={() => touchedFields.email = true}
-			error={errors.email}
-		/>
-		<Input
-			type="password"
-		  placeholder="password"
-			bind:value={password}
-			on:blur={() => touchedFields.password = true}
-			error={errors.password}
-		/>
-		<Input
-			type="password"
-		  placeholder="confirm password"
-			bind:value={cpassword}
-			on:blur={() => touchedFields.cpassword = true}
-			error={errors.cpassword}
-		/>
-		
+	<Input
+		type="text"
+		placeholder="email"
+		bind:value={data.email}
+		on:blur={() => (touchedFields.email = true)}
+		error={errors.email}
+	/>
+	<Input
+		type="password"
+		placeholder="password"
+		bind:value={data.password}
+		on:blur={() => (touchedFields.password = true)}
+		error={errors.password}
+	/>
+	<Input
+		type="password"
+		placeholder="confirm password"
+		bind:value={data.cpassword}
+		on:blur={() => (touchedFields.cpassword = true)}
+		error={errors.cpassword}
+	/>
 
-		<Button on:click={validateAndSubmit}>Signup</Button>
+	<Button on:click={validateAndSubmit}>Signup</Button>
 </div>
 
-
 <style>
-.form {
+	.form {
 		display: flex;
 		justify-content: center;
 		flex-direction: column;

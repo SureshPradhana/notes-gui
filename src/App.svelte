@@ -6,10 +6,10 @@
 	import Search from "./components/Search.svelte";
 	import Modal from "./components/Modal.svelte";
 	import UserProfile from "./components/UserProfile.svelte";
-	import LoginForm from './components/LoginForm.svelte';
-	import SignupForm from './components/SignupForm.svelte';
-	import Loading from './components/Loading.svelte';
-	import MessagePopup from './components/MessagePopup.svelte';
+	import LoginForm from "./components/LoginForm.svelte";
+	import SignupForm from "./components/SignupForm.svelte";
+	import Loading from "./components/Loading.svelte";
+	import MessagePopup from "./components/MessagePopup.svelte";
 
 	import { jwtDecode } from "jwt-decode";
 	import { onMount } from "svelte";
@@ -17,7 +17,7 @@
 
 	import { addNote, getNote, updateNote } from "./utils/db.js";
 	let loadingStatus = false;
-	let message = '';
+	let message = "";
 	//stores
 	import {
 		notesStore,
@@ -29,7 +29,7 @@
 		user,
 		userdetails,
 	} from "./stores.js";
-	var path = 'https://notes-api-3xdk.onrender.com'
+	var path = "https://notes-api-3xdk.onrender.com";
 	let modalNote = null;
 	let modalAction = null;
 	let userModal = false;
@@ -45,89 +45,16 @@
 
 	let status = "";
 	let pageswitch = "login";
-	let logindata={ email: '', password:'' };
-	let signupdata={ email:'',password:'',cpassword:''};
-	async function login(logindata) {
-		loadingStatus= true;
-		let {email,password}=logindata;	
-		try{
-		const response = await fetch(`${path}/login`, {
-			method: "POST",
-			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify({ email, password }),
-		});
-		const data = await response.json();
-		localStorage.setItem("token", data.token);
-		token.set(data.token);
-		logindata={email:'',password:''};
-		pageStatus = "logedin";
-		message ="Login successful!";
-		
-		}catch(error){
-		message="User not found";
-		} finally{
-		 loadingStatus =false;
-		 setTimeout(() => {
-        message = '';
-      }, 2000);
-		}
-		
+	let logindata = { email: "", password: "" };
+	let signupdata = { email: "", password: "", cpassword: "" };
+
 	
-	}
-
-	async function signup(signupdata) {
-		loadingStatus= true;
-		let {email,password,cpassword}=signupdata
-		if (cpassword !== password) {
-			console.log("Password does not match");
-			return;
-		} else {
-			try {
-				console.log("Hello");
-				const response = await fetch(`${path}/signup`, {
-					method: "POST",
-					headers: { "Content-Type": "application/json" },
-					body: JSON.stringify({ email, password }),
-				});
-				console.log("Hello", response);
-
-				if (!response.ok) {
-					const errorData = await response.json();
-					throw new Error(errorData.message);
-				}
-
-				const data = await response.json();
-					console.log(data);
-					console.log("Signup successful!");
-					status = "Signup successful!";
-					signupdata.email = '';
-            signupdata.password = '';
-            signupdata.cpassword = '';
-					message="signed up successful";
-					pageswitch="login";
-
-				} catch (error) {
-					message="signup fail";
-	signupdata.email = '';
-            signupdata.password = '';
-            signupdata.cpassword = '';
-					console.error("Error signing up:", error);
-			}
-			finally{
-				loadingStatus =false;
-		 setTimeout(() => {
-        message = '';
-      }, 2000);
-
-			}
-		}
-	}
 
 	async function signout() {
 		localStorage.removeItem("token");
 		token.set("");
 		pageStatus = "home";
-		closeModal()
+		closeModal();
 	}
 
 	$: {
@@ -137,7 +64,7 @@
 			try {
 				(async () => {
 					// Wrap the async function properly
-					
+
 					const response = await fetch(`${path}/api/notes`, {
 						headers: { Authorization: $token },
 					});
@@ -261,16 +188,134 @@
 			console.log("No token");
 		}
 	});
+
+	const resetLoginData = () => {
+		// Define your default login data here
+		logindata.password="";
+	};
+	const resetSignupData = () => {
+		signupdata.password="";
+		signupdata.email="";
+		signupdata.cpassword="";
+	};
+
+	const handleLogin = async (data) => {
+		try {
+			const result = await login(data);
+			if (result.success) {
+				resetLoginData();
+			} else {
+				console.log("Login failed:", result);
+				resetLoginData();
+			}
+		} catch (error) {
+			console.error("Error occurred:", error);
+		}
+	};
+	const handleSignup = async (data) => {
+		try {
+			let resultt = await signup(data);
+			if (resultt.success) {
+				resetSignupData();
+			} else {
+				console.log("signup failed:", resultt);
+				resetSignupData();
+			}
+		} catch (error) {
+			console.error("Error occurred:", error);
+		}
+	};
+
+	async function login(logindata) {
+		let success = false;
+		loadingStatus = true;
+		let { email, password } = logindata;
+		try {
+			const response = await fetch(`${path}/login`, {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({ email, password }),
+			});
+			const data = await response.json();
+			if (data.token) {
+				localStorage.setItem("token", data.token);
+				token.set(data.token);
+				
+				pageStatus = "logedin";
+				message = "Login successful!";
+				success = true;
+			} else {
+				message = "Login failed!";
+				success = false;
+			}
+			
+		} catch (error) {
+			message = "User not found";
+			success = false;
+			
+		} finally {
+			loadingStatus = false;
+			setTimeout(() => {
+				message = "";
+			}, 2000);
+		}
+		return {success}
+	}
+
+	async function signup(signupdata) {
+		loadingStatus = true;
+		let success=false;
+		let { email, password, cpassword } = signupdata;
+		if (cpassword !== password) {
+			console.log("Password does not match");
+			return;
+		} else {
+			try {
+				console.log("Hello");
+				const response = await fetch(`${path}/signup`, {
+					method: "POST",
+					headers: { "Content-Type": "application/json" },
+					body: JSON.stringify({ email, password }),
+				});
+				console.log("Hello", response);
+
+				if (!response.ok) {
+					const errorData = await response.json();
+					throw new Error(errorData.message);
+				}
+
+				const data = await response.json();
+				console.log(data);
+				console.log("Signup successful!");
+				status = "Signup successful!";
+				message = "signed up successful";
+				pageswitch = "login";
+				success=true;
+			} catch (error) {
+				message = "signup fail";
+				console.error("Error signing up:", error);
+				
+				success=false;
+				console.log(success)
+			} finally {
+				loadingStatus = false;
+				setTimeout(() => {
+					message = "";
+				}, 2000);
+			}
+			return {success}
+		}
+	}
 </script>
+
 <div class="status">
+	{#if loadingStatus}
+		<Loading />
+	{/if}
 
-{#if loadingStatus}
-  <Loading />
-{/if}
-
-{#if message}
-  <MessagePopup message={message} />
-{/if}
+	{#if message}
+		<MessagePopup {message} />
+	{/if}
 </div>
 <div class="header">
 	<h1>Notes</h1>
@@ -309,12 +354,15 @@
 			>
 		</div>
 		<div class="form">
-		
-	{#if pageswitch =="login"}
-		<LoginForm data={logindata} login={async (logindata) =>await  login(logindata)} />
-	{:else if pageswitch == "signup"}
-		<SignupForm data={signupdata} signup={async (signupdata)=>await signup(signupdata)}/>
-	{/if}
+			{#if pageswitch == "login"}
+				<!-- <LoginForm data={logindata} login={async (logindata) =>await  login(logindata)} /> -->
+				<LoginForm data={logindata} login={handleLogin} />
+			{:else if pageswitch == "signup"}
+				<SignupForm
+					data={signupdata}
+					signup={handleSignup}
+				/>
+			{/if}
 		</div>
 	</div>
 {:else if pageStatus == "logedin"}
@@ -369,7 +417,7 @@
 		margin: none;
 		padding: none;
 	}
-	
+
 	.tag-wrapper {
 		display: flex;
 		justify-content: center;
@@ -379,7 +427,7 @@
 		display: flex;
 		justify-content: center;
 	}
-	
+
 	.active {
 		/* Styles for active state */
 		background-color: #72d86a;
@@ -409,7 +457,7 @@
 		background-color: #1a1a1a;
 		color: #ccc;
 	}
-	
+
 	.login-form {
 		width: 400px;
 		margin: 10px auto;
@@ -424,6 +472,5 @@
 		padding: 10px;
 		margin: 10px;
 		border-radius: 5px;
-		
 	}
 </style>
