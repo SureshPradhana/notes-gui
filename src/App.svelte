@@ -17,7 +17,7 @@
 
 	import { addNote, getNote, updateNote } from "./utils/db.js";
 	let loadingStatus = false;
-	let message = "";
+	let message = {message:"",type:""};
 	//stores
 	import {
 		notesStore,
@@ -30,6 +30,7 @@
 		userdetails,
 	} from "./stores.js";
 	var path = "https://notes-api-3xdk.onrender.com";
+	// var path = "http://localhost:3000";
 	let modalNote = null;
 	let modalAction = null;
 	let userModal = false;
@@ -237,26 +238,35 @@
 				body: JSON.stringify({ email, password }),
 			});
 			const data = await response.json();
+			console.log("test1",data)
 			if (data.token) {
 				localStorage.setItem("token", data.token);
 				token.set(data.token);
 				
 				pageStatus = "logedin";
-				message = "Login successful!";
+				message.message = "Login successful!";
+				message.type="success";
 				success = true;
 			} else {
-				message = "Login failed!";
+				if(data.message = "Invalid password"){
+					message.message ="email or password is wrong";
+				}else{
+				message.message= "Login failed!";
+				}
+				message.type="error";
 				success = false;
 			}
 			
 		} catch (error) {
-			message = "User not found";
+			message.message= "User not found";
+			message.type="error"
 			success = false;
 			
 		} finally {
 			loadingStatus = false;
 			setTimeout(() => {
-				message = "";
+				message.message= "";
+				message.type="";
 			}, 2000);
 		}
 		return {success}
@@ -288,19 +298,19 @@
 				console.log(data);
 				console.log("Signup successful!");
 				status = "Signup successful!";
-				message = "signed up successful";
+				message.message = "signed up successful";
+				message.type="success";
 				pageswitch = "login";
 				success=true;
 			} catch (error) {
-				message = "signup fail";
-				console.error("Error signing up:", error);
-				
+				message.message= error;
+				message.type="error";	
 				success=false;
-				console.log(success)
 			} finally {
 				loadingStatus = false;
 				setTimeout(() => {
-					message = "";
+					message.message= "";
+					message.type="";
 				}, 2000);
 			}
 			return {success}
@@ -313,8 +323,8 @@
 		<Loading />
 	{/if}
 
-	{#if message}
-		<MessagePopup {message} />
+	{#if message.message}
+		<MessagePopup {message}/>
 	{/if}
 </div>
 <div class="header">
@@ -429,19 +439,16 @@
 	}
 
 	.active {
-		/* Styles for active state */
 		background-color: #72d86a;
 		color: #2a2a2a;
 	}
 
 	.highlight {
-		/* Additional styles for highlighting */
-		border: 2px solid black; /* Blue border as an example */
+		border: 2px solid black;
 		pointer-events: none;
 	}
 
 	.dim {
-		/* Styles for dimmed state */
 		opacity: 0.5;
 		cursor: pointer;
 	}

@@ -4,6 +4,7 @@ import { token } from '../stores.js';
 
 
 var path = 'https://notes-api-3xdk.onrender.com';
+// var path = 'http://localhost:3000';
 export const deleteNote = (id) => {
 
 	var tokenValue = get(token);
