@@ -6,11 +6,17 @@
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
   background-color: #2a2a2a;
+  
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+body{
+  padding:0;
+  margin:0;
+ 
 }
 *{
   box-sizing:border-box;
@@ -36,7 +42,7 @@ h1 {
 }
 
 #app {
-  max-width: 1280px;
+  /* max-width: 1280px; */
   margin: 0 auto;
   text-align: center;
 }

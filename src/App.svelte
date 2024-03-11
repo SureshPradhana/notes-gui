@@ -1,400 +1,72 @@
 <script>
 	import { icons } from "feather-icons";
 
-	import Notes from "./components/Notes.svelte";
-	import Tag from "./components/Tag.svelte";
-	import Search from "./components/Search.svelte";
-	import Modal from "./components/Modal.svelte";
-	import UserProfile from "./components/UserProfile.svelte";
-	import LoginForm from "./components/LoginForm.svelte";
-	import SignupForm from "./components/SignupForm.svelte";
-	import Loading from "./components/Loading.svelte";
-	import MessagePopup from "./components/MessagePopup.svelte";
+	import { Router, Route, Link, navigate } from "svelte-routing";
 
+	import {onMount} from "svelte";
+	import {userdetails,token, path, loading} from "./stores.js"
 	import { jwtDecode } from "jwt-decode";
-	import { onMount } from "svelte";
-	import { derived } from "svelte/store";
+	// routes
+	import Home from "./components/Home.svelte";
+	import Login from "./components/Login.svelte";
+	import NotesRoute from "./components/NotesRoute.svelte";
+	import BucketList from "./components/BucketList.svelte";
 
-	import { addNote, getNote, updateNote } from "./utils/db.js";
-	let loadingStatus = false;
-	let message = {message:"",type:""};
-	//stores
-	import {
-		notesStore,
-		selectedTag,
-		searchTerm,
-		selectedDate,
-		loading,
-		token,
-		user,
-		userdetails,
-	} from "./stores.js";
-	var path = "https://notes-api-3xdk.onrender.com";
-	// var path = "http://localhost:3000";
-	let modalNote = null;
-	let modalAction = null;
-	let userModal = false;
-	let pageStatus = "home";
 
-	const updateNotes = (data) => {
-		notesStore.set(data);
-	};
+	import NavBar from "./components/NavBar.svelte";
 
-	const updateLoading = (data) => {
-		loading.set(data);
-	};
+	onMount(()=>{
+		let tokenfromlocal=localStorage.getItem("token");
+		token.set(tokenfromlocal);
+		if (tokenfromlocal) {
+                const decodedToken = jwtDecode(tokenfromlocal);
+			    userdetails.set(decodedToken.user);
+			}
+		else{
+			navigate("/")
+		}
 
-	let status = "";
-	let pageswitch = "login";
-	let logindata = { email: "", password: "" };
-	let signupdata = { email: "", password: "", cpassword: "" };
+		
+	})
 
 	
 
-	async function signout() {
-		localStorage.removeItem("token");
-		token.set("");
-		pageStatus = "home";
-		closeModal();
-	}
-
-	$: {
-		if ($token) {
-			const decodedToken = jwtDecode($token);
-			userdetails.set(decodedToken.user);
-			try {
-				(async () => {
-					// Wrap the async function properly
-
-					const response = await fetch(`${path}/api/notes`, {
-						headers: { Authorization: $token },
-					});
-					if (!response.ok) {
-						throw new Error("Failed to fetch data");
-					}
-					const data = await response.json();
-					updateNotes(data);
-					updateLoading(false);
-				})(); // Call the async function immediately
-			} catch (error) {
-				loading.set(true);
-			}
-		} else {
-			notesStore.set([]);
-			loading.set(false);
-		}
-	}
-
-	// Add note
-	async function handleAction(note) {
-		let res = await addNote(note);
-		let newNote = await getNote(res.insertedId);
-		if (newNote) {
-			notesStore.update((notes) => {
-				return [newNote, ...notes];
-			});
-		}
-		modalNote = null;
-		modalAction = null;
-	}
-
-	function openModal(note, action) {
-		modalNote = note;
-		modalAction = action;
-	}
-
-	function openUserModal() {
-		console.log("User Modal");
-		userModal = true;
-	}
-
-	function closeModal() {
-		modalNote = null;
-		modalAction = null;
-
-		userModal = false;
-	}
-
-	// Filtering notes by tag
-	let filteredNotesByTag = derived(
-		[notesStore, selectedTag],
-		([$notesStore, $selectedTag]) =>
-			$selectedTag !== "All" && $selectedTag
-				? $notesStore.filter((note) => note.tags.includes($selectedTag))
-				: $notesStore,
-	);
-
-	// Filtering notes by search term
-	let filteredNotesBySearchTerm = derived(
-		[filteredNotesByTag, searchTerm],
-		([$filteredNotes, $searchTerm]) =>
-			$searchTerm
-				? $filteredNotes.filter((note) =>
-						note.content
-							.toLowerCase()
-							.includes($searchTerm.toLowerCase()),
-					)
-				: $filteredNotes,
-	);
-
-	// Filtering notes by date
-	let filteredNotesByDate = derived(
-		[filteredNotesBySearchTerm, selectedDate],
-		([$filteredNotes, $selectedDate]) =>
-			$selectedDate
-				? $filteredNotes.filter((note) => {
-						const noteDateWithoutTime = new Date(note.date)
-							.toISOString()
-							.split("T")[0];
-						const selectedDateWithoutTime = new Date($selectedDate)
-							.toISOString()
-							.split("T")[0];
-						return noteDateWithoutTime === selectedDateWithoutTime;
-					})
-				: $filteredNotes,
-	);
-	function switchToLogin() {
-		pageswitch = "login";
-	}
-
-	function switchToSignup() {
-		pageswitch = "signup";
-	}
-
-	onMount(() => {
-		// Fetch data from the server
-		token.set(localStorage.getItem("token"));
-		if ($token) {
-			console.log("Token", $token);
-			pageStatus = "logedin";
-			userdetails.set(jwtDecode($token).user);
-			try {
-				(async () => {
-					// Wrap the async function properly
-					const response = await fetch(`${path}/api/notes`, {
-						headers: { Authorization: $token },
-					});
-					if (!response.ok) {
-						throw new Error("Failed to fetch data");
-					}
-					const data = await response.json();
-					console.log(data);
-					updateNotes(data);
-					updateLoading(false);
-				})();
-			} catch (error) {
-				loading.set(true);
-			}
-		} else {
-			console.log("No token");
-		}
-	});
-
-	const resetLoginData = () => {
-		// Define your default login data here
-		logindata.password="";
-	};
-	const resetSignupData = () => {
-		signupdata.password="";
-		signupdata.email="";
-		signupdata.cpassword="";
-	};
-
-	const handleLogin = async (data) => {
-		try {
-			const result = await login(data);
-			if (result.success) {
-				resetLoginData();
-			} else {
-				console.log("Login failed:", result);
-				resetLoginData();
-			}
-		} catch (error) {
-			console.error("Error occurred:", error);
-		}
-	};
-	const handleSignup = async (data) => {
-		try {
-			let resultt = await signup(data);
-			if (resultt.success) {
-				resetSignupData();
-			} else {
-				console.log("signup failed:", resultt);
-				resetSignupData();
-			}
-		} catch (error) {
-			console.error("Error occurred:", error);
-		}
-	};
-
-	async function login(logindata) {
-		let success = false;
-		loadingStatus = true;
-		let { email, password } = logindata;
-		try {
-			const response = await fetch(`${path}/login`, {
-				method: "POST",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({ email, password }),
-			});
-			const data = await response.json();
-			console.log("test1",data)
-			if (data.token) {
-				localStorage.setItem("token", data.token);
-				token.set(data.token);
-				
-				pageStatus = "logedin";
-				message.message = "Login successful!";
-				message.type="success";
-				success = true;
-			} else {
-				if(data.message = "Invalid password"){
-					message.message ="email or password is wrong";
-				}else{
-				message.message= "Login failed!";
-				}
-				message.type="error";
-				success = false;
-			}
-			
-		} catch (error) {
-			message.message= "User not found";
-			message.type="error"
-			success = false;
-			
-		} finally {
-			loadingStatus = false;
-			setTimeout(() => {
-				message.message= "";
-				message.type="";
-			}, 2000);
-		}
-		return {success}
-	}
-
-	async function signup(signupdata) {
-		loadingStatus = true;
-		let success=false;
-		let { email, password, cpassword } = signupdata;
-		if (cpassword !== password) {
-			console.log("Password does not match");
-			return;
-		} else {
-			try {
-				console.log("Hello");
-				const response = await fetch(`${path}/signup`, {
-					method: "POST",
-					headers: { "Content-Type": "application/json" },
-					body: JSON.stringify({ email, password }),
-				});
-				console.log("Hello", response);
-
-				if (!response.ok) {
-					const errorData = await response.json();
-					throw new Error(errorData.message);
-				}
-
-				const data = await response.json();
-				console.log(data);
-				console.log("Signup successful!");
-				status = "Signup successful!";
-				message.message = "signed up successful";
-				message.type="success";
-				pageswitch = "login";
-				success=true;
-			} catch (error) {
-				message.message= error;
-				message.type="error";	
-				success=false;
-			} finally {
-				loadingStatus = false;
-				setTimeout(() => {
-					message.message= "";
-					message.type="";
-				}, 2000);
-			}
-			return {success}
-		}
-	}
 </script>
 
-<div class="status">
-	{#if loadingStatus}
-		<Loading />
-	{/if}
 
-	{#if message.message}
-		<MessagePopup {message}/>
-	{/if}
-</div>
-<div class="header">
-	<h1>Notes</h1>
-	{#if pageStatus == "logedin"}
-		<button class="user-profile" on:click={() => openUserModal()}>
-			{@html icons["user"].toSvg({
-				class: "feather card user",
-				width: "18px",
-				height: "18px",
-			})}
-		</button>
-		<button class="add" on:click={() => openModal(null, "new")}>
-			{@html icons["edit"].toSvg({
-				class: "feather card edit",
-				width: "18px",
-				height: "18px",
-			})}
-		</button>
-	{/if}
-</div>
-{#if pageStatus == "home"}
-	<div class="login-form">
-		<h1>Login or Signup</h1>
-		<div class="login-swicth">
-			<button
-				on:click={switchToLogin}
-				class:active={pageswitch === "login"}
-				class:highlight={pageswitch === "login"}
-				class:dim={pageswitch !== "login"}>Login</button
-			>
-			<button
-				on:click={switchToSignup}
-				class:active={pageswitch === "signup"}
-				class:highlight={pageswitch === "signup"}
-				class:dim={pageswitch !== "signup"}>Signup</button
-			>
-		</div>
-		<div class="form">
-			{#if pageswitch == "login"}
-				<!-- <LoginForm data={logindata} login={async (logindata) =>await  login(logindata)} /> -->
-				<LoginForm data={logindata} login={handleLogin} />
-			{:else if pageswitch == "signup"}
-				<SignupForm
-					data={signupdata}
-					signup={handleSignup}
-				/>
-			{/if}
-		</div>
+
+<Router>
+	<Route path= "/">
+		<!-- make a component -->
+		<Home/>
+	</Route>
+
+	<Route path="/login">
+		<Login/>	
+	</Route>
+	
+
+	
+	
+  <Route path="/notes">
+    <div class="main-container">
+      <NavBar/>
+      <NotesRoute/>
+    </div>
+  </Route>
+	<Route path="/bucketlist">
+		<div class="main-container">
+		<NavBar/>
+		<BucketList/>
 	</div>
-{:else if pageStatus == "logedin"}
-	<div class="tag-wrapper">
-		<Tag localStore={$notesStore} bind:selectedTag={$selectedTag} />
-	</div>
-	<div class="search">
-		<Search bind:searchTerm={$searchTerm} />
-		<input type="date" bind:value={$selectedDate} />
-	</div>
-	<div class="notes-wrapper">
-		<Notes notesProp={$filteredNotesByDate} />
-	</div>
-	{#if modalAction == "new"}
-		<Modal {modalNote} {modalAction} {closeModal} {handleAction} />
-	{/if}
-	{#if userModal}
-		<UserProfile {closeModal} {signout} />
-	{/if}
-{/if}
+	</Route>
+</Router>
 
 <style>
+	.main-container {
+		display: flex;
+		flex-direction: row;
+	}
 	.header {
 		background-color: #2a2a2a;
 		text-align: center;
@@ -415,6 +87,9 @@
 		border: none;
 		margin: none;
 		padding: none;
+	}
+	:global(.menu) {
+		background-color: transparent;
 	}
 	:global(.header .user-profile) {
 		height: auto;
@@ -480,4 +155,41 @@
 		margin: 10px;
 		border-radius: 5px;
 	}
+	header {
+		background-color: #2a2a2a;
+		text-align: right;
+		position: relative;
+		margin: 10px;
+		height: 40px;
+	}
+	:global(header a) {
+		text-decoration: none;
+		color: rgba(255, 255, 255, 0.7);
+		font-weight: 500;
+		padding: 5px;
+		background-color: #393e41;
+		border: 1px solid #393e41;
+	}
+	:global(header a:hover) {
+		border: 1px solid #466676;
+		color: rgba(255, 255, 255, 0.7);
+	}
+
+	.menu {
+		position: absolute;
+		top: 0;
+		right: 0;
+		height: 100%;
+		transform: translateX(100%);
+		transition: transform 0.3s ease-out;
+	}
+
+	.menu.open {
+		transform: translateX(0);
+	}
+
+	
+
+
+	
 </style>

@@ -94,6 +94,7 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 20px;
+    margin:5px;
   }
 
   .note {
@@ -101,7 +102,7 @@
     border: 1px solid rgba(0, 0, 0, 0.2);
     border-radius: 6px;
     padding: 20px;
-    margin: 10px 0px 0px 10px;
+    margin: 5px;
     display: grid;
     grid-template-rows: auto 2fr auto;
   }

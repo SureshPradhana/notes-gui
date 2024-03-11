@@ -1,6 +1,7 @@
-import { writable } from "svelte/store";
+import { writable,readable } from "svelte/store";
 
 export let notesStore = writable([])
+export let bucketsStore = writable([])
 
 export const selectedTag = writable("All");
 export const searchTerm = writable("");
@@ -10,3 +11,10 @@ export const token = writable("");
 export const user = writable("");
 export const status = writable("");
 export const userdetails = writable("");
+// export const path=readable("http://localhost:3000");
+export const userModal=writable(false);
+export const modalAction=writable(false);
+export const message=writable({message:"",type:""});
+export const pageStatus=writable("");
+export const path=readable("https://notes-api-3xdk.onrender.com");
+

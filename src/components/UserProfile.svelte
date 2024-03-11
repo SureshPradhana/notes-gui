@@ -49,6 +49,7 @@
       justify-content: center;
       align-items: center;
       flex-direction: column;
+      z-index:30;
     }
     .close{
         position: absolute;

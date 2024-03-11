@@ -20,8 +20,10 @@
     "vite": "^5.1.0"
   },
   "dependencies": {
+    "@roxi/routify": "^2.18.15",
     "@supabase/supabase-js": "^2.39.6",
     "feather-icons": "^4.29.1",
-    "jwt-decode": "^4.0.0"
+    "jwt-decode": "^4.0.0",
+    "svelte-routing": "^2.12.0"
   }
 }
