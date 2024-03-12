@@ -14,92 +14,101 @@
         name = email.split("@")[0];
     })
 
-    async function signout() {
-		localStorage.removeItem("token");
-		token.set("");
-		userdetails.set({})
-
-	}
+  
 
   </script>
   
   <div class="home">
-    <h1>Manage your bucket list and notes efficiently.</h1>
-    <div class="buttons">
-        {#if Object.keys($userdetails).length != 0}
-        <div class="routes">
-        <Link to ="/notes">notes</Link>
-        <Link to ="/bucketlist">bucket list</Link>
-      </div>
-        <button
-                    id="nav-footer-title"
-                    href="/"
-                    target="_blank" >
-            <div id="nav-footer-avatar" >
-                {@html icons["user"].toSvg({
-                    class: "feather",
-                })}
-            </div>
-            <div id="nav-footer-titlebox">
-                {name}
-            </div>
-        </button>
-        <div class="signout-wrapper">
-        <button on:click={signout} class="button-signout">signout</button>
-        </div>
+    <header>
+      <h1>Notes</h1>
+      {#if Object.keys($userdetails).length != 0}
+      <Link to="/notes" class="login-signup">Dashboard</Link>
         {:else}
-        <Link to="/login" class="button-login">Login or Signup</Link>
+        <Link to="/login" class="login-signup">Login / Sign Up</Link>
         {/if}
-    </div>
+      
+  </header>
+  
+  <div class="hero">
+      <h2>Manage your bucket list and notes efficiently.</h2>
   </div>
+  
+  <footer>
+      <p>&copy; 2024. All rights reserved.</p>
+  </footer>
+
+  </div>
+
+
+
+
+
   
   <style>
     .home {
-      text-align: center;
-      padding: 1em;
+      margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        background-color: #121212;
+        color: #fff;
     }
-  
-    :global(.button-login) {
-      display: inline-block;
-      margin: 1em;
-      padding: 0.5em 1em;
-      text-decoration: none;
-      background-color: #007BFF;
-      color: white;
-      border-radius: 5px;
-      transition: background-color 0.3s;
-    }
-  
-    :global(.button-login:hover) {
-      background-color: #0056b3;
-      color: white;
-    }
-    .routes{
+
+    header {
+        background-color: #333;
+        padding: 20px 20px;
+        text-align: center;
+        height:80px;
         display: flex;
         flex-direction: row;
-      justify-content: center;
+        justify-content: space-between;
     }
-    :global(.routes a){
-        background-color:#343e41;
-        margin: 4px;
-        padding: 10px;
-        color:white;
-    }
-    .button-signout {
-  background-color: #f44336; /* Red */
-  border: none;
-  color: white;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
 
-.button-signout:hover {
-  background-color: #da190b;
-}
+    header h1 {
+        margin: 0;
+    }
+
+    .hero {
+        background-image: url('hero-image.jpg');
+        background-size: cover;
+        background-position: center;
+        height: 400px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        min-height: calc(100vh - 130px);
+    }
+
+    .hero h2 {
+        font-size: 36px;
+        margin: 0;
+    }
+
+    footer {
+        background-color: #333;
+        padding: 20px 0;
+        text-align: center;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        height: 50px;
+    }
+
+    footer p {
+        margin: 0;
+    }
+
+    :global(.login-signup){
+        float: right;
+        color: #fff;
+        text-decoration: none;
+        padding: 10px 20px;
+        border: 1px solid #fff;
+        border-radius: 5px;
+    }
+
+    :global(.login-signup:hover)   {
+        background-color: #fff;
+        color: #333;
+    }
   </style>
