@@ -252,4 +252,26 @@
 		height: 100vh;
 		overflow: scroll;
     }
+	input[type="date"] {
+  padding: 4px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 16px; /* Adjust font size as needed */
+  background-color: #2b2a33;
+ 
+}
+
+/* Styling the date picker arrow */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  background: transparent;
+  color: #333; /* Change color of the arrow */
+  cursor: pointer;
+}
+
+/* Styling placeholder text */
+input[type="date"]::placeholder {
+  color: #999; /* Change color of the placeholder text */
+}
+
 </style>

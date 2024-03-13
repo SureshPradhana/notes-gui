@@ -14,6 +14,6 @@
         margin: 10px;
         border-radius: 5px;
         border: 1px solid #ccc;
+        background-color: #2b2a23;
     }
-    
 </style>

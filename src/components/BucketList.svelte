@@ -1,135 +1,123 @@
 <script>
   import { onMount } from "svelte";
-  import { bucketsStore, token, userdetails ,userModal} from "../stores.js";
+  import { bucketsStore, token, userdetails, userModal } from "../stores.js";
   import { navigate } from "svelte-routing";
   import { icons } from "feather-icons";
 
   import Loading from "./Loading.svelte";
   import BucketModal from "../components/BucketModel.svelte";
-	import UserProfile from "../components/UserProfile.svelte";
-  import {addBucket,getBucket} from "../utils/db.js";
-  import {get} from "svelte/store";
+  import UserProfile from "../components/UserProfile.svelte";
+  import { addBucket, getBucket } from "../utils/db.js";
+  import { get } from "svelte/store";
   let modalNote = null;
-  let modalAction=null;
-  let isAuthenticated=false;
+  let modalAction = null;
+  let isAuthenticated = false;
   // let user;
 
   import Box from "./bucketlist/Box.svelte";
-  import {path} from "../stores.js";
-  const updateBuckets= (data) => {
-		bucketsStore.set(data);
-	};
+  import { path } from "../stores.js";
+  const updateBuckets = (data) => {
+    bucketsStore.set(data);
+  };
 
   $: buckets = $bucketsStore;
 
-
-
   onMount(async () => {
-
-
-    isAuthenticated=!!$userdetails
+    isAuthenticated = !!$userdetails;
     if (!isAuthenticated) {
       // If the user is not authenticated, redirect them to the login page
       navigate("/login");
     }
 
     try {
-				(async () => {
-					// Wrap the async function properly
-					const response = await fetch(`${$path}/api/bucketlist/bybuckets`, {
-						headers: { Authorization: $token },
-					});
-					if (!response.ok) {
-						throw new Error("Failed to fetch data");
-					}
-					const data = await response.json();
-					updateBuckets(data);
-				})();
-			} catch (error) {
-				console.log(error);
-			}
+      (async () => {
+        // Wrap the async function properly
+        const response = await fetch(`${$path}/api/bucketlist/bybuckets`, {
+          headers: { Authorization: $token },
+        });
+        if (!response.ok) {
+          throw new Error("Failed to fetch data");
+        }
+        const data = await response.json();
+        updateBuckets(data);
+      })();
+    } catch (error) {
+      console.log(error);
+    }
   });
 
   async function handleAction(note) {
-		let res = await addBucket(note);
-		let newNote = await getBucket(res.insertedId);
-		if (newNote) {
-			bucketsStore.update((notes) => {
-				return [newNote, ...notes];
-			});
-		}
-		modalNote = null;
-		modalAction = null;
-	}
-  
+    let res = await addBucket(note);
+    let newNote = await getBucket(res.insertedId);
+    if (newNote) {
+      bucketsStore.update((notes) => {
+        return [newNote, ...notes];
+      });
+    }
+    modalNote = null;
+    modalAction = null;
+  }
+
   // openModel
 
   function openModal(bucket, action) {
-		modalNote = bucket;
-		modalAction = action;
-	}
+    modalNote = bucket;
+    modalAction = action;
+  }
 
-	function openUserModal() {
-		$userModal = true;
-	}
+  function openUserModal() {
+    $userModal = true;
+  }
 
-	function closeModal() {
-		modalNote = null;
-		modalAction = null;
+  function closeModal() {
+    modalNote = null;
+    modalAction = null;
 
-		$userModal = false;
-	}
+    $userModal = false;
+  }
 
   async function signout() {
-		localStorage.removeItem("token");
-    $token="";
+    localStorage.removeItem("token");
+    $token = "";
     closeModal();
-    navigate("/login")
-		
-	}
+    navigate("/login");
+  }
 </script>
 
-{#if $userdetails }
+{#if $userdetails}
   <div class="main-body">
-  <div class="header">
-    <div class="title-wrapper">
-      <img src="bucket.png" alt="Logo" class="logo" />
-      <h1>Bucket List</h1>
+    <div class="header">
+      <div class="title-wrapper">
+        <img src="bucket.png" alt="Logo" class="logo" />
+        <h1>Bucket List</h1>
+      </div>
+
+      {#if $userdetails}
+        <button class="add" on:click={() => openModal(null, "new")}>
+          {@html icons["edit"].toSvg({
+            class: "feather card edit",
+            width: "18px",
+            height: "18px",
+          })}
+        </button>
+      {/if}
     </div>
+    <!-- Bucket list component goes here -->
 
-    {#if $userdetails}
-      <button class="add" on:click={() => openModal(null, "new")}>
-        {@html icons["edit"].toSvg({
-          class: "feather card edit",
-          width: "18px",
-          height: "18px",
-        })}
-      </button>
+    <div class="buckets">
+      <Box notesProp={buckets} />
+    </div>
+    {#if modalAction == "new"}
+      <BucketModal {modalNote} {modalAction} {closeModal} {handleAction} />
     {/if}
-  </div>
-  <!-- Bucket list component goes here -->
-
-
-
-<div class="buckets">
- 
-
-    <Box notesProp={buckets} />
-</div>
-{#if modalAction == "new"}
-<BucketModal {modalNote} {modalAction} {closeModal} {handleAction} />
-{/if}
-{#if $userModal}
-<UserProfile {closeModal} {signout} />
-{/if}
+    {#if $userModal}
+      <UserProfile {closeModal} {signout} />
+    {/if}
   </div>
 {:else}
   <!-- Show a loading spinner or some other placeholder while the authentication check is in progress -->
   <Loading />
-
-
 {/if}
-
 
 <style>
   .buckets {
@@ -138,17 +126,18 @@
     gap: 20px;
   }
   .main-container {
-		display: flex;
-		flex-direction: row;
-	}
-  .main-body{
-    width:100%;
-    height: 100vh;
+    display: flex;
+    flex-direction: row;
   }
-  .header{
+  .main-body {
+    width: 100%;
+    height: 100vh;
+    overflow: scroll;
+  }
+  .header {
     position: relative;
   }
-  
+
   :global(.header .add) {
     height: auto;
     position: absolute;

@@ -92,7 +92,7 @@
     border: 1px solid rgba(0, 0, 0, 0.2);
     border-radius: 6px;
     padding: 20px;
-    margin: 10px 0px 0px 10px;
+    margin: 10px;
     display: grid;
     grid-template-rows: auto 2fr auto;
   }
@@ -160,4 +160,6 @@
     color: #888787;
     margin: 0px 4px 0px 0px;
   }
+
+  
   </style>

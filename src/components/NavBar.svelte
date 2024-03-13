@@ -105,9 +105,6 @@
             <div id="nav-footer-titlebox">
                 {name}
             </div>
-            <label for="nav-footer-toggle"
-                ><i class="fas fa-caret-up"></i></label
-            >
         </div>
     </div>
 </div>
@@ -381,9 +378,11 @@
         overflow: hidden;
         transform: translate(0);
         transition: 0.2s;
+        color:white;
     }
     #nav-footer-avatar img {
         height: 100%;
+        
     }
 
     #nav-footer-titlebox {
@@ -393,6 +392,7 @@
         display: flex;
         flex-direction: column;
         transition: opacity 1s;
+        color:white;
     }
 
     #nav-footer-subtitle {
