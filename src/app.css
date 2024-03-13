@@ -42,7 +42,12 @@ h1 {
   margin:0.5em;
   padding:0.2em;
 }
-
+h2{
+  color:white;
+}
+label{
+  color:white;
+}
 .card {
   padding: 2em;
 }

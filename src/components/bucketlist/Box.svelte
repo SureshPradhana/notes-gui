@@ -161,5 +161,16 @@
     margin: 0px 4px 0px 0px;
   }
 
+  input[type="checkbox"] {
+  padding: 4px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 16px; /* Adjust font size as needed */
+  background-color: #2b2a33;
+ 
+}
+
+
   
   </style>
