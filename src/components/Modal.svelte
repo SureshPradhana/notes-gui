@@ -23,7 +23,7 @@
 
   function addTag(tag) {
     if (localNote) {
-      localNote.tags = [...localNote.tags, tag];
+      localNote.tags = [...localNote.tags,tag.trim()];
       newtag = "";
     }
   }
