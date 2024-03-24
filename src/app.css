@@ -81,7 +81,7 @@ svg{
 
 @media (prefers-color-scheme: dark) {
   :root {
-    color: #213547;
+    color: white;
     background-color: #2a2a2a;
   }
   a:hover {

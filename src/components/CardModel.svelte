@@ -1,11 +1,12 @@
-Card<script>
+
+<script>
   export let modalNote = null;
   export let modalAction = null;
   export let handleAction = () => {};
   export let closeModal = () => {};
 
   let localNote = null;
-  // let completed = false;
+  let newtag = "";
 
   function confirmAction() {
     handleAction(localNote);
@@ -13,25 +14,48 @@ Card<script>
     closeModal();
   }
 
-  $: localNote = modalNote ? modalNote : { content: "", completed: false };
+  $: localNote = modalNote ? modalNote : { content: "", title:"",tags: [] };
+
+  function removeTag(index) {
+    if (localNote) {
+      localNote.tags = localNote.tags.filter((_, i) => i !== index);
+    }
+  }
+
+  function addTag(tag) {
+    if (localNote) {
+      localNote.tags = [...localNote.tags,tag.trim()];
+      newtag = "";
+    }
+  }
 </script>
 
 <div class="modal">
   <div class="modal-content">
     {#if modalAction === "new"}
       <div class="info2">
-        <h2>Add Bucket</h2>
-        <textarea rows="10" cols="100" bind:value={localNote.content}
-        ></textarea>
+
+        <h2>Add Title</h2>
+        <textarea rows="10" cols="100" bind:value={localNote.title}></textarea>
+        <h2>Add Card</h2>
+        <textarea rows="10" cols="100" bind:value={localNote.content}></textarea>
+      </div>
+      <div class="shit-wrapper">
+        {#if localNote.tags.length > 0}
+          {#each localNote.tags as tag, index (tag)}
+            <p>
+              {tag}
+              <button class="delete" on:click={() => removeTag(index)}>X</button
+              >
+            </p>
+          {/each}
+        {:else}
+          <p>No tags</p>
+        {/if}
       </div>
       <div class="add-tag-wrapper">
-        <input
-          type="checkbox"
-          id="completed"
-          name="completed"
-          bind:checked={localNote.completed}
-        />
-        <label for="completed">completed</label>
+        <input type="text" placeholder="Add tag" bind:value={newtag} />
+        <button on:click={() => addTag(newtag)}>Add tag</button>
       </div>
       <div class="button-wrapper">
         <button on:click={closeModal}>Cancel</button>
@@ -40,7 +64,7 @@ Card<script>
       </div>
     {:else if modalAction === "delete"}
       <div class="info">
-        <h2>Are you sure you want to {modalAction} this note?</h2>
+        <h2>Are you sure you want to {modalAction} this Card?</h2>
       </div>
       <div class="button-wrapper">
         <button on:click={closeModal}>No</button>
@@ -50,20 +74,26 @@ Card<script>
     {:else if modalAction === "edit"}
       <div class="info2">
         <h2>Edit note</h2>
-        <textarea rows="10" cols="100" bind:value={localNote.content}
-        ></textarea>
+
+        <textarea rows="10" cols="100" bind:value={localNote.title}></textarea>
+        <textarea rows="10" cols="100" bind:value={localNote.content}></textarea>
       </div>
       <div class="shit-wrapper">
-        
+        {#if localNote.tags.length > 0}
+          {#each localNote.tags as tag, index (tag)}
+            <p>
+              {tag}
+              <button class="delete" on:click={() => removeTag(index)}>X</button
+              >
+            </p>
+          {/each}
+        {:else}
+          <p>No tags</p>
+        {/if}
       </div>
       <div class="add-tag-wrapper">
-        <input
-        type="checkbox"
-        id="completed"
-        name="completed"
-        bind:checked={localNote.completed}
-      />
-      <label for="completed">completed</label>
+        <input type="text" placeholder="Add tag" bind:value={newtag} />
+        <button on:click={() => addTag(newtag)}>Add tag</button>
       </div>
 
       <div class="button-wrapper">
@@ -82,7 +112,6 @@ Card<script>
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 29;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -122,22 +151,23 @@ Card<script>
     /* align-content: stretch; */
   }
   .add-tag-wrapper input {
-    width: 60%;
+    width:60%;
     padding: 12px;
     /* margin: 10px; */
     border-radius: 5px;
     border: 1px solid #ccc;
   }
 
-  .add-tag-wrapper button {
-    background-color: #1a1a1a;
-    padding: 12px;
+  .add-tag-wrapper button{
+    background-color:#1a1a1a;
+    padding:12px;
     border-radius: 5px;
   }
 
-  .add-tag-wrapper input:focus {
-    color: #ccc;
+  .add-tag-wrapper input:focus{
+    color:#ccc;
   }
+
 
   .button-wrapper .done {
     background-color: #3f6d41;
@@ -165,9 +195,11 @@ Card<script>
     border: none;
   }
 
+  
   @media (min-width: 768px) {
-    .modal-content {
-      width: 45%;
-    }
+  .modal-content{
+    width:45%;
   }
+}
+ 
 </style>

@@ -22,6 +22,9 @@ dependencies:
     version: 2.12.0
 
 devDependencies:
+  '@magidoc/plugin-svelte-marked':
+    specifier: ^4.1.4
+    version: 4.1.4
   '@sveltejs/vite-plugin-svelte':
     specifier: ^3.0.2
     version: 3.0.2(svelte@4.2.12)(vite@5.1.4)
@@ -34,6 +37,12 @@ devDependencies:
   '@types/feather-icons':
     specifier: ^4.29.4
     version: 4.29.4
+  '@types/marked':
+    specifier: ^6.0.0
+    version: 6.0.0
+  marked:
+    specifier: ^12.0.1
+    version: 12.0.1
   svelte:
     specifier: ^4.2.10
     version: 4.2.12
@@ -295,6 +304,14 @@ packages:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.4.15
+    dev: true
+
+  /@magidoc/plugin-svelte-marked@4.1.4:
+    resolution: {integrity: sha512-Pk3tmNswjMI6SHu8esyXEsNisbWD/QoCDSiSnM/RtCZ+kZjeuLBTgyQCFO5u+kgVgRNc/7Rw7xfFqvDlMLijdQ==}
+    dependencies:
+      github-slugger: 2.0.0
+      marked: 11.2.0
+      svelte: 4.2.12
     dev: true
 
   /@nodelib/fs.scandir@2.1.5:
@@ -671,6 +688,13 @@ packages:
 
   /@types/feather-icons@4.29.4:
     resolution: {integrity: sha512-cvwI455PWx/gJ33XDTIZOdauRy+XCxZggkOT/tAQYZLdySPFATD4RnDC9mxOnCIEaK9kwPm3zZigkAsMkhXb5w==}
+    dev: true
+
+  /@types/marked@6.0.0:
+    resolution: {integrity: sha512-jmjpa4BwUsmhxcfsgUit/7A9KbrC48Q0q8KvnY107ogcjGgTFDlIL3RpihNpx2Mu1hM4mdFQjoVc4O6JoGKHsA==}
+    deprecated: This is a stub types definition. marked provides its own type definitions, so you do not need this installed.
+    dependencies:
+      marked: 12.0.1
     dev: true
 
   /@types/node@12.20.55:
@@ -1145,6 +1169,10 @@ packages:
     dev: true
     optional: true
 
+  /github-slugger@2.0.0:
+    resolution: {integrity: sha512-IaOQ9puYtjrkq7Y0Ygl9KDZnrf/aiUJYUpVf89y8kyaxbRG7Y1SrX/jaumrv81vc61+kiMempujsM3Yw7w5qcw==}
+    dev: true
+
   /glob-parent@5.1.2:
     resolution: {integrity: sha512-AOIgSQCepiJYwP3ARnGx+5VnTu2HBYdzbGP45eLw1vr3zB3vZLeyed1sC9hnbcOc9/SrMyM5RPQrkGz4aS9Zow==}
     engines: {node: '>= 6'}
@@ -1344,6 +1372,18 @@ packages:
     engines: {node: '>=12'}
     dependencies:
       '@jridgewell/sourcemap-codec': 1.4.15
+    dev: true
+
+  /marked@11.2.0:
+    resolution: {integrity: sha512-HR0m3bvu0jAPYiIvLUUQtdg1g6D247//lvcekpHO1WMvbwDlwSkZAX9Lw4F4YHE1T0HaaNve0tuAWuV1UJ6vtw==}
+    engines: {node: '>= 18'}
+    hasBin: true
+    dev: true
+
+  /marked@12.0.1:
+    resolution: {integrity: sha512-Y1/V2yafOcOdWQCX0XpAKXzDakPOpn6U0YLxTJs3cww6VxOzZV1BTOOYWLvH3gX38cq+iLwljHHTnMtlDfg01Q==}
+    engines: {node: '>= 18'}
+    hasBin: true
     dev: true
 
   /mdn-data@2.0.30:

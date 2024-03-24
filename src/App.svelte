@@ -11,6 +11,7 @@
 	import Login from "./components/Login.svelte";
 	import NotesRoute from "./components/NotesRoute.svelte";
 	import BucketList from "./components/BucketList.svelte";
+	import FlashCards from "./components/FlashCards.svelte";
 
 
 	import NavBar from "./components/NavBar.svelte";
@@ -54,12 +55,18 @@
       <NotesRoute/>
     </div>
   </Route>
-	<Route path="/bucketlist">
-		<div class="main-container">
+   <Route path="/bucketlist">
+	<div class="main-container">
 		<NavBar/>
 		<BucketList/>
 	</div>
-	</Route>
+   </Route>
+   <Route path="/flashcards">
+		<div class="main-container">
+		<NavBar/>
+		<FlashCards/>
+	</div>
+   </Route>
 </Router>
 
 <style>

@@ -4,7 +4,7 @@ import { token } from '../stores.js';
 
 
 var path = 'https://notes-api-3xdk.onrender.com';
-// var path = 'http://localhost:3000';
+//var path = 'http://localhost:3000';
 
 export const deleteNote = (id) => {
 
@@ -39,6 +39,22 @@ export const deleteBucket = (id) => {
 	});
 	return res;
 }
+export const deleteCard = (id) => {
+
+	var tokenValue = get(token);
+
+	var res = fetch(`${path}/api/flashcards/bycardId`, {
+		method: 'DELETE',
+		headers: {
+			'Content-Type': 'application/json',
+			'Authorization': tokenValue,
+		},
+		body: JSON.stringify({ _id: id })
+	}).then(response => response.json()).then(data => {
+		return data;
+	});
+	return res;
+}
 
 export const addNote = (note) => {
 	var tokenValue = get(token);
@@ -56,7 +72,7 @@ export const addNote = (note) => {
 	return res;
 }
 
-export const addBucket = (bucket,completed) => {
+export const addBucket = (bucket, completed) => {
 	var tokenValue = get(token);
 
 	var res = fetch(`${path}/api/bucketlist/bybucket`, {
@@ -65,7 +81,22 @@ export const addBucket = (bucket,completed) => {
 			'Content-Type': 'application/json',
 			'Authorization': tokenValue,
 		},
-		body: JSON.stringify(bucket,completed)
+		body: JSON.stringify(bucket, completed)
+	}).then(response => response.json()).then(data => {
+		return data;
+	});
+	return res;
+}
+export const addCard = (bucket) => {
+	var tokenValue = get(token);
+
+	var res = fetch(`${path}/api/flashcards/bycard`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+			'Authorization': tokenValue,
+		},
+		body: JSON.stringify(bucket)
 	}).then(response => response.json()).then(data => {
 		return data;
 	});
@@ -102,6 +133,20 @@ export const getBucket = (id) => {
 	});
 	return res;
 }
+export const getCard = (id) => {
+	var tokenValue = get(token);
+
+	var res = fetch(`${path}/api/flashcards/bycard/?id=${id}`, {
+		method: 'GET',
+		headers: {
+			'Content-Type': 'application/json',
+			'Authorization': tokenValue,
+		}
+	}).then(response => response.json()).then(data => {
+		return data;
+	});
+	return res;
+}
 export const updateNote = (note) => {
 	var tokenValue = get(token);
 
@@ -122,7 +167,7 @@ export const updateNote = (note) => {
 export const updateBucket = (bucket) => {
 	var tokenValue = get(token);
 
-	var res = fetch(`${path}/api/bucketlist/bybucket`, {
+	var res = fetch(`${path}/api/flashcards/bycard`, {
 		method: 'PUT',
 		headers: {
 			'Content-Type': 'application/json',
@@ -134,3 +179,21 @@ export const updateBucket = (bucket) => {
 	});
 	return res;
 }
+
+
+export const updateCard = (bucket) => {
+	var tokenValue = get(token);
+
+	var res = fetch(`${path}/api/flashcards/bycard`, {
+		method: 'PUT',
+		headers: {
+			'Content-Type': 'application/json',
+			'Authorization': tokenValue,
+		},
+		body: JSON.stringify(bucket)
+	}).then(response => response.json()).then(data => {
+		return data;
+	});
+	return res;
+}
+

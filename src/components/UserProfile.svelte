@@ -1,5 +1,6 @@
 <script>
     export let signout = () => {};
+	
     export let closeModal = () => {};
     import {get} from 'svelte/store';
     import {userdetails} from '../stores.js';

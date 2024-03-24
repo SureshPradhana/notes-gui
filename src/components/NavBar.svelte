@@ -84,6 +84,17 @@
             ><span>Bucket List</span>
         </div>
     </Link>
+    <Link to="/flashcards">
+        <div class="nav-button">
+            <i class="fas"
+                >{@html icons["zap"].toSvg({
+                    class: "feather",
+                    width: "18px",
+                    height: "18px",
+                })}</i
+            ><span>Flash Cards</span>
+        </div>
+    </Link>
         <hr />
         <div id="nav-content-highlight"></div>
     </div>
