@@ -57,6 +57,7 @@
 	
 	div.details {
 		padding:1rem;
+		text-align:left;
 	}
 	div.header.open {
     border-bottom: 2px dashed #393e41 ; /* Dashed border when open */
@@ -67,4 +68,6 @@
   }
 
 </style>
+
+
 

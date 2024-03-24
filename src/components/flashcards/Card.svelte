@@ -23,7 +23,7 @@ import Accordion from '../Accordion.svelte';
 
     let res = await deleteCard(note._id);
     if (res) {
-      flashcardsStore.update((n) => n.filter((n) => n._id !== note._id));
+      flashCardsStore.update((n) => n.filter((n) => n._id !== note._id));
     }
     modalNote = null;
   }
@@ -33,7 +33,7 @@ import Accordion from '../Accordion.svelte';
 
     let res = await updateCard(note);
     if (res) {
-      flashcardsStore.update((n) => n.map((n) => (n._id === note._id ? note : n)));
+      flashCardsStore.update((n) => n.map((n) => (n._id === note._id ? note : n)));
     }
 
     modalNote = null;
@@ -107,6 +107,7 @@ import Accordion from '../Accordion.svelte';
     margin: 10px;
     display: grid;
     grid-template-rows: auto 2fr auto;
+    height:fit-content;
   }
  
 
@@ -261,3 +262,5 @@ import Accordion from '../Accordion.svelte';
 
   
   </style>
+
+

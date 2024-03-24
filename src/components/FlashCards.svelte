@@ -233,5 +233,8 @@
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 20px;
     margin:5px;
+    grid-auto-rows: min-content;
   }
 </style>
+
+
