@@ -98,7 +98,7 @@ import Accordion from '../Accordion.svelte';
   
 
 
-  <style>
+  <style lang="scss">
      .bucket {
     background-color: #242424;
     border: 1px solid rgba(0, 0, 0, 0.2);
@@ -260,7 +260,7 @@ import Accordion from '../Accordion.svelte';
 
 
 
-  
+
   </style>
 
 

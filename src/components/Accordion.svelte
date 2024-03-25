@@ -38,7 +38,7 @@
 	{/if}
 </div>
 
-<style>
+<style lang="scss">
 	div.accordion {
 		margin: 1rem 0;
 	}
@@ -56,7 +56,7 @@
 	}
 	
 	div.details {
-		padding:1rem;
+		padding:0.5rem;
 		text-align:left;
 	}
 	div.header.open {
@@ -67,7 +67,10 @@
   outline:none;
   }
 
+
+
+
+
+
+
 </style>
-
-
-

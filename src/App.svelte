@@ -69,7 +69,7 @@
    </Route>
 </Router>
 
-<style>
+<style lang="scss">
 	.main-container {
 		display: flex;
 		flex-direction: row;
@@ -196,7 +196,5 @@
 	}
 
 	
-
-
 	
 </style>
