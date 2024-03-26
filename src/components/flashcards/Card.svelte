@@ -1,11 +1,11 @@
 
 <script>
   import { icons } from "feather-icons";
-import Accordion from '../Accordion.svelte';
+import Accordion from '../componenthub/Accordion.svelte';
 
   import {flashCardsStore} from "../../stores.js";
     import { deleteCard,updateCard } from "../../utils/db.js";
-    import FlashCardModel from "../CardModel.svelte";
+    import FlashCardModel from "./CardModel.svelte";
   export let cardsProp;
   import Markdown from '@magidoc/plugin-svelte-marked'
 
@@ -99,6 +99,8 @@ import Accordion from '../Accordion.svelte';
 
 
   <style lang="scss">
+  
+ @import "../styles/mixins.scss";
      .bucket {
     background-color: #242424;
     border: 1px solid rgba(0, 0, 0, 0.2);
@@ -184,10 +186,7 @@ import Accordion from '../Accordion.svelte';
  
 }
 .notes {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px;
-    margin:5px;
+   @include grid-5-320min(); 
   }
 
   .note {

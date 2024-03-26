@@ -2,8 +2,9 @@
   // import {notes} from '../App.svelte';
   import { icons } from "feather-icons";
   import Modal from "./Modal.svelte";
-  import { deleteNote, updateNote } from "../utils/db.js";
-  import { notesStore } from "../stores.js";
+  import { deleteNote, updateNote } from "../../utils/db.js";
+  import { notesStore } from "../../stores.js";
+  import Markdown from '@magidoc/plugin-svelte-marked'
   export let notesProp;
 
   let modalNote = null;
@@ -40,15 +41,16 @@
   }
 </script>
 
-<div class="notes">
   {#each notesProp as note (note._id)}
     <div class="note">
       <div class="time">
         <p><small>{new Date(note.date).toLocaleTimeString()}</small></p>
         <p><small>{new Date(note.date).toDateString()}</small></p>
       </div>
-      <div>
-        <p class="content">{note.content}</p>
+      <div class="details">
+          <div>
+	  <Markdown source={note.content}/>
+          </div>
       </div>
       <div class="last">
         <div class="tag-wrapper">
@@ -79,7 +81,6 @@
       </div>
     </div>
   {/each}
-</div>
 {#if modalNote}
   <Modal
     {modalNote}
@@ -90,13 +91,6 @@
 {/if}
 
 <style>
-  .notes {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px;
-    margin: 5px;
-  }
-
   .note {
     background-color: #242424;
     border: 1px solid rgba(0, 0, 0, 0.2);

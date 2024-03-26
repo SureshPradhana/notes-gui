@@ -1,21 +1,19 @@
 <script>
   import { onMount } from "svelte";
-  import { bucketsStore, token, userdetails, userModal } from "../stores.js";
+  import { bucketsStore, token, userdetails, userModal,path } from "../../stores.js";
   import { navigate } from "svelte-routing";
   import { icons } from "feather-icons";
 
-  import Loading from "./Loading.svelte";
-  import BucketModal from "../components/BucketModel.svelte";
-  import UserProfile from "../components/UserProfile.svelte";
-  import { addBucket, getBucket } from "../utils/db.js";
+  import Loading from "../componenthub/Loading.svelte";
+  import BucketModal from "./BucketModel.svelte";
+  import UserProfile from "../componenthub/UserProfile.svelte";
+  import Box from "./Box.svelte";
+  import { addBucket, getBucket } from "../../utils/db.js";
   import { get } from "svelte/store";
   let modalNote = null;
   let modalAction = null;
   let isAuthenticated = false;
-  // let user;
 
-  import Box from "./bucketlist/Box.svelte";
-  import { path } from "../stores.js";
   const updateBuckets = (data) => {
     bucketsStore.set(data);
   };
@@ -119,55 +117,26 @@
   <Loading />
 {/if}
 
-<style>
-  .buckets {
-    display: grid;
-    grid-template-rows: repeat(1fr);
-    gap: 20px;
-  }
-  .main-container {
-    display: flex;
-    flex-direction: row;
-  }
-  .main-body {
-    width: 100%;
-    height: 100vh;
-    overflow: scroll;
-  }
-  .header {
-    position: relative;
-  }
+<style lang="scss">
+@import "../styles/mixins.scss";
+	.main-body {
+		@include main-body();
+	}
+	.header {
+		@include header();
+		.add {
+			@include add-new();
+		}
+		.title-wrapper {
+			@include title-wrapper();
+			.logo {
+				@include logo();
+			}
+		}
+		.tag-wrapper {
+			@include tag-wrapper();
+		}
+	}
 
-  :global(.header .add) {
-    height: auto;
-    position: absolute;
-    right: 10%;
-    top: 50%;
-    transform: translateY(-20%);
-    background-color: transparent;
-    border: none;
-    margin: none;
-    padding: none;
-  }
-  :global(.header .user-profile) {
-    height: auto;
-    position: absolute;
-    left: 10%;
-    top: 50%;
-    transform: translateY(-20%);
-    background-color: transparent;
-    border: none;
-    margin: none;
-    padding: none;
-  }
-  .title-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .logo {
-    width: 50px;
-    height: 50px;
-    margin-right: 10px;
-  }
-</style>
+
+  </style>

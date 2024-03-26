@@ -1,10 +1,10 @@
 <!-- MessagePopup.svelte -->
 <script>
-  export let message;
+  export let msg;
 </script>
 
-<div class="message-popup {message.type}">
-  <p>{message.message}</p>
+<div class="message-popup {msg.type}">
+  <p>{msg.message}</p>
 </div>
 
 <style>

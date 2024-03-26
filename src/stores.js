@@ -18,6 +18,7 @@ export const userdetails = writable("");
 // export const path = readable("http://localhost:3000");
 export const userModal = writable(false);
 export const modalAction = writable(false);
+export const loadingStatus = writable(false);
 export const message = writable({ message: "", type: "" });
 export const pageStatus = writable("");
 export const path = readable("https://notes-api-3xdk.onrender.com");

@@ -3,7 +3,7 @@
 
   import {bucketsStore} from "../../stores.js";
     import { deleteBucket,updateBucket } from "../../utils/db.js";
-    import BucketModel from "../BucketModel.svelte";
+    import BucketModel from "./BucketModel.svelte";
   export let notesProp;
 
   let modalNote = null;

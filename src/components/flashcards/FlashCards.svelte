@@ -8,23 +8,23 @@
 		selectedCardTag,
 		selectedCardDate,
 		searchCardTerm,
-	} from "../stores.js";
+		path
+	} from "../../stores.js";
 	import { navigate } from "svelte-routing";
 	import { icons } from "feather-icons";
 
-	import Loading from "./Loading.svelte";
-	import FlashCardModel from "../components/CardModel.svelte";
-	import UserProfile from "../components/UserProfile.svelte";
-	import Tag from "../components/Tag.svelte";
-	import Search from "../components/Search.svelte";
-	import { addCard, getCard } from "../utils/db.js";
+	import Loading from "../componenthub/Loading.svelte";
+	import FlashCardModel from "./CardModel.svelte";
+	import UserProfile from "../componenthub/UserProfile.svelte";
+	import Tag from "../componenthub/Tag.svelte";
+	import Search from "../componenthub/Search.svelte";
+	import Card from "./Card.svelte";
+	import { addCard, getCard } from "../../utils/db.js";
 	import { get, derived } from "svelte/store";
 	let modalNote = null;
 	let modalAction = null;
 	let isAuthenticated = false;
 
-	import Card from "./flashcards/Card.svelte";
-	import { path } from "../stores.js";
 	const updateCards = (data) => {
 		flashCardsStore.set(data);
 	};
@@ -41,9 +41,12 @@
 		try {
 			(async () => {
 				// Wrap the async function properly
-				const response = await fetch(`${$path}/api/flashcards/bycards`, {
-					headers: { Authorization: $token },
-				});
+				const response = await fetch(
+					`${$path}/api/flashcards/bycards`,
+					{
+						headers: { Authorization: $token },
+					},
+				);
 				if (!response.ok) {
 					throw new Error("Failed to fetch data");
 				}
@@ -109,7 +112,9 @@
 		([$filteredCards, $searchCardTerm]) =>
 			$searchCardTerm
 				? $filteredCards.filter((note) =>
-						note.content.toLowerCase().includes($searchCardTerm.toLowerCase()),
+						note.content
+							.toLowerCase()
+							.includes($searchCardTerm.toLowerCase()),
 					)
 				: $filteredCards,
 	);
@@ -123,7 +128,9 @@
 						const noteDateWithoutTime = new Date(note.date)
 							.toISOString()
 							.split("T")[0];
-						const selectedDateWithoutTime = new Date($selectedCardDate)
+						const selectedDateWithoutTime = new Date(
+							$selectedCardDate,
+						)
 							.toISOString()
 							.split("T")[0];
 						return noteDateWithoutTime === selectedDateWithoutTime;
@@ -137,8 +144,8 @@
 		<div class="header">
 			<div class="title-wrapper">
 				<img src="bucket.png" alt="Logo" class="logo" />
-				<h1>Flash Cards</h1>
 			</div>
+			<h1>Flash Cards</h1>
 
 			{#if $userdetails}
 				<button class="add" on:click={() => openModal(null, "new")}>
@@ -168,7 +175,12 @@
 			</div>
 		</div>
 		{#if modalAction == "new"}
-			<FlashCardModel {modalNote} {modalAction} {closeModal} {handleAction} />
+			<FlashCardModel
+				{modalNote}
+				{modalAction}
+				{closeModal}
+				{handleAction}
+			/>
 		{/if}
 		{#if $userModal}
 			<UserProfile {closeModal} {signout} />
@@ -179,62 +191,31 @@
 	<Loading />
 {/if}
 
-<style>
-	.buckets {
-		display: grid;
-		grid-template-rows: repeat(1fr);
-		gap: 20px;
-	}
-	.main-container {
-		display: flex;
-		flex-direction: row;
-	}
+<style lang="scss">
+	@import "../styles/mixins.scss";
 	.main-body {
-		width: 100%;
-		height: 100vh;
-		overflow: scroll;
+		@include main-body();
 	}
 	.header {
-		position: relative;
+		@include header();
+		.add {
+			@include add-new();
+		}
+		.title-wrapper {
+			@include title-wrapper();
+			.logo {
+				@include logo();
+			}
+		}
 	}
 
-	:global(.header .add) {
-		height: auto;
-		position: absolute;
-		right: 10%;
-		top: 50%;
-		transform: translateY(-20%);
-		background-color: transparent;
-		border: none;
-		margin: none;
-		padding: none;
-	}
-	:global(.header .user-profile) {
-		height: auto;
-		position: absolute;
-		left: 10%;
-		top: 50%;
-		transform: translateY(-20%);
-		background-color: transparent;
-		border: none;
-		margin: none;
-		padding: none;
-	}
-	.title-wrapper {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-	}
-	.logo {
-		width: 50px;
-		height: 50px;
-		margin-right: 10px;
-	}
 	.notes-wrapper {
-		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-		gap: 10px;
-		margin: 5px;
-		grid-auto-rows: min-content;
+		@include grid-5-320min();
+	}
+
+	.header,
+	.tag-wrapper,
+	.search {
+		@include center();
 	}
 </style>

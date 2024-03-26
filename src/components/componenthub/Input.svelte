@@ -33,7 +33,7 @@
 	{/if}
 </label>
 
-<style>
+<style lang="scss">
 	.label {
 		margin: 10px;
 	}
@@ -44,13 +44,14 @@
 		width: 100%;
 		padding: 10px;
 		border-radius: 5px;
+		border:none;
 	}
 	.error {
-		border-color: #f55;
+		border-color: var(--red);
 	}
 
 	.error-text {
-		color: #f55;
+		color: var(--red);
 		text-align: left;
 	}
 </style>

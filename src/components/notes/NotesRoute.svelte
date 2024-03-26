@@ -9,22 +9,20 @@
 		selectedTag,
 		searchTerm,
 		selectedDate,
-		message,
-	} from "../stores.js";
+	} from "../../stores.js";
 
 	import { jwtDecode } from "jwt-decode";
-	import Loading from "./Loading.svelte";
+	import Loading from "../componenthub/Loading.svelte";
 	import Modal from "./Modal.svelte";
-	import UserProfile from "./UserProfile.svelte";
+	import UserProfile from "../componenthub/UserProfile.svelte";
 	import Notes from "./Notes.svelte";
-	import Tag from "./Tag.svelte";
-	import Search from "./Search.svelte";
+	import Tag from "../componenthub/Tag.svelte";
+	import Search from "../componenthub/Search.svelte";
 	import { derived } from "svelte/store";
-	import { userModal } from "../stores.js";
+	import { userModal } from "../../stores.js";
 	import { icons } from "feather-icons";
 
-	import { addNote, getNote, updateNote } from "../utils/db.js";
-	import MessagePopup from "./MessagePopup.svelte";
+	import { addNote, getNote, updateNote } from "../../utils/db.js";
 	import { navigate } from "svelte-routing";
 
 	let modalNote = null;
@@ -34,7 +32,6 @@
 
 	onMount(() => {
 		// Fetch data from the server
-		let messagetemp = $message;
 		token.set(localStorage.getItem("token"));
 		if ($token) {
 			userdetails.set(jwtDecode($token).user);
@@ -187,33 +184,20 @@
 			{#if loadingStatus}
 				<Loading />
 			{/if}
-
-			{#if $message}
-				<!-- <MessagePopup {message} /> -->
-			{/if}
 		</div>
 
+
 		<div class="header">
+		<div class="title-wrapper">
 			<h1>Notes</h1>
-			<div class="add">
-				<button
-					class="add-button"
-					on:click={() => openModal(null, "new")}
-				>
-					{@html icons["edit"].toSvg({
-						class: "feather card edit",
-						width: "18px",
-						height: "18px",
-					})}
-				</button>
-				<!-- <button class="menu" on:click={() => openMenu()}>
-                {@html icons["menu"].toSvg({
-                    class: "feather card menu",
-                    width: "18px",
-                    height: "18px",
-                })}
-            </button> -->
 			</div>
+			<button class="add" on:click={() => openModal(null, "new")}>
+				{@html icons["edit"].toSvg({
+					class: "feather card edit",
+					width: "18px",
+					height: "18px",
+				})}
+			</button>
 		</div>
 		<div class="tag-wrapper">
 			<Tag localStore={$notesStore} bind:selectedTag={$selectedTag} />
@@ -235,33 +219,34 @@
 {/if}
 
 <style lang="scss">
-	.header {
-		position: relative;
-	}
+	@import "../styles/mixins.scss";
 	.main-body {
-		width: 100%;
-		height: 100vh;
-		overflow: scroll;
+		@include main-body();
+	}
+	.header {
+		@include header();
+		.add {
+			@include add-new();
+		}
+		.title-wrapper {
+			@include title-wrapper();
+			.logo {
+				@include logo();
+			}
+		}
+		.tag-wrapper {
+			@include tag-wrapper();
+		}
 	}
 
-	input[type="date"] {
-		padding: 4px;
-		border: 1px solid #ccc;
-		border-radius: 4px;
-		box-sizing: border-box;
-		font-size: 16px; /* Adjust font size as needed */
-		background-color: #2b2a33;
+	.notes-wrapper {
+		@include grid-5-320min();
 	}
-
-	/* Styling the date picker arrow */
-	input[type="date"]::-webkit-calendar-picker-indicator {
-		background: transparent;
-		color: #333; /* Change color of the arrow */
-		cursor: pointer;
-	}
-
-	/* Styling placeholder text */
-	input[type="date"]::placeholder {
-		color: #999; /* Change color of the placeholder text */
+     
+	.status,
+	.header,
+	.tag-wrapper,
+	.search {
+		@include center();
 	}
 </style>
