@@ -1,42 +1,41 @@
 <script>
     import { icons } from "feather-icons";
     import { get } from "svelte/store";
-    import { userdetails ,userModal} from "../stores.js";
+    import { userdetails, userModal } from "../stores.js";
     import { Link } from "svelte-routing";
     import { onMount } from "svelte";
-    import {onDestroy} from "svelte";
-    
+    import { onDestroy } from "svelte";
 
     let name;
     let email;
     let userDetailsValue;
-    let navToggleChecked=true;
+    let navToggleChecked = true;
     const unsubscribe = userdetails.subscribe((value) => {
-            userDetailsValue = value;
-        });
+        userDetailsValue = value;
+    });
 
     function openUserModal() {
-		$userModal=true
-	}
-
-	function closeModal() {
-		$userModal=false
-	}
-
-    onMount(() => {
-        if (window.innerWidth <= 600) { // adjust 600 to your mobile breakpoint
-      navToggleChecked = true;
+        $userModal = true;
     }
 
+    function closeModal() {
+        $userModal = false;
+    }
+
+    onMount(() => {
+        if (window.innerWidth <= 600) {
+            // adjust 600 to your mobile breakpoint
+            navToggleChecked = true;
+        }
+
         // Remember to unsubscribe when you no longer need the updates
-        
+
         email = userDetailsValue.email;
 
         name = email.split("@")[0];
     });
 
     onDestroy(unsubscribe);
-
 </script>
 
 <div id="nav-bar">
@@ -50,72 +49,71 @@
     </div>
     <div id="nav-content">
         <Link to="/">
-        <div class="nav-button">
-            
-            <i class="fas"
-                >{@html icons["home"].toSvg({
-                    class: "feather ",
-                    width: "18px",
-                    height: "18px",
-                })}</i
-            ><span><a href="/">Home</a></span>
-            
-        </div>
-    </Link>
-    <Link to="/notes">
-        <div class="nav-button">
-            <i class="fas"
-                >{@html icons["file-text"].toSvg({
-                    class: "feather ",
-                    width: "18px",
-                    height: "18px",
-                })}</i
-            ><span>Notes</span>
-        </div>
-    </Link>
-    <Link to="/bucketlist">
-        <div class="nav-button">
-            <i class="fas"
-                >{@html icons["list"].toSvg({
-                    class: "feather",
-                    width: "18px",
-                    height: "18px",
-                })}</i
-            ><span>Bucket List</span>
-        </div>
-    </Link>
-    <Link to="/flashcards">
-        <div class="nav-button">
-            <i class="fas"
-                >{@html icons["zap"].toSvg({
-                    class: "feather",
-                    width: "18px",
-                    height: "18px",
-                })}</i
-            ><span>Flash Cards</span>
-        </div>
-    </Link>
+            <div class="nav-button">
+                <i class="fas"
+                    >{@html icons["home"].toSvg({
+                        class: "feather ",
+                        width: "18px",
+                        height: "18px",
+                    })}</i
+                ><span><a href="/">Home</a></span>
+            </div>
+        </Link>
+        <Link to="/notes">
+            <div class="nav-button">
+                <i class="fas"
+                    >{@html icons["file-text"].toSvg({
+                        class: "feather ",
+                        width: "18px",
+                        height: "18px",
+                    })}</i
+                ><span>Notes</span>
+            </div>
+        </Link>
+        <Link to="/bucketlist">
+            <div class="nav-button">
+                <i class="fas"
+                    >{@html icons["list"].toSvg({
+                        class: "feather",
+                        width: "18px",
+                        height: "18px",
+                    })}</i
+                ><span>Bucket List</span>
+            </div>
+        </Link>
+        <Link to="/flashcards">
+            <div class="nav-button">
+                <i class="fas"
+                    >{@html icons["zap"].toSvg({
+                        class: "feather",
+                        width: "18px",
+                        height: "18px",
+                    })}</i
+                ><span>Flash Cards</span>
+            </div>
+        </Link>
         <hr />
         <div id="nav-content-highlight"></div>
     </div>
-   
-   
 
     <input id="nav-footer-toggle" type="checkbox" />
     <div id="nav-footer">
         <div id="nav-footer-heading">
             <button
-                    id="nav-footer-title"
-                    href="/"
-                    target="_blank" on:click={openUserModal}>
-            <div id="nav-footer-avatar" >
-                {@html icons["user"].toSvg({
-                    class: "feather",
-                })}
-            </div>
-            <div id="nav-footer-titlebox">
-                {name}
-            </div>
+                id="nav-footer-title"
+                href="/"
+                target="_blank"
+                on:click={openUserModal}
+            >
+                <div id="nav-footer-avatar">
+                    {@html icons["user"].toSvg({
+                        class: "feather",
+                    })}
+                </div>
+                <div id="nav-footer-titlebox">
+                    {name}
+                </div>
+            </button>
         </div>
     </div>
 </div>
@@ -160,7 +158,7 @@
         opacity: 0;
         transition: opacity 0.1s;
     }
-    #nav-toggle:checked ~ #nav-content .nav-button  .fas {
+    #nav-toggle:checked ~ #nav-content .nav-button .fas {
         min-width: calc(100% - 16px);
     }
     #nav-toggle:checked ~ #nav-footer #nav-footer-avatar {
@@ -181,7 +179,7 @@
   top: 1vw; */
         height: 100vh;
         background: var(--navbar-dark-primary);
-        border-radius: 16px;
+        /* border-radius: 16px; */
         display: flex;
         flex-direction: column;
         color: var(--navbar-light-primary);
@@ -315,14 +313,13 @@
         top: 100%;
         box-shadow: 16px -16px var(--background);
     }
-   
 
-    .nav-button{
+    .nav-button {
         position: relative;
         margin-left: 16px;
         height: 54px;
         display: flex;
-     
+
         align-items: center;
         color: var(--navbar-light-secondary);
         direction: ltr;
@@ -330,7 +327,7 @@
         z-index: 1;
         transition: color 0.2s;
     }
-    .nav-button span{
+    .nav-button span {
         transition: opacity 1s;
     }
     .nav-button .fas {
@@ -339,15 +336,14 @@
     .nav-button:nth-of-type(1):hover {
         color: var(--navbar-dark-primary);
     }
-    
+
     .nav-button:nth-of-type(6):hover {
         color: var(--navbar-dark-primary);
     }
 
-    .nav-button:hover{
-        background-color:#9c95bd;
+    .nav-button:hover {
+        background-color: #9c95bd;
     }
-   
 
     #nav-bar .fas {
         min-width: 3rem;
@@ -372,9 +368,8 @@
         position: relative;
         width: 100%;
         height: 54px;
-        
     }
-    #nav-footer-heading button{
+    #nav-footer-heading button {
         display: flex;
         align-items: center;
     }
@@ -389,11 +384,10 @@
         overflow: hidden;
         transform: translate(0);
         transition: 0.2s;
-        color:white;
+        color: white;
     }
     #nav-footer-avatar img {
         height: 100%;
-        
     }
 
     #nav-footer-titlebox {
@@ -403,7 +397,7 @@
         display: flex;
         flex-direction: column;
         transition: opacity 1s;
-        color:white;
+        color: white;
     }
 
     #nav-footer-subtitle {
@@ -436,13 +430,10 @@
     }
 
     @media only screen and (max-width: 600px) {
-       :root{
-        --navbar-width:100vw;
-       }
+        :root {
+            --navbar-width: 100vw;
+        }
     }
 
-  
-
-/* This media query targets screens with a width of more than 600px */
-
+    /* This media query targets screens with a width of more than 600px */
 </style>

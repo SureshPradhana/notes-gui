@@ -1,19 +1,24 @@
-
 <script>
-    import LoginForm from "./LoginForm.svelte";
+	import LoginForm from "./LoginForm.svelte";
 	import SignupForm from "./SignupForm.svelte";
-    import {navigate} from 'svelte-routing';
-    import {jwtDecode} from 'jwt-decode';
+	import { navigate } from "svelte-routing";
+	import { jwtDecode } from "jwt-decode";
 
-    let pageswitch = "login";
-    let loadingStatus = false;
-    let logindata = { email: "", password: "" };
+	let pageswitch = "login";
+	let loadingStatus = false;
+	let logindata = { email: "", password: "" };
 	let signupdata = { email: "", password: "", cpassword: "" };
 
-    //stores
-    import {path,token, userdetails, message,pageStatus} from "../stores.js";
+	//stores
+	import {
+		path,
+		token,
+		userdetails,
+		message,
+		pageStatus,
+	} from "../stores.js";
 
-    function switchToLogin() {
+	function switchToLogin() {
 		pageswitch = "login";
 	}
 
@@ -21,7 +26,7 @@
 		pageswitch = "signup";
 	}
 
-    const resetLoginData = () => {
+	const resetLoginData = () => {
 		logindata.password = "";
 	};
 	const resetSignupData = () => {
@@ -35,7 +40,7 @@
 			const result = await login(data);
 			if (result.success) {
 				resetLoginData();
-                navigate('/notes');
+				navigate("/notes");
 			} else {
 				console.log("Login failed:", result);
 				resetLoginData();
@@ -72,28 +77,36 @@
 			if (data.token) {
 				localStorage.setItem("token", data.token);
 				token.set(data.token);
-                const decodedToken = jwtDecode($token);
-			    userdetails.set(decodedToken.user);
-               
+				const decodedToken = jwtDecode($token);
+				userdetails.set(decodedToken.user);
 
 				$pageStatus = "logedin";
-				$message={message:"Login successful!",type:"success"};
-				success=true
+				$message = {
+					message: "Login successful!",
+					type: "success",
+				};
+				success = true;
 			} else {
 				if ((data.message = "Invalid password")) {
-					$message={message:"email or password is wrong",type:"error"};
+					$message = {
+						message: "email or password is wrong",
+						type: "error",
+					};
 				} else {
-					$message={message:"login failed",type:"error"};
+					$message = {
+						message: "login failed",
+						type: "error",
+					};
 				}
 				success = false;
 			}
 		} catch (error) {
-			$message={message:"user not found",type:"error"};
+			$message = { message: "user not found", type: "error" };
 			success = false;
 		} finally {
 			loadingStatus = false;
 			setTimeout(() => {
-				$message={message:"",type:""}
+				$message = { message: "", type: "" };
 			}, 2000);
 		}
 		return { success };
@@ -108,13 +121,20 @@
 			return;
 		} else {
 			try {
-				
-				const response = await fetch(`${$path}/signup`, {
-					method: "POST",
-					headers: { "Content-Type": "application/json" },
-					body: JSON.stringify({ email, password }),
-				});
-				
+				const response = await fetch(
+					`${$path}/signup`,
+					{
+						method: "POST",
+						headers: {
+							"Content-Type":
+								"application/json",
+						},
+						body: JSON.stringify({
+							email,
+							password,
+						}),
+					},
+				);
 
 				if (!response.ok) {
 					const errorData = await response.json();
@@ -122,63 +142,54 @@
 				}
 
 				const data = await response.json();
-				
+
 				console.log("Signup successful!");
 				$pageStatus = "Signup successful!";
-				$message={message:"signup successful!", type:"success"}
+				$message = {
+					message: "signup successful!",
+					type: "success",
+				};
 				pageswitch = "login";
 				success = true;
 			} catch (error) {
-				
-				$message={message:error, type:"success"}
+				$message = { message: error, type: "success" };
 
 				success = false;
 			} finally {
 				loadingStatus = false;
 				setTimeout(() => {
-					$message={message:"", type:""}
+					$message = { message: "", type: "" };
 				}, 2000);
 			}
 			return { success };
 		}
 	}
-
-
-
 </script>
 
-
 <div class="login-form">
-    <h1>Login or Signup</h1>
-    <div class="login-swicth">
-        <button
-            on:click={switchToLogin}
-            class:active={pageswitch === "login"}
-            class:highlight={pageswitch === "login"}
-            class:dim={pageswitch !== "login"}>Login</button
-        >
-        <button
-            on:click={switchToSignup}
-            class:active={pageswitch === "signup"}
-            class:highlight={pageswitch === "signup"}
-            class:dim={pageswitch !== "signup"}
-            >Signup</button
-        >
-    </div>
-    <div class="form">
-        {#if pageswitch == "login"}
-            <!-- <LoginForm data={logindata} login={async (logindata) =>await  login(logindata)} /> -->
-            <LoginForm
-                data={logindata}
-                login={handleLogin}
-            />
-        {:else if pageswitch == "signup"}
-            <SignupForm
-                data={signupdata}
-                signup={handleSignup}
-            />
-        {/if}
-    </div>
+	<h1>Login or Signup</h1>
+	<div class="login-swicth">
+		<button
+			on:click={switchToLogin}
+			class:active={pageswitch === "login"}
+			class:highlight={pageswitch === "login"}
+			class:dim={pageswitch !== "login"}>Login</button
+		>
+		<button
+			on:click={switchToSignup}
+			class:active={pageswitch === "signup"}
+			class:highlight={pageswitch === "signup"}
+			class:dim={pageswitch !== "signup"}>Signup</button
+		>
+	</div>
+	<div class="form">
+		{#if pageswitch == "login"}
+			<!-- <LoginForm data={logindata} login={async (logindata) =>await  login(logindata)} /> -->
+			<LoginForm data={logindata} login={handleLogin} />
+		{:else if pageswitch == "signup"}
+			<SignupForm data={signupdata} signup={handleSignup} />
+		{/if}
+	</div>
 </div>
 
 <style>
@@ -220,3 +231,4 @@
 		cursor: pointer;
 	}
 </style>
+

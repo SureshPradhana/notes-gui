@@ -1,52 +1,40 @@
 <script>
-    import { Link } from 'svelte-routing';
-    import  {userdetails,userModal,token} from '../stores.js';
-    import {icons} from "feather-icons";
-    import { onMount } from 'svelte';
+    import { Link } from "svelte-routing";
+    import { userdetails, userModal, token } from "../stores.js";
+    import { icons } from "feather-icons";
+    import { onMount } from "svelte";
     let email;
     let name;
 
-   
-
-    onMount(()=>{
+    onMount(() => {
         email = $userdetails.email;
 
         name = email.split("@")[0];
-    })
+    });
+</script>
 
-  
-
-  </script>
-  
-  <div class="home">
+<div class="home">
     <header>
-      <h1>Notes</h1>
-      {#if Object.keys($userdetails).length != 0}
-      <Link to="/notes" class="login-signup">Dashboard</Link>
+        <h1>Notes</h1>
+        {#if Object.keys($userdetails).length != 0}
+            <Link to="/notes" class="login-signup">Dashboard</Link>
         {:else}
-        <Link to="/login" class="login-signup">Login / Sign Up</Link>
+            <Link to="/login" class="login-signup">Login / Sign Up</Link>
         {/if}
-      
-  </header>
-  
-  <div class="hero">
-      <h2>Manage your bucket list and notes efficiently.</h2>
-  </div>
-  
-  <footer>
-      <p>&copy; 2024. All rights reserved.</p>
-  </footer>
+    </header>
 
-  </div>
+    <div class="hero">
+        <h2>Manage your bucket list and notes efficiently.</h2>
+    </div>
 
+    <footer>
+        <p>&copy; 2024. All rights reserved.</p>
+    </footer>
+</div>
 
-
-
-
-  
-  <style>
+<style>
     .home {
-      margin: 0;
+        margin: 0;
         padding: 0;
         font-family: Arial, sans-serif;
         background-color: #121212;
@@ -57,7 +45,7 @@
         background-color: #333;
         padding: 20px 20px;
         text-align: center;
-        height:80px;
+        height: 80px;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
@@ -68,7 +56,7 @@
     }
 
     .hero {
-        background-image: url('hero-image.jpg');
+        background-image: url("hero-image.jpg");
         background-size: cover;
         background-position: center;
         height: 400px;
@@ -98,7 +86,7 @@
         margin: 0;
     }
 
-    :global(.login-signup){
+    :global(.login-signup) {
         float: right;
         color: #fff;
         text-decoration: none;
@@ -107,8 +95,9 @@
         border-radius: 5px;
     }
 
-    :global(.login-signup:hover)   {
+    :global(.login-signup:hover) {
         background-color: #fff;
         color: #333;
     }
-  </style>
+</style>
+

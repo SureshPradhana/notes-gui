@@ -7,7 +7,7 @@
 <style>
   .loading-overlay {
     position: fixed;
-    z-index:1000;
+    z-index: 1000;
     top: 0;
     left: 0;
     width: 100%;
@@ -33,4 +33,3 @@
     }
   }
 </style>
-

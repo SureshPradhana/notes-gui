@@ -5,7 +5,6 @@
 	export let data = {};
 	export let signup = () => {};
 
-
 	let errors = {};
 	let touchedFields = {};
 
@@ -55,7 +54,7 @@
 
 	const validateAndSubmit = () => {
 		touchedFields = { email: true, password: true, cpassword: true };
-		errors=validate()
+		errors = validate();
 		if (!Object.keys(errors).length) {
 			signup(data);
 		}

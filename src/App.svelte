@@ -3,8 +3,8 @@
 
 	import { Router, Route, Link, navigate } from "svelte-routing";
 
-	import {onMount} from "svelte";
-	import {userdetails,token, path, loading} from "./stores.js"
+	import { onMount } from "svelte";
+	import { userdetails, token, path, loading } from "./stores.js";
 	import { jwtDecode } from "jwt-decode";
 	// routes
 	import Home from "./components/Home.svelte";
@@ -13,60 +13,48 @@
 	import BucketList from "./components/BucketList.svelte";
 	import FlashCards from "./components/FlashCards.svelte";
 
-
 	import NavBar from "./components/NavBar.svelte";
 
-	onMount(()=>{
-		let tokenfromlocal=localStorage.getItem("token");
+	onMount(() => {
+		let tokenfromlocal = localStorage.getItem("token");
 		token.set(tokenfromlocal);
 		if (tokenfromlocal) {
-                const decodedToken = jwtDecode(tokenfromlocal);
-			    userdetails.set(decodedToken.user);
-			}
-		else{
-			navigate("/")
+			const decodedToken = jwtDecode(tokenfromlocal);
+			userdetails.set(decodedToken.user);
+		} else {
+			navigate("/");
 		}
-
-		
-	})
-
-	
-
+	});
 </script>
 
-
-
 <Router>
-	<Route path= "/">
+	<Route path="/">
 		<!-- make a component -->
-		<Home/>
+		<Home />
 	</Route>
 
 	<Route path="/login">
-		<Login/>	
+		<Login />
 	</Route>
-	
 
-	
-	
-  <Route path="/notes">
-    <div class="main-container">
-      <NavBar/>
-      <NotesRoute/>
-    </div>
-  </Route>
-   <Route path="/bucketlist">
-	<div class="main-container">
-		<NavBar/>
-		<BucketList/>
-	</div>
-   </Route>
-   <Route path="/flashcards">
+	<Route path="/notes">
 		<div class="main-container">
-		<NavBar/>
-		<FlashCards/>
-	</div>
-   </Route>
+			<NavBar />
+			<NotesRoute />
+		</div>
+	</Route>
+	<Route path="/bucketlist">
+		<div class="main-container">
+			<NavBar />
+			<BucketList />
+		</div>
+	</Route>
+	<Route path="/flashcards">
+		<div class="main-container">
+			<NavBar />
+			<FlashCards />
+		</div>
+	</Route>
 </Router>
 
 <style lang="scss">
@@ -194,7 +182,4 @@
 	.menu.open {
 		transform: translateX(0);
 	}
-
-	
-	
 </style>

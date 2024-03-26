@@ -1,4 +1,4 @@
-Card<script>
+<script>
   export let modalNote = null;
   export let modalAction = null;
   export let handleAction = () => {};
@@ -16,6 +16,7 @@ Card<script>
   $: localNote = modalNote ? modalNote : { content: "", completed: false };
 </script>
 
+Card
 <div class="modal">
   <div class="modal-content">
     {#if modalAction === "new"}
@@ -53,17 +54,15 @@ Card<script>
         <textarea rows="10" cols="100" bind:value={localNote.content}
         ></textarea>
       </div>
-      <div class="shit-wrapper">
-        
-      </div>
+      <div class="shit-wrapper"></div>
       <div class="add-tag-wrapper">
         <input
-        type="checkbox"
-        id="completed"
-        name="completed"
-        bind:checked={localNote.completed}
-      />
-      <label for="completed">completed</label>
+          type="checkbox"
+          id="completed"
+          name="completed"
+          bind:checked={localNote.completed}
+        />
+        <label for="completed">completed</label>
       </div>
 
       <div class="button-wrapper">

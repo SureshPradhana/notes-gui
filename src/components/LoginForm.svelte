@@ -8,8 +8,6 @@
 	let errors = {};
 	let touchedFields = {};
 
-	
-
 	const validate = () => {
 		const errors = {};
 
@@ -38,7 +36,7 @@
 
 	const validateAndSubmit = () => {
 		touchedFields = { email: true, password: true };
-		errors=validate();
+		errors = validate();
 		if (!Object.keys(errors).length) {
 			login(data);
 		}
