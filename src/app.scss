@@ -20,14 +20,21 @@
 	--mocha: #7f4f24;
 	--tan: #ddb892;
 	--blue: #3e80b6;
+	--blue-2: #4c6676;
 	--background: #2E2E2E;
 	--background-color: #2a2a2a;
-	--background-2:#242424 ;
+	--background-2: #242424;
 	--stroke: #444444;
 	--accent: #FF6F61;
 	--black: #121212;
-	--black-2:#1a1a1a;
-	--red:#ff5555;
+	--black-2: #1a1a1a;
+	--red: #ff5555;
+	--red-2: #9a3a31;
+	--purple: #2b2a33;
+	--gray: #393e41;
+	--link: #646cff;
+	--link-hover: #535bf2;
+	--border: rgba(0, 0, 0, 0.2);
 
 	/* fonts */
 	--decorative: "Montserrat", sans-serif;
@@ -48,43 +55,35 @@
 	--small: calc(var(--base-size)/ var(--scale));
 }
 
-input[type="date"] {
-	padding: 4px;
-	border: 1px solid #ccc;
-	border-radius: 4px;
-	box-sizing: border-box;
-	font-size: 16px;
-	background-color: #2b2a33;
+@media (prefers-color-scheme: dark) {
+	:root {
+		color: var(--white);
+		background-color: var(--background-color);
+	}
+
+	a:hover {
+		color: var(--link-hover);
+	}
+
+	button {
+		background-color: transparent;
+	}
+
 }
 
-input[type="date"]::-webkit-calendar-picker-indicator {
-	background: transparent;
-	color: #333;
-	cursor: pointer;
-}
-
-input[type="date"]::placeholder {
-	color: #999;
-}
 
 @mixin hideScrollbar() {
 
-	/* Hide scrollbar for Chrome, Safari, and Opera */
 	&::-webkit-scrollbar {
 		display: none;
 	}
 
-	/* IE, Edge, and Firefox */
 	& {
 		-ms-overflow-style: none;
-		/* IE and Edge */
 		scrollbar-width: none;
-		/* Firefox */
 		scrollbar-color: transparent transparent;
-		/* Firefox (hide scrollbar thumb) */
 	}
 
-	/* Brave */
 	&::-webkit-scrollbar {
 		width: 0;
 	}
@@ -94,7 +93,7 @@ input[type="date"]::placeholder {
 body {
 	padding: 0;
 	margin: 0;
-	background-color: #2a2a2a;
+	background-color: var(--background-color);
 
 }
 
@@ -106,17 +105,19 @@ body {
 
 a {
 	font-weight: 500;
-	color: #646cff;
+	color: var(--link);
 	text-decoration: inherit;
 }
 
 a:hover {
-	color: #535bf2;
+	color: var(--link-hover);
 }
 
 h1,
-p {
-	color: white;
+p,
+h2,
+label {
+	color: var(--white);
 }
 
 
@@ -126,17 +127,17 @@ h1 {
 	padding: 0.2em;
 }
 
-h2 {
-	color: white;
+textarea {
+	width: 100%;
+	height: 200px;
+	padding: 10px;
+	font-family: Arial, sans-serif;
+	font-size: 16px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	box-sizing: border-box;
 }
 
-label {
-	color: white;
-}
-
-.card {
-	padding: 2em;
-}
 
 #app {
 	/* max-width: 1280px; */
@@ -156,7 +157,7 @@ button {
 }
 
 button:hover {
-	border-color: #646cff;
+	border-color: var(--link);
 }
 
 button:focus,
@@ -168,22 +169,51 @@ svg {
 	box-sizing: content-box;
 }
 
-@media (prefers-color-scheme: dark) {
-	:root {
-		color: white;
-		background-color: #2a2a2a;
-	}
-
-	a:hover {
-		color: #747bff;
-	}
-
-	button {
-		background-color: transparent;
-	}
-
+input[type="date"] {
+	padding: 4px;
+	border: 1px solid var(--white-2);
+	border-radius: 4px;
+	box-sizing: border-box;
+	font-size: 16px;
+	background-color: var(--purple);
 }
 
+input[type="date"]::-webkit-calendar-picker-indicator {
+	background: transparent;
+	color: var(--background);
+	cursor: pointer;
+}
+
+input[type="date"]::placeholder {
+	color: var(--background-2);
+}
+
+// edit and delete icon
+.card {
+	padding: 4px;
+	display: inline-block;
+	background-color: var(--black-2);
+	font-weight: bold;
+	border-radius: 2px;
+}
+
+.edit {
+	color: #ccc;
+	background: var(--gray);
+	border: 1px solid var(--gray);
+}
+
+.trash {
+	color: var(--red-2);
+	background: transparent;
+	border: 1px solid var(--red-2);
+}
+
+.card:hover {
+	border: 1px solid var(--blue-2);
+}
+
+// markdown content styles
 .details>* {
 
 	h1,
@@ -323,7 +353,6 @@ svg {
 	}
 
 
-	/* Basic styling for code blocks */
 	pre {
 		font-family: 'Courier New', monospace;
 		font-size: 14px;
@@ -335,7 +364,6 @@ svg {
 		white-space: pre-wrap;
 	}
 
-	/* Styling for inline code */
 	pre code {
 		display: inline;
 		padding: 1.2rem 0.5rem;
@@ -352,9 +380,7 @@ svg {
 		font-size: 0.7rem;
 	}
 
-	/* Styling for code blocks */
 
-	/* styling for blockquotes */
 	blockquote {
 		border-left: 0.5rem solid var(--accent);
 		padding-left: 1rem;
@@ -393,9 +419,6 @@ svg {
 		content: "";
 	}
 
-	/* styling for blockquotes */
-
-	/* styling for lists */
 	ul {
 		list-style-type: disc;
 	}
@@ -412,135 +435,4 @@ svg {
 		font-size: 0.8rem;
 	}
 
-	/* styling for lists */
-
-
-
-
 }
-
-/*.header {
-		background-color: #2a2a2a;
-		text-align: center;
-		position: relative;
-		height: 60px;
-	}
-	.header h1 {
-		margin: 0;
-		padding: 10px;
-	}
-	:global(.header .add) {
-		height: auto;
-		position: absolute;
-		right: 10%;
-		top: 50%;
-		transform: translateY(-20%);
-		background-color: transparent;
-		border: none;
-		margin: none;
-		padding: none;
-	}
-	:global(.menu) {
-		background-color: transparent;
-	}
-	:global(.header .user-profile) {
-		height: auto;
-		position: absolute;
-		left: 10%;
-		top: 50%;
-		transform: translateY(-20%);
-		background-color: transparent;
-		border: none;
-		margin: none;
-		padding: none;
-	}
-:global(.buckets) {
-    display: grid;
-    grid-template-rows: repeat(1fr);
-    gap: 20px;
-  }
- 
- 
- 
-
-
-	.search {
-		display: flex;
-		justify-content: center;
-	}
-
-	.active {
-		background-color: #72d86a;
-		color: #2a2a2a;
-	}
-
-	.highlight {
-		border: 2px solid black;
-		pointer-events: none;
-	}
-
-	.dim {
-		opacity: 0.5;
-		cursor: pointer;
-	}
-	.login-swicth {
-		display: flex;
-		justify-content: center;
-	}
-	.login-swicth button {
-		padding: 10px;
-		margin: 10px;
-		border-radius: 5px;
-		border: 1px solid #ccc;
-		background-color: #1a1a1a;
-		color: #ccc;
-	}
-
-	.login-form {
-		width: 400px;
-		margin: 10px auto;
-		background-color: #242424;
-		padding: 40px;
-	}
-	.login-form h1 {
-		text-align: center;
-		font-size: 24px;
-	}
-	input {
-		padding: 10px;
-		margin: 10px;
-		border-radius: 5px;
-	}
-	header {
-		background-color: #2a2a2a;
-		text-align: right;
-		position: relative;
-		margin: 10px;
-		height: 40px;
-	}
-	:global(header a) {
-		text-decoration: none;
-		color: rgba(255, 255, 255, 0.7);
-		font-weight: 500;
-		padding: 5px;
-		background-color: #393e41;
-		border: 1px solid #393e41;
-	}
-	:global(header a:hover) {
-		border: 1px solid #466676;
-		color: rgba(255, 255, 255, 0.7);
-	}
-
-	.menu {
-		position: absolute;
-		top: 0;
-		right: 0;
-		height: 100%;
-		transform: translateX(100%);
-		transition: transform 0.3s ease-out;
-	}
-
-	.menu.open {
-		transform: translateX(0);
-	}
-	*/

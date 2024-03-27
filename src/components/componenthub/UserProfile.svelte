@@ -33,20 +33,9 @@
   </div>
 </div>
 
-<style>
-  .modal {
-    background-color: rgba(57, 57, 57, 0.8);
-    width: 100vw;
-    height: 100vh;
-    position: fixed;
-    top: 0;
-    left: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    z-index: 30;
-  }
+<style lang="scss">
+  @import "../styles/model.scss";
+
   .close {
     position: absolute;
     right: 10px;
@@ -59,12 +48,6 @@
   }
   .modal-content {
     position: relative;
-    background-color: #222222;
-    width: 60%;
-    height: 60%;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     display: grid;
     grid-template-rows: 1fr auto;
   }
@@ -73,66 +56,6 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-  }
-  .button-wrapper {
-    display: flex;
-    justify-content: end;
-  }
-  .button-wrapper button {
-    padding: 10px;
-    margin: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    background-color: #1a1a1a;
-    color: #ccc;
-  }
-  .add-tag-wrapper {
-    display: flex;
-    justify-content: left;
-    /* align-content: stretch; */
-  }
-  .add-tag-wrapper input {
-    width: 60%;
-    padding: 12px;
-    /* margin: 10px; */
-    border-radius: 5px;
-    border: 1px solid #ccc;
-  }
-
-  .add-tag-wrapper button {
-    background-color: #1a1a1a;
-    padding: 12px;
-    border-radius: 5px;
-  }
-
-  .add-tag-wrapper input:focus {
-    color: #ccc;
-  }
-
-  .button-wrapper .done {
-    background-color: #3f6d41;
-    color: #ccc;
-  }
-  .info2 textarea {
-    width: 100%;
-  }
-  .shit-wrapper {
-    display: flex;
-  }
-  .shit-wrapper p {
-    background-color: #1a1a1a;
-    border-radius: 4px;
-    margin-right: 4px;
-    padding: 8px;
-  }
-  .shit-wrapper p button {
-    margin: 0;
-    padding: 0;
-    border: none;
-  }
-  .shit-wrapper p button:hover {
-    color: #9a3a31;
-    border: none;
   }
   .info {
     padding: 20px;

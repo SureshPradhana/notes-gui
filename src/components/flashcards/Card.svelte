@@ -1,22 +1,19 @@
-
 <script>
   import { icons } from "feather-icons";
-import Accordion from '../componenthub/Accordion.svelte';
+  import Accordion from "../componenthub/Accordion.svelte";
 
-  import {flashCardsStore} from "../../stores.js";
-    import { deleteCard,updateCard } from "../../utils/db.js";
-    import FlashCardModel from "./CardModel.svelte";
+  import { flashCardsStore } from "../../stores.js";
+  import { deleteCard, updateCard } from "../../utils/db.js";
+  import FlashCardModel from "./CardModel.svelte";
   export let cardsProp;
-  import Markdown from '@magidoc/plugin-svelte-marked'
+  import Markdown from "@magidoc/plugin-svelte-marked";
 
   let modalNote = null;
   let modalAction = null;
 
-  
-  function openModal(bucket,action){
+  function openModal(bucket, action) {
     modalNote = bucket;
-    modalAction=action;
-
+    modalAction = action;
   }
   async function handleDelete(note) {
     // Delete the note
@@ -33,7 +30,9 @@ import Accordion from '../componenthub/Accordion.svelte';
 
     let res = await updateCard(note);
     if (res) {
-      flashCardsStore.update((n) => n.map((n) => (n._id === note._id ? note : n)));
+      flashCardsStore.update((n) =>
+        n.map((n) => (n._id === note._id ? note : n)),
+      );
     }
 
     modalNote = null;
@@ -43,51 +42,49 @@ import Accordion from '../componenthub/Accordion.svelte';
     modalNote = null;
     modalAction = null;
   }
-
 </script>
 
 {#each cardsProp as bucket (bucket._id)}
-<div class="bucket">
-		<Accordion>
-	<span slot="head">     {bucket.title}
-</span>
-	<div slot="details">
-	  <Markdown source={bucket.content}/>
+  <div class="bucket">
+    <Accordion>
+      <span slot="head"> {bucket.title} </span>
+      <div slot="details">
+        <Markdown source={bucket.content} />
 
-    <div class="last">
-      <div class="tag-wrapper">
-          {#if bucket.tags.length > 0}
-            {#each bucket.tags as tag (tag)}
-              <p class="tag">{tag}</p>
-            {/each}
-          {:else}
-            <p class="tag">No tags</p>
-          {/if}
+        <div class="last">
+          <div class="tag-wrapper">
+            {#if bucket.tags.length > 0}
+              {#each bucket.tags as tag (tag)}
+                <p class="tag">{tag}</p>
+              {/each}
+            {:else}
+              <p class="tag">No tags</p>
+            {/if}
+          </div>
+
+          <div class="edit-wrapper">
+            <button on:click={() => openModal(bucket, "edit")}>
+              {@html icons["edit-2"].toSvg({
+                class: "feather card edit",
+                width: "14px",
+                height: "14px",
+              })}
+            </button>
+            <button on:click={() => openModal(bucket, "delete")}>
+              {@html icons["trash-2"].toSvg({
+                class: "feather card trash",
+                width: "14px",
+                height: "14px",
+              })}
+            </button>
+          </div>
         </div>
-
-      <div class="edit-wrapper">
-        <button on:click={() => openModal(bucket, "edit")}>
-          {@html icons["edit-2"].toSvg({
-            class: "feather card edit",
-            width: "14px",
-            height: "14px",
-          })}
-        </button>
-        <button on:click={() => openModal(bucket, "delete")}>
-          {@html icons["trash-2"].toSvg({
-            class: "feather card trash",
-            width: "14px",
-            height: "14px",
-          })}
-        </button>
       </div>
-    </div>
-	</div>
-</Accordion>
+    </Accordion>
   </div>
-  {/each}
+{/each}
 
-  {#if modalNote}
+{#if modalNote}
   <FlashCardModel
     {modalNote}
     {modalAction}
@@ -95,171 +92,24 @@ import Accordion from '../componenthub/Accordion.svelte';
     handleAction={modalAction === "delete" ? handleDelete : handleEdit}
   />
 {/if}
-  
 
-
-  <style lang="scss">
-  
- @import "../styles/mixins.scss";
-     .bucket {
-    background-color: #242424;
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    border-radius: 6px;
-    padding: 20px;
-    margin: 10px;
-    display: grid;
-    grid-template-rows: auto 2fr auto;
-    height:fit-content;
+<style lang="scss">
+  @import "../styles/mixins.scss";
+  .bucket {
+    @include bucket();
+    .content-wrapper {
+      .content {
+        @include content();
+      }
+    }
+    .last {
+      @include last();
+      .tag-wrapper {
+        @include tag-wrapper();
+        .tag {
+          @include tag();
+        }
+      }
+    }
   }
- 
-
-
-  .content {
-    font-size: 16px;
-    text-align: left;
-    font-family: monospace;
-  }
-  .tag {
-    font-size: 12px;
-    padding: 4px 10px;
-    display: inline-block;
-    background-color: #1a1a1a;
-    font-weight: bold;
-    margin: 0px 4px 0px 0px;
-    border-radius: 4px;
-    color: #ccc;
-  }
-  .last {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .tag-wrapper {
-    display: flex;
-    flex-wrap: wrap;
-  }
-  :global(.card) {
-    padding: 4px;
-    display: inline-block;
-    background-color: #1a1a1a;
-    font-weight: bold;
-    border-radius: 2px;
-  }
-
-  :global(.edit) {
-    color: #ccc;
-    background: #393e41;
-    border: 1px solid #393e41;
-  }
-  :global(.trash) {
-    color: #9a3a31;
-    background: transparent;
-    border: 1px solid #9a3a31;
-  }
-  :global(.card:hover) {
-    border: 1px solid #4c6676;
-  }
-  :global(.green) {
-    color: forestgreen;
-  }
-  .content-wrapper {
-  text-align:left;
-  }
-  
-  .tag-wrapper label {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    color: #888787;
-    margin: 0px 4px 0px 0px;
-  }
-
-  input[type="checkbox"] {
-  padding: 4px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-  font-size: 16px; /* Adjust font size as needed */
-  background-color: #2b2a33;
- 
-}
-.notes {
-   @include grid-5-320min(); 
-  }
-
-  .note {
-    background-color: #242424;
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    border-radius: 6px;
-    padding: 20px;
-    margin: 5px;
-    display: grid;
-    grid-template-rows: auto 2fr auto;
-  }
-
-  .time {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    font-size: 14px;
-  }
-  .time p {
-    margin: 0px;
-    padding: auto;
-    color: #ccc;
-  }
-  .content {
-    font-size: 16px;
-    text-align: left;
-    font-family: monospace;
-  }
-  .tag {
-    font-size: 12px;
-    padding: 4px 10px;
-    display: inline-block;
-    background-color: #1a1a1a;
-    font-weight: bold;
-    margin: 0px 4px 0px 0px;
-    border-radius: 4px;
-    color: #ccc;
-  }
-  .last {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .tag-wrapper {
-    display: flex;
-    flex-wrap: wrap;
-  }
-  :global(.card) {
-    padding: 4px;
-    display: inline-block;
-    background-color: #1a1a1a;
-    font-weight: bold;
-    border-radius: 2px;
-  }
-
-  :global(.edit) {
-    color: #ccc;
-    background: #393e41;
-    border: 1px solid #393e41;
-  }
-  :global(.trash) {
-    color: #9a3a31;
-    background: transparent;
-    border: 1px solid #9a3a31;
-  }
-  :global(.card:hover) {
-    border: 1px solid #4c6676;
-  }
-
-
-
-
-  </style>
-
-
+</style>

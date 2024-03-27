@@ -355,7 +355,6 @@
         width: var(--navbar-width);
         height: 54px;
         background: #393e41;
-        border-radius: 16px;
         display: flex;
         flex-direction: column;
         z-index: 2;

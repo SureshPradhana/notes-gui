@@ -1,6 +1,6 @@
 @mixin header() {
 	position: relative;
-	display:flex;
+	display: flex;
 	justify-content: center;
 }
 
@@ -23,30 +23,88 @@
 
 }
 
-@mixin grid-5-320min(){
-display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-		gap: 10px;
-		margin: 5px;
-		grid-auto-rows: min-content;
+@mixin grid-5-320min() {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+	gap: 10px;
+	margin: 5px;
+	grid-auto-rows: min-content;
 }
-@mixin center(){
-  text-align: center;
+
+@mixin center() {
+	text-align: center;
 }
 
 @mixin logo() {
-    width: 50px;
-    height: 50px;
-    margin-right: 10px;
-  }
+	width: 50px;
+	height: 50px;
+	margin-right: 10px;
+}
 
 @mixin title-wrapper() {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
 @mixin tag-wrapper() {
-		display: flex;
-		justify-content: center;
-		flex-wrap: wrap;
-	}
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+}
+
+@mixin bucket() {
+	background-color: #242424;
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	border-radius: 6px;
+	padding: 20px;
+	margin: 10px;
+	display: grid;
+	grid-template-rows: auto 2fr auto;
+	height: fit-content;
+
+}
+
+@mixin content() {
+	font-size: 16px;
+	text-align: left;
+	font-family: monospace;
+}
+
+@mixin tag() {
+	font-size: 12px;
+	padding: 4px 10px;
+	display: inline-block;
+	background-color: #1a1a1a;
+	font-weight: bold;
+	margin: 0px 4px 0px 0px;
+	border-radius: 4px;
+	color: #ccc;
+}
+
+@mixin last() {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+}
+
+@mixin tag-wrapper() {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+@mixin time(){
+	  display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      font-size: 14px;
+}
+
+@mixin time-i() {
+	margin: 0px;
+	padding: auto;
+	color: #ccc;
+}
+
+

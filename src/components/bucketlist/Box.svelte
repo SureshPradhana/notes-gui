@@ -1,19 +1,17 @@
 <script>
   import { icons } from "feather-icons";
 
-  import {bucketsStore} from "../../stores.js";
-    import { deleteBucket,updateBucket } from "../../utils/db.js";
-    import BucketModel from "./BucketModel.svelte";
+  import { bucketsStore } from "../../stores.js";
+  import { deleteBucket, updateBucket } from "../../utils/db.js";
+  import BucketModel from "./BucketModel.svelte";
   export let notesProp;
 
   let modalNote = null;
   let modalAction = null;
 
-  
-  function openModal(bucket,action){
+  function openModal(bucket, action) {
     modalNote = bucket;
-    modalAction=action;
-
+    modalAction = action;
   }
   async function handleDelete(note) {
     // Delete the note
@@ -40,21 +38,22 @@
     modalNote = null;
     modalAction = null;
   }
-
 </script>
 
 {#each notesProp as bucket (bucket._id)}
-<div class="bucket">
+  <div class="bucket">
     <div class="content-wrapper">
       <p class="content">{bucket.content}</p>
       <label>
-        <input type="checkbox" bind:checked={bucket.completed} on:change={()=>updateBucket(bucket)} />
+        <input
+          type="checkbox"
+          bind:checked={bucket.completed}
+          on:change={() => updateBucket(bucket)}
+        />
       </label>
     </div>
     <div class="last">
-      <div class="tag-wrapper">
-      
-      </div>
+      <div class="tag-wrapper"></div>
       <div class="edit-wrapper">
         <button on:click={() => openModal(bucket, "edit")}>
           {@html icons["edit-2"].toSvg({
@@ -73,9 +72,9 @@
       </div>
     </div>
   </div>
-  {/each}
+{/each}
 
-  {#if modalNote}
+{#if modalNote}
   <BucketModel
     {modalNote}
     {modalAction}
@@ -83,94 +82,24 @@
     handleAction={modalAction === "delete" ? handleDelete : handleEdit}
   />
 {/if}
-  
 
-
-  <style>
-     .bucket {
-    background-color: #242424;
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    border-radius: 6px;
-    padding: 20px;
-    margin: 10px;
-    display: grid;
-    grid-template-rows: auto 2fr auto;
+<style lang="scss">
+  @import "../styles/mixins.scss";
+  .bucket {
+    @include bucket();
+    .content-wrapper {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      .content {
+        @include content();
+      }
+    }
+    .last {
+      @include last();
+      .tag-wrapper {
+        @include tag-wrapper();
+      }
+    }
   }
-
-
-  .content {
-    font-size: 16px;
-    text-align: left;
-    font-family: monospace;
-  }
-  .tag {
-    font-size: 12px;
-    padding: 4px 10px;
-    display: inline-block;
-    background-color: #1a1a1a;
-    font-weight: bold;
-    margin: 0px 4px 0px 0px;
-    border-radius: 4px;
-    color: #ccc;
-  }
-  .last {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .tag-wrapper {
-    display: flex;
-    flex-wrap: wrap;
-  }
-  :global(.card) {
-    padding: 4px;
-    display: inline-block;
-    background-color: #1a1a1a;
-    font-weight: bold;
-    border-radius: 2px;
-  }
-
-  :global(.edit) {
-    color: #ccc;
-    background: #393e41;
-    border: 1px solid #393e41;
-  }
-  :global(.trash) {
-    color: #9a3a31;
-    background: transparent;
-    border: 1px solid #9a3a31;
-  }
-  :global(.card:hover) {
-    border: 1px solid #4c6676;
-  }
-  :global(.green) {
-    color: forestgreen;
-  }
-  .content-wrapper {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-  }
-  .tag-wrapper label {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    color: #888787;
-    margin: 0px 4px 0px 0px;
-  }
-
-  input[type="checkbox"] {
-  padding: 4px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-  font-size: 16px; /* Adjust font size as needed */
-  background-color: #2b2a33;
- 
-}
-
-
-  
-  </style>
+</style>
