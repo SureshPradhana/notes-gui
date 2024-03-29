@@ -356,7 +356,7 @@ input[type="date"]::placeholder {
 	pre {
 		font-family: 'Courier New', monospace;
 		font-size: 14px;
-		background-color: var(--stroke);
+		background-color: var(--background-color);
 		padding: 20px;
 		border-radius: 4px;
 		color: #f8f8f8;
@@ -372,7 +372,7 @@ input[type="date"]::placeholder {
 	}
 
 	p>code {
-		background-color: var(--stroke);
+		background-color: var(--background-color);
 		padding: 0.1rem 0.2rem;
 		border-radius: 0.2rem;
 		/*add red light color*/

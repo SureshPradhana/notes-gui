@@ -1,8 +1,8 @@
-import { writable, readable } from "svelte/store";
+import { readable, writable } from "svelte/store";
 
-export let notesStore = writable([])
-export let bucketsStore = writable([])
-export let flashCardsStore = writable([])
+export let notesStore = writable([]);
+export let bucketsStore = writable([]);
+export let flashCardsStore = writable([]);
 
 export const selectedTag = writable("All");
 export const searchTerm = writable("");
@@ -22,4 +22,3 @@ export const loadingStatus = writable(false);
 export const message = writable({ message: "", type: "" });
 export const pageStatus = writable("");
 export const path = readable("https://notes-api-3xdk.onrender.com");
-
