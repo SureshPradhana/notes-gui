@@ -17,6 +17,9 @@ dependencies:
   jwt-decode:
     specifier: ^4.0.0
     version: 4.0.0
+  simple-svelte-autocomplete:
+    specifier: ^2.5.2
+    version: 2.5.2
   svelte-routing:
     specifier: ^2.12.0
     version: 2.12.0
@@ -1652,6 +1655,10 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       xmlchars: 2.2.0
+    dev: false
+
+  /simple-svelte-autocomplete@2.5.2:
+    resolution: {integrity: sha512-6+kZP3XQGb7zs0djTWoFv8tQorBZdv64YfCKrlsYIYBCFsEeikSiNsBSSYw1Om+LYmFeMEOAYSSKoEw+qpnBXQ==}
     dev: false
 
   /sorcery@0.11.0:
