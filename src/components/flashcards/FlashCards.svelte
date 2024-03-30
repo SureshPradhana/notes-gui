@@ -1,5 +1,6 @@
 <script>
 	import { onMount } from "svelte";
+	import { SyncLoader } from "svelte-loading-spinners";
 	import {
 		flashCardsStore,
 		token,
@@ -8,7 +9,8 @@
 		selectedCardTag,
 		selectedCardDate,
 		searchCardTerm,
-		path
+		path,
+		loadingServer,
 	} from "../../stores.js";
 	import { navigate } from "svelte-routing";
 	import { icons } from "feather-icons";
@@ -24,6 +26,13 @@
 	let modalNote = null;
 	let modalAction = null;
 	let isAuthenticated = false;
+	$: if ($loadingServer.status === "NAVIGATING") {
+		setTimeout(() => {
+			if ($loadingServer.status === "NAVIGATING") {
+				$loadingServer.status = "LOADING";
+			}
+		}, 400);
+	}
 
 	const updateCards = (data) => {
 		flashCardsStore.set(data);
@@ -38,6 +47,7 @@
 			navigate("/login");
 		}
 
+		loadingServer.setLoading(true, "I'm loading");
 		try {
 			(async () => {
 				// Wrap the async function properly
@@ -52,6 +62,7 @@
 				}
 				const data = await response.json();
 				updateCards(data);
+				loadingServer.setLoading(false);
 			})();
 		} catch (error) {
 			console.log(error);
@@ -159,21 +170,27 @@
 		</div>
 		<!-- Bucket list component goes here -->
 
-		<div class="buckets">
-			<div class="tag-wrapper">
-				<Tag
-					localStore={$flashCardsStore}
-					bind:selectedTag={$selectedCardTag}
-				/>
+		{#if $loadingServer.status === "LOADING"}
+			<div class="loader">
+				<SyncLoader size="45" color="#ff6f61" unit="px" duration="1s" />
 			</div>
-			<div class="search">
-				<Search bind:searchTerm={$searchCardTerm} />
-				<input type="date" bind:value={$selectedCardDate} />
+		{:else}
+			<div class="buckets">
+				<div class="tag-wrapper">
+					<Tag
+						localStore={$flashCardsStore}
+						bind:selectedTag={$selectedCardTag}
+					/>
+				</div>
+				<div class="search">
+					<Search bind:searchTerm={$searchCardTerm} />
+					<input type="date" bind:value={$selectedCardDate} />
+				</div>
+				<div class="notes-wrapper">
+					<Card cardsProp={$filteredCardsByDate} />
+				</div>
 			</div>
-			<div class="notes-wrapper">
-				<Card cardsProp={$filteredCardsByDate} />
-			</div>
-		</div>
+		{/if}
 		{#if modalAction == "new"}
 			<FlashCardModel
 				{modalNote}
@@ -195,6 +212,9 @@
 	@import "../styles/mixins.scss";
 	.main-body {
 		@include main-body();
+		.loader {
+			@include loader();
+		}
 	}
 	.header {
 		@include header();

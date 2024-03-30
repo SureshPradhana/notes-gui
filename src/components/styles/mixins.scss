@@ -8,6 +8,14 @@
 	width: 100%;
 	height: 100vh;
 	overflow: scroll;
+	position: relative;
+}
+
+@mixin loader() {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
 }
 
 @mixin add-new() {
@@ -94,11 +102,11 @@
 	flex-wrap: wrap;
 }
 
-@mixin time(){
-	  display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      font-size: 14px;
+@mixin time() {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	font-size: 14px;
 }
 
 @mixin time-i() {
@@ -106,5 +114,3 @@
 	padding: auto;
 	color: #ccc;
 }
-
-

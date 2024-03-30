@@ -22,3 +22,32 @@ export const loadingStatus = writable(false);
 export const message = writable({ message: "", type: "" });
 export const pageStatus = writable("");
 export const path = readable("https://notes-api-3xdk.onrender.com");
+
+const newLoading = () => {
+  const { subscribe, update, set } = writable({
+    status: "IDLE", // IDLE, LOADING, NAVIGATING
+    message: "",
+  });
+
+  function setNavigate(isNavigating) {
+    update(() => {
+      return {
+        status: isNavigating ? "NAVIGATING" : "IDLE",
+        message: "",
+      };
+    });
+  }
+
+  function setLoading(isLoading, message = "") {
+    update(() => {
+      return {
+        status: isLoading ? "LOADING" : "IDLE",
+        message: isLoading ? message : "",
+      };
+    });
+  }
+
+  return { subscribe, update, set, setNavigate, setLoading };
+};
+
+export const loadingServer = newLoading();

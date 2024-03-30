@@ -1,5 +1,6 @@
 <script>
 	import { onMount } from "svelte";
+	import { SyncLoader } from "svelte-loading-spinners";
 	import {
 		token,
 		userdetails,
@@ -9,10 +10,10 @@
 		selectedTag,
 		searchTerm,
 		selectedDate,
+		loadingServer,
 	} from "../../stores.js";
 
 	import { jwtDecode } from "jwt-decode";
-	import Loading from "../componenthub/Loading.svelte";
 	import Modal from "./Modal.svelte";
 	import UserProfile from "../componenthub/UserProfile.svelte";
 	import Notes from "./Notes.svelte";
@@ -28,14 +29,20 @@
 	let modalNote = null;
 	let modalAction = null;
 
-	let loadingStatus = false;
+	$: if ($loadingServer.status === "NAVIGATING") {
+		setTimeout(() => {
+			if ($loadingServer.status === "NAVIGATING") {
+				$loadingServer.status = "LOADING";
+			}
+		}, 400);
+	}
 
 	onMount(() => {
 		// Fetch data from the server
 		token.set(localStorage.getItem("token"));
 		if ($token) {
 			userdetails.set(jwtDecode($token).user);
-
+			loadingServer.setLoading(true, "I'm loading");
 			try {
 				(async () => {
 					const response = await fetch(`${$path}/api/notes`, {
@@ -51,42 +58,15 @@
 
 					updateNotes(data);
 					updateLoading(false);
+					loadingServer.setLoading(false);
 				})();
 			} catch (error) {
-				loading.set(true);
+				loadingServer.setLoading(true);
 			}
 		} else {
 			navigate("/login");
 		}
 	});
-
-	$: {
-		if ($token) {
-			const decodedToken = jwtDecode($token);
-			userdetails.set(decodedToken.user);
-			try {
-				(async () => {
-					// Wrap the async function properly
-					const response = await fetch(`${path}/api/notes`, {
-						headers: {
-							Authorization: $token,
-						},
-					});
-					if (!response.ok) {
-						throw new Error("Failed to fetch data");
-					}
-					const data = await response.json();
-					updateNotes(data);
-					updateLoading(false);
-				})(); // Call the async function immediately
-			} catch (error) {
-				loading.set(true);
-			}
-		} else {
-			notesStore.set([]);
-			loading.set(false);
-		}
-	}
 
 	async function handleAction(note) {
 		let res = await addNote(note);
@@ -180,16 +160,9 @@
 
 {#if Object.keys($userdetails).length != 0}
 	<div class="main-body">
-		<div class="status">
-			{#if loadingStatus}
-				<Loading />
-			{/if}
-		</div>
-
-
 		<div class="header">
-		<div class="title-wrapper">
-			<h1>Notes</h1>
+			<div class="title-wrapper">
+				<h1>Notes</h1>
 			</div>
 			<button class="add" on:click={() => openModal(null, "new")}>
 				{@html icons["edit"].toSvg({
@@ -199,16 +172,22 @@
 				})}
 			</button>
 		</div>
-		<div class="tag-wrapper">
-			<Tag localStore={$notesStore} bind:selectedTag={$selectedTag} />
-		</div>
-		<div class="search">
-			<Search bind:searchTerm={$searchTerm} />
-			<input type="date" bind:value={$selectedDate} />
-		</div>
-		<div class="notes-wrapper">
-			<Notes notesProp={$filteredNotesByDate} />
-		</div>
+		{#if $loadingServer.status === "LOADING"}
+			<div class="loader">
+				<SyncLoader size="45" color="#ff6f61" unit="px" duration="1s" />
+			</div>
+		{:else}
+			<div class="tag-wrapper">
+				<Tag localStore={$notesStore} bind:selectedTag={$selectedTag} />
+			</div>
+			<div class="search">
+				<Search bind:searchTerm={$searchTerm} />
+				<input type="date" bind:value={$selectedDate} />
+			</div>
+			<div class="notes-wrapper">
+				<Notes notesProp={$filteredNotesByDate} />
+			</div>
+		{/if}
 		{#if modalAction == "new"}
 			<Modal {modalNote} {modalAction} {closeModal} {handleAction} />
 		{/if}
@@ -222,11 +201,8 @@
 	@import "../styles/mixins.scss";
 	.main-body {
 		@include main-body();
-	}
-	.header {
-		@include header();
-		.add {
-			@include add-new();
+		.loader {
+			@include loader();
 		}
 		.title-wrapper {
 			@include title-wrapper();
@@ -242,7 +218,7 @@
 	.notes-wrapper {
 		@include grid-5-320min();
 	}
-     
+
 	.status,
 	.header,
 	.tag-wrapper,

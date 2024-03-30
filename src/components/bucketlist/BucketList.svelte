@@ -1,6 +1,14 @@
 <script>
   import { onMount } from "svelte";
-  import { bucketsStore, token, userdetails, userModal,path } from "../../stores.js";
+  import { SyncLoader } from "svelte-loading-spinners";
+  import {
+    bucketsStore,
+    token,
+    userdetails,
+    userModal,
+    path,
+    loadingServer,
+  } from "../../stores.js";
   import { navigate } from "svelte-routing";
   import { icons } from "feather-icons";
 
@@ -20,6 +28,13 @@
 
   $: buckets = $bucketsStore;
 
+  $: if ($loadingServer.status === "NAVIGATING") {
+    setTimeout(() => {
+      if ($loadingServer.status === "NAVIGATING") {
+        $loadingServer.status = "LOADING";
+      }
+    }, 400);
+  }
   onMount(async () => {
     isAuthenticated = !!$userdetails;
     if (!isAuthenticated) {
@@ -27,6 +42,7 @@
       navigate("/login");
     }
 
+    loadingServer.setLoading(true, "I'm loading");
     try {
       (async () => {
         // Wrap the async function properly
@@ -38,6 +54,7 @@
         }
         const data = await response.json();
         updateBuckets(data);
+        loadingServer.setLoading(false);
       })();
     } catch (error) {
       console.log(error);
@@ -102,9 +119,15 @@
     </div>
     <!-- Bucket list component goes here -->
 
-    <div class="buckets">
-      <Box notesProp={buckets} />
-    </div>
+    {#if $loadingServer.status === "LOADING"}
+      <div class="loader">
+        <SyncLoader size="45" color="#ff6f61" unit="px" duration="1s" />
+      </div>
+    {:else}
+      <div class="buckets">
+        <Box notesProp={buckets} />
+      </div>
+    {/if}
     {#if modalAction == "new"}
       <BucketModal {modalNote} {modalAction} {closeModal} {handleAction} />
     {/if}
@@ -118,25 +141,26 @@
 {/if}
 
 <style lang="scss">
-@import "../styles/mixins.scss";
-	.main-body {
-		@include main-body();
-	}
-	.header {
-		@include header();
-		.add {
-			@include add-new();
-		}
-		.title-wrapper {
-			@include title-wrapper();
-			.logo {
-				@include logo();
-			}
-		}
-		.tag-wrapper {
-			@include tag-wrapper();
-		}
-	}
-
-
-  </style>
+  @import "../styles/mixins.scss";
+  .main-body {
+    @include main-body();
+    .loader {
+      @include loader();
+    }
+  }
+  .header {
+    @include header();
+    .add {
+      @include add-new();
+    }
+    .title-wrapper {
+      @include title-wrapper();
+      .logo {
+        @include logo();
+      }
+    }
+    .tag-wrapper {
+      @include tag-wrapper();
+    }
+  }
+</style>
