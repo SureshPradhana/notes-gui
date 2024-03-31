@@ -1,15 +1,16 @@
 .modal {
-    background-color: rgba(07, 07, 07, 0.8);
-    width: 100vw;
-    height: 100vh;
-    position: fixed;
-    top: 0;
-    left: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    z-index: 10000;
+  background-color: rgba(07, 07, 07, 0.8);
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  z-index: 10000;
+
   .modal-content {
     background-color: var(--background-2);
     padding: 1em;
@@ -17,84 +18,106 @@
     display: grid;
     grid-template-rows: 1fr auto;
     margin: 0.5em;
+
     h2 {
       border-bottom: 1px solid var(--white-2);
       padding: 0.2em;
       margin: 0.2em 0;
     }
   }
-  }
-  .info2 {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    padding: 0.2em;
-  }
-  .button-wrapper {
-    display: flex;
-    justify-content: end;
-  }
-  .button-wrapper button {
-    padding: 10px;
-    margin: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    background-color: #1a1a1a;
-    color: #ccc;
-  }
-  .add-tag-wrapper {
-    display: flex;
-    justify-content: left;
-    padding: 0.2em;
-  }
-  .add-tag-wrapper input {
-    width: 60%;
-    padding: 12px;
-    /* margin: 10px; */
-    border-radius: 5px;
-    border: 1px solid #ccc;
-  }
+}
 
-  .add-tag-wrapper button {
-    background-color: #1a1a1a;
-    padding: 12px;
-    border-radius: 5px;
-  }
+.info2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 0.2em;
+}
 
-  .add-tag-wrapper input:focus {
-    color: #ccc;
-  }
+.button-wrapper {
+  display: flex;
+  justify-content: end;
+}
 
-  .button-wrapper .done {
-    background-color: #3f6d41;
-    color: #ccc;
-  }
-  .info2 textarea {
-    width: 100%;
-  }
-  .shit-wrapper {
-    display: flex;
-    padding: 0.2em;
-  }
-  .shit-wrapper p {
-    background-color: #1a1a1a;
-    border-radius: 4px;
-    margin-right: 4px;
-    padding: 8px;
-  }
-  .shit-wrapper p button {
-    margin: 0;
-    padding: 0;
-    border: none;
-  }
-  .shit-wrapper p button:hover {
-    color: #9a3a31;
-    border: none;
-  }
+.button-wrapper button {
+  padding: 10px;
+  margin: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background-color: #1a1a1a;
+  color: #ccc;
+}
 
-  @media (min-width: 768px) {
-    .modal-content {
-      width: 45%;
-    }
+.add-tag-wrapper {
+  display: flex;
+  justify-content: left;
+  padding: 0.2em;
+}
+
+.add-tag-wrapper input {
+  width: 100%;
+}
+
+.add-tag-wrapper {
+  position: relative;
+}
+
+.add-tag-wrapper div {
+  position: relative;
+}
+
+.add-tag-wrapper input {
+  padding: 12px;
+  /* margin: 10px; */
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.add-tag-wrapper button {
+  background-color: #1a1a1a;
+  padding: 12px;
+  border-radius: 5px;
+}
+
+.add-tag-wrapper input:focus {
+  color: #ccc;
+}
+
+.button-wrapper .done {
+  background-color: #3f6d41;
+  color: #ccc;
+}
+
+.info2 textarea {
+  width: 100%;
+}
+
+.shit-wrapper {
+  display: flex;
+  padding: 0.2em;
+}
+
+.shit-wrapper p {
+  background-color: #1a1a1a;
+  border-radius: 4px;
+  margin-right: 4px;
+  padding: 8px;
+}
+
+.shit-wrapper p button {
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+.shit-wrapper p button:hover {
+  color: #9a3a31;
+  border: none;
+}
+
+@media (min-width: 768px) {
+  .modal-content {
+    width: 45%;
   }
+}

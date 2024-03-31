@@ -213,8 +213,13 @@ input[type="date"]::placeholder {
 	border: 1px solid var(--blue-2);
 }
 
+.details {
+	width: 100%;
+	overflow: scroll;
+}
+
 // markdown content styles
-.details>* {
+.details {
 
 	h1,
 	h2,
@@ -380,6 +385,16 @@ input[type="date"]::placeholder {
 		font-size: 0.7rem;
 	}
 
+	code {
+		background-color: var(--background-color);
+		padding: 0.1rem 0.2rem;
+		border-radius: 0.2rem;
+		/*add red light color*/
+		color: var(--accent);
+		font-size: 0.7rem;
+	}
+
+
 
 	blockquote {
 		border-left: 0.5rem solid var(--accent);
@@ -419,6 +434,34 @@ input[type="date"]::placeholder {
 		content: "";
 	}
 
+	footer {
+		font-style: normal;
+		color: var(--accent);
+	}
+
+	footer:before {
+		content: "— ";
+	}
+
+	footer:after {
+		content: "";
+	}
+
+	footer>cite {
+		font-style: normal;
+		font-weight: bold;
+	}
+
+	footer>cite:before {
+		content: "";
+	}
+
+	footer>cite:after {
+		content: "";
+	}
+
+
+
 	ul {
 		list-style-type: disc;
 	}
@@ -433,6 +476,37 @@ input[type="date"]::placeholder {
 
 	ul>li {
 		font-size: 0.8rem;
+	}
+
+	/* Style the table */
+	table {
+		width: 100%;
+		border-collapse: collapse;
+		border: 2px solid #ddd;
+		/* Border color */
+	}
+
+	/* Style the table header */
+	th {
+		border: 2px solid #ddd;
+		/* Border color */
+		padding: 8px;
+		text-align: left;
+		background-color: #f2f2f2;
+		/* Header background color */
+	}
+
+	/* Style the table rows */
+	tr {
+		border: 2px solid #ddd;
+		/* Border color */
+	}
+
+	/* Style the table data cells */
+	td {
+		border: 1px solid #ddd;
+		/* Border color */
+		padding: 8px;
 	}
 
 }

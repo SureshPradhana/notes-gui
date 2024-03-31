@@ -38,6 +38,7 @@
 <style lang="scss">
 	div.accordion {
 		margin: 1rem 0;
+		overflow: hidden;
 	}
 
 	div.header {

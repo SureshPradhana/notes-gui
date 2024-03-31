@@ -1,4 +1,6 @@
 <script>
+  import Dropdown from "../componenthub/Dropdown.svelte";
+  import { flashCardsStore } from "../../stores.js";
   export let modalNote = null;
   export let modalAction = null;
   export let handleAction = () => {};
@@ -7,6 +9,13 @@
   let localNote = null;
   let newtag = "";
 
+  let tagsList = [];
+
+  $: tagsList = [...new Set($flashCardsStore.flatMap((note) => note.tags))];
+
+  $: filteredTags = tagsList.filter((tag) =>
+    tag.toLowerCase().includes(newtag.toLowerCase()),
+  );
   function confirmAction() {
     handleAction(localNote);
 
@@ -26,6 +35,18 @@
       localNote.tags = [...localNote.tags, tag.trim()];
       newtag = "";
     }
+  }
+
+  let selectedSuggestion = "";
+
+  function selectSuggestion(suggestion) {
+    selectedSuggestion = suggestion;
+    newtag = suggestion;
+  }
+
+  function handleInput(event) {
+    selectedSuggestion = "";
+    newtag = event.target.value;
   }
 </script>
 
@@ -55,17 +76,21 @@
         {/if}
       </div>
       <div class="add-tag-wrapper">
-        <input type="text" placeholder="Add tag" bind:value={newtag} />
+        <div>
+          <input type="text" bind:value={newtag} on:input={handleInput} />
+          {#if newtag}
+            <Dropdown {filteredTags} {selectSuggestion} />
+          {/if}
+        </div>
         <button on:click={() => addTag(newtag)}>Add tag</button>
       </div>
       <div class="button-wrapper">
         <button on:click={closeModal}>Cancel</button>
-        <!-- Call closeModal when clicked -->
-        <button class="done" on:click={confirmAction}>Add</button>
+        <button class="done" on:click={confirmAction}>Save</button>
       </div>
     {:else if modalAction === "delete"}
       <div class="info">
-        <h2>Are you sure you want to {modalAction} this Card?</h2>
+        <h2>Are you sure you want to {modalAction} this note?</h2>
       </div>
       <div class="button-wrapper">
         <button on:click={closeModal}>No</button>
@@ -96,7 +121,12 @@
         {/if}
       </div>
       <div class="add-tag-wrapper">
-        <input type="text" placeholder="Add tag" bind:value={newtag} />
+        <div>
+          <input type="text" bind:value={newtag} on:input={handleInput} />
+          {#if newtag}
+            <Dropdown {filteredTags} {selectSuggestion} />
+          {/if}
+        </div>
         <button on:click={() => addTag(newtag)}>Add tag</button>
       </div>
 
