@@ -55,7 +55,8 @@
     {#if modalAction === "new"}
       <h2>Add Title</h2>
       <div class="info2">
-        <textarea rows="10" cols="100" bind:value={localNote.title}></textarea>
+        <textarea rows="10" cols="100" bind:value={localNote.title} autofocus
+        ></textarea>
       </div>
       <h2>Add Card</h2>
       <div class="info2">
@@ -100,7 +101,8 @@
     {:else if modalAction === "edit"}
       <h2>Edit note</h2>
       <div class="info2">
-        <textarea rows="10" cols="100" bind:value={localNote.title}></textarea>
+        <textarea rows="10" cols="100" bind:value={localNote.title} autofocus
+        ></textarea>
       </div>
       <div class="info2">
         <textarea rows="10" cols="100" bind:value={localNote.content}

@@ -22,7 +22,7 @@ Card
     {#if modalAction === "new"}
       <h2>Add Bucket</h2>
       <div class="info2">
-        <textarea rows="10" cols="100" bind:value={localNote.content}
+        <textarea rows="10" cols="100" bind:value={localNote.content} autofocus
         ></textarea>
       </div>
       <div class="add-checkbox-wrapper">
@@ -51,7 +51,7 @@ Card
     {:else if modalAction === "edit"}
       <h2>Edit note</h2>
       <div class="info2">
-        <textarea rows="10" cols="100" bind:value={localNote.content}
+        <textarea rows="10" cols="100" bind:value={localNote.content} autofocus
         ></textarea>
       </div>
       <div class="shit-wrapper"></div>

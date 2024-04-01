@@ -204,12 +204,19 @@
 		.loader {
 			@include loader();
 		}
-		.title-wrapper {
-			@include title-wrapper();
-			.logo {
-				@include logo();
+		.header {
+			@include header();
+			.add {
+				@include add-new();
+			}
+			.title-wrapper {
+				@include title-wrapper();
+				.logo {
+					@include logo();
+				}
 			}
 		}
+
 		.tag-wrapper {
 			@include tag-wrapper();
 		}
