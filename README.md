@@ -1,47 +1,49 @@
-# Svelte + TS + Vite
+# Web App for Notes, Bucket Lists, and Flashcards
 
-This template should help get you started developing with Svelte and TypeScript in Vite.
+This web app provides functionality for managing notes, bucket lists, and flashcards effectively. Users can organize their content using tags and dates, making it easy to filter and find information.
 
-## Recommended IDE Setup
+## Features
 
-[VS Code](https://code.visualstudio.com/) + [Svelte](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode).
+- **Notes**: Write and organize your notes effectively.
+- **Bucket Lists**: Keep track of your goals and aspirations.
+- **Flashcards**: Create flashcards for efficient learning.
 
-## Need an official Svelte framework?
+## Usage
 
-Check out [SvelteKit](https://github.com/sveltejs/kit#readme), which is also powered by Vite. Deploy anywhere with its serverless-first approach and adapt to various platforms, with out of the box support for TypeScript, SCSS, and Less, and easily-added support for mdsvex, GraphQL, PostCSS, Tailwind CSS, and more.
+### Markdown Formatting
 
-## Technical considerations
+You can use Markdown formatting to style your notes, bucket lists, and flashcards. Here are some examples:
 
-**Why use this over SvelteKit?**
+- **Bold Text**: Use double asterisks or double underscores (`**bold text**` or `__bold text__`).
+- *Italic Text*: Use single asterisks or single underscores (`*italic text*` or `_italic text_`).
+- [Hyperlinks](https://example.com): Use square brackets followed by the URL in parentheses (`[Hyperlinks](https://example.com)`).
+- Lists:
+  - Use hyphens, asterisks, or plus signs followed by a space for unordered lists.
+  - Use numbers followed by a period and a space for ordered lists.
+- `Inline Code`: Enclose code snippets with backticks (\`inline code\`).
+- ``` Code Blocks ```: Use triple backticks for multi-line code blocks.
 
-- It brings its own routing solution which might not be preferable for some users.
-- It is first and foremost a framework that just happens to use Vite under the hood, not a Vite app.
+### Organizing with Tags and Dates
 
-This template contains as little as possible to get started with Vite + TypeScript + Svelte, while taking into account the developer experience with regards to HMR and intellisense. It demonstrates capabilities on par with the other `create-vite` templates and is a good starting point for beginners dipping their toes into a Vite + Svelte project.
+- **Tags**: Use tags to categorize your content. You can add tags to your notes, bucket lists, and flashcards for easy organization.
+- **Dates**: Dates are automatically recorded for each entry and can be used to filter and sort your content. You can filter your notes and flashcards based on specific dates to focus on relevant information.
 
-Should you later need the extended capabilities and extensibility provided by SvelteKit, the template has been structured similarly to SvelteKit so that it is easy to migrate.
+## Issues and Bugs
 
-**Why `global.d.ts` instead of `compilerOptions.types` inside `jsconfig.json` or `tsconfig.json`?**
+If you encounter any issues or bugs while using the app, please report them on the [Issues](https://github.com/SureshPradhana/notes-gui/issues) page. Your feedback is valuable for improving the app's functionality and user experience.
 
-Setting `compilerOptions.types` shuts out all other types not explicitly listed in the configuration. Using triple-slash references keeps the default TypeScript setting of accepting type information from the entire workspace, while also adding `svelte` and `vite/client` type information.
+## User Feedback and Suggestions
 
-**Why include `.vscode/extensions.json`?**
+We value your input! If you have any suggestions for improving the app or if there are new features you'd like to see implemented, please let us know. You can submit your feedback and suggestions through the [Issues](https://github.com/SureshPradhana/notes-gui/issues) page as well. We'll consider your requests and prioritize them based on user demand and feasibility.
 
-Other templates indirectly recommend extensions via the README, but this file allows VS Code to prompt the user to install the recommended extension upon opening the project.
+## Contributions
 
-**Why enable `allowJs` in the TS template?**
+Contributions to this project are welcome! If you'd like to contribute code, report issues, or suggest improvements, please follow these guidelines:
 
-While `allowJs: false` would indeed prevent the use of `.js` files in the project, it does not prevent the use of JavaScript syntax in `.svelte` files. In addition, it would force `checkJs: false`, bringing the worst of both worlds: not being able to guarantee the entire codebase is TypeScript, and also having worse typechecking for the existing JavaScript. In addition, there are valid use cases in which a mixed codebase may be relevant.
+- **Code Contributions**: Fork the repository, make your changes, and submit a pull request.
+  Please ensure that your code adheres to our coding standards 
 
-**Why is HMR not preserving my local component state?**
+## License
 
-HMR state preservation comes with a number of gotchas! It has been disabled by default in both `svelte-hmr` and `@sveltejs/vite-plugin-svelte` due to its often surprising behavior. You can read the details [here](https://github.com/rixo/svelte-hmr#svelte-hmr).
+This project is licensed under the [GNU General Public License v3.0](https://www.gnu.org/licenses/gpl-3.0.en.html), which means you are free to use, modify, and distribute the software under certain conditions. See the [LICENSE.txt](LICENSE.txt) file for details.
 
-If you have state that's important to retain within a component, consider creating an external store which would not be replaced by HMR.
-
-```ts
-// store.ts
-// An extremely simple external store
-import { writable } from 'svelte/store'
-export default writable(0)
-```
