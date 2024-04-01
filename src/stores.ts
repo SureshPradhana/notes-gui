@@ -1,8 +1,8 @@
 import { readable, writable } from "svelte/store";
 
-export let notesStore = writable([]);
-export let bucketsStore = writable([]);
-export let flashCardsStore = writable([]);
+export const notesStore = writable([]);
+export const bucketsStore = writable([]);
+export const flashCardsStore = writable([]);
 
 export const selectedTag = writable("All");
 export const searchTerm = writable("");
@@ -29,7 +29,7 @@ const newLoading = () => {
     message: "",
   });
 
-  function setNavigate(isNavigating) {
+  function setNavigate(isNavigating: boolean) {
     update(() => {
       return {
         status: isNavigating ? "NAVIGATING" : "IDLE",
@@ -38,7 +38,7 @@ const newLoading = () => {
     });
   }
 
-  function setLoading(isLoading, message = "") {
+  function setLoading(isLoading: boolean, message: string = "") {
     update(() => {
       return {
         status: isLoading ? "LOADING" : "IDLE",

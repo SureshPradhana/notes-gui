@@ -16,7 +16,7 @@
 		message,
 		pageStatus,
 		loadingStatus,
-	} from "../../stores.js";
+	} from "../../stores";
 
 	function switchToLogin() {
 		pageswitch = "login";
@@ -41,9 +41,6 @@
 			if (result.success) {
 				resetLoginData();
 				navigate("/notes");
-
-			
-
 			} else {
 				console.log("Login failed:", result);
 				resetLoginData();
@@ -57,7 +54,6 @@
 			let resultt = await signup(data);
 			if (resultt.success) {
 				resetSignupData();
-
 			} else {
 				console.log("signup failed:", resultt);
 				resetSignupData();
@@ -89,7 +85,7 @@
 					message: "Login successful!",
 					type: "success",
 				};
-				$loadingStatus=false;
+				$loadingStatus = false;
 				success = true;
 			} else {
 				if ((data.message = "Invalid password")) {
@@ -97,19 +93,19 @@
 						message: "email or password is wrong",
 						type: "error",
 					};
-					$loadingStatus=false;
+					$loadingStatus = false;
 				} else {
 					$message = {
 						message: "login failed",
 						type: "error",
 					};
-					$loadingStatus=false;
+					$loadingStatus = false;
 				}
 				success = false;
 			}
 		} catch (error) {
 			$message = { message: "user not found", type: "error" };
-			$loadingStatus=false;
+			$loadingStatus = false;
 			success = false;
 		} finally {
 			$loadingStatus = false;
@@ -153,12 +149,12 @@
 					message: "signup successful!",
 					type: "success",
 				};
-				$loadingStatus=false;
+				$loadingStatus = false;
 				pageswitch = "login";
 				success = true;
 			} catch (error) {
 				$message = { message: error, type: "success" };
-				$loadingStatus=false;
+				$loadingStatus = false;
 
 				success = false;
 			} finally {
@@ -219,7 +215,7 @@
 				color: var(--white);
 			}
 			.active {
-				background-color:var(--green-2); 
+				background-color: var(--green-2);
 				color: var(--background-color);
 			}
 

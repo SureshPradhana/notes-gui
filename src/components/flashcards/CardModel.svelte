@@ -1,6 +1,6 @@
 <script>
   import Dropdown from "../componenthub/Dropdown.svelte";
-  import { flashCardsStore } from "../../stores.js";
+  import { flashCardsStore } from "../../stores";
   export let modalNote = null;
   export let modalAction = null;
   export let handleAction = () => {};

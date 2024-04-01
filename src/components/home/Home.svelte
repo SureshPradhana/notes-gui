@@ -1,6 +1,6 @@
 <script>
     import { Link } from "svelte-routing";
-    import { userdetails } from "../../stores.js";
+    import { userdetails } from "../../stores";
 </script>
 
 <div class="home">

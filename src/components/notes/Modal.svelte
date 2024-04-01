@@ -3,7 +3,7 @@
   export let modalAction = null;
   export let handleAction = () => {};
   export let closeModal = () => {};
-  import { notesStore } from "../../stores.js";
+  import { notesStore } from "../../stores";
   import Dropdown from "../componenthub/Dropdown.svelte";
 
   let localNote = null;

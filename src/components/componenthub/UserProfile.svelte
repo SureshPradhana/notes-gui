@@ -3,7 +3,7 @@
 
   export let closeModal = () => {};
   import { get } from "svelte/store";
-  import { userdetails } from "../../stores.js";
+  import { userdetails } from "../../stores";
 
   let name;
   let email;

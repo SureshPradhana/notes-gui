@@ -8,7 +8,7 @@
     userModal,
     path,
     loadingServer,
-  } from "../../stores.js";
+  } from "../../stores";
   import { navigate } from "svelte-routing";
   import { icons } from "feather-icons";
 
@@ -16,7 +16,7 @@
   import BucketModal from "./BucketModel.svelte";
   import UserProfile from "../componenthub/UserProfile.svelte";
   import Box from "./Box.svelte";
-  import { addBucket, getBucket } from "../../utils/db.js";
+  import { addBucket, getBucket } from "../../utils/db";
   import { get } from "svelte/store";
   let modalNote = null;
   let modalAction = null;

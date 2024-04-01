@@ -11,7 +11,7 @@
 		searchCardTerm,
 		path,
 		loadingServer,
-	} from "../../stores.js";
+	} from "../../stores";
 	import { navigate } from "svelte-routing";
 	import { icons } from "feather-icons";
 
@@ -21,7 +21,7 @@
 	import Tag from "../componenthub/Tag.svelte";
 	import Search from "../componenthub/Search.svelte";
 	import Card from "./Card.svelte";
-	import { addCard, getCard } from "../../utils/db.js";
+	import { addCard, getCard } from "../../utils/db";
 	import { get, derived } from "svelte/store";
 	let modalNote = null;
 	let modalAction = null;

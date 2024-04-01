@@ -1,8 +1,8 @@
 <script>
   import { icons } from "feather-icons";
 
-  import { bucketsStore } from "../../stores.js";
-  import { deleteBucket, updateBucket } from "../../utils/db.js";
+  import { bucketsStore } from "../../stores";
+  import { deleteBucket, updateBucket } from "../../utils/db";
   import BucketModel from "./BucketModel.svelte";
   export let notesProp;
 

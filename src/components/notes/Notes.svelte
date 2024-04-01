@@ -1,16 +1,18 @@
-<script>
+<script lang="ts">
   // import {notes} from '../App.svelte';
   import { icons } from "feather-icons";
   import Modal from "./Modal.svelte";
-  import { deleteNote, updateNote } from "../../utils/db.js";
-  import { notesStore } from "../../stores.js";
+  import { deleteNote, updateNote } from "../../utils/db";
+  import { notesStore } from "../../stores";
   import Markdown from "@magidoc/plugin-svelte-marked";
-  export let notesProp;
+  import type { Note, ModalAction } from "../../utils/types";
 
-  let modalNote = null;
-  let modalAction = null;
+  export let notesProp: Note[];
 
-  async function handleDelete(note) {
+  let modalNote: Note = null;
+  let modalAction: ModalAction = null;
+
+  async function handleDelete(note: Note) {
     // Delete the note
     let res = await deleteNote(note._id);
     if (res) {
@@ -19,7 +21,7 @@
     modalNote = null;
   }
 
-  async function handleEdit(note) {
+  async function handleEdit(note: Note) {
     // Edit the note
 
     let res = await updateNote(note);
@@ -30,7 +32,7 @@
     modalNote = null;
   }
 
-  function openModal(note, action) {
+  function openModal(note: Note, action: ModalAction) {
     modalNote = note;
     modalAction = action;
   }

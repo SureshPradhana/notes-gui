@@ -1,9 +1,9 @@
-<script>
+<script lang="ts">
 	import { Router, Route, navigate } from "svelte-routing";
 	import { onMount } from "svelte";
 	import { jwtDecode } from "jwt-decode";
 
-	import { userdetails, token ,message,loadingStatus} from "./stores.js";
+	import { userdetails, token, message, loadingStatus } from "./stores";
 
 	// routes
 	import Home from "./components/home//Home.svelte";
@@ -15,13 +15,13 @@
 	import MessagePopup from "./components/componenthub/MessagePopup.svelte";
 	import Loading from "./components/componenthub/Loading.svelte";
 
-	$:msg=$message;
+	$: msg = $message;
 
 	onMount(() => {
-		let tokenfromlocal = localStorage.getItem("token");
-		token.set(tokenfromlocal);
+		let tokenfromlocal: string | null = localStorage.getItem("token");
 		if (tokenfromlocal) {
-			const decodedToken = jwtDecode(tokenfromlocal);
+			token.set(tokenfromlocal);
+			const decodedToken: any = jwtDecode(tokenfromlocal);
 			userdetails.set(decodedToken.user);
 		} else {
 			navigate("/");
@@ -29,15 +29,15 @@
 	});
 </script>
 
-		<div class="status">
-			{#if $loadingStatus}
-				<Loading />
-			{/if}
-		</div>
+<div class="status">
+	{#if $loadingStatus}
+		<Loading />
+	{/if}
+</div>
 
-			{#if msg.message}
-				<MessagePopup {msg} />
-			{/if}
+{#if msg.message}
+	<MessagePopup {msg} />
+{/if}
 <Router>
 	<Route path="/">
 		<Home />

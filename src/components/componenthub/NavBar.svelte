@@ -1,7 +1,7 @@
 <script>
     import { icons } from "feather-icons";
     import { get } from "svelte/store";
-    import { userdetails, userModal } from "../../stores.js";
+    import { userdetails, userModal } from "../../stores";
     import { Link } from "svelte-routing";
     import { onMount } from "svelte";
     import { onDestroy } from "svelte";

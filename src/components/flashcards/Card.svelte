@@ -2,8 +2,8 @@
   import { icons } from "feather-icons";
   import Accordion from "../componenthub/Accordion.svelte";
 
-  import { flashCardsStore } from "../../stores.js";
-  import { deleteCard, updateCard } from "../../utils/db.js";
+  import { flashCardsStore } from "../../stores";
+  import { deleteCard, updateCard } from "../../utils/db";
   import FlashCardModel from "./CardModel.svelte";
   export let cardsProp;
   import Markdown from "@magidoc/plugin-svelte-marked";

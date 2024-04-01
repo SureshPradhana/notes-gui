@@ -11,7 +11,7 @@
 		searchTerm,
 		selectedDate,
 		loadingServer,
-	} from "../../stores.js";
+	} from "../../stores";
 
 	import { jwtDecode } from "jwt-decode";
 	import Modal from "./Modal.svelte";
@@ -20,10 +20,10 @@
 	import Tag from "../componenthub/Tag.svelte";
 	import Search from "../componenthub/Search.svelte";
 	import { derived } from "svelte/store";
-	import { userModal } from "../../stores.js";
+	import { userModal } from "../../stores";
 	import { icons } from "feather-icons";
 
-	import { addNote, getNote, updateNote } from "../../utils/db.js";
+	import { addNote, getNote, updateNote } from "../../utils/db";
 	import { navigate } from "svelte-routing";
 
 	let modalNote = null;
