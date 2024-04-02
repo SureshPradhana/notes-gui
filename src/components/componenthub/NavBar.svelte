@@ -119,16 +119,6 @@
 </div>
 
 <style>
-    :root {
-        --background: #9c88ff;
-        --navbar-width: 256px;
-        --navbar-width-min: 70px;
-        --navbar-dark-primary: #242424;
-        --navbar-dark-secondary: #2c3e50;
-        --navbar-light-primary: #f5f6fa;
-        --navbar-light-secondary: rgba(255, 255, 255, 0.8);
-    }
-
     #nav-toggle:checked ~ #nav-header {
         width: calc(var(--navbar-width-min) - 16px);
     }

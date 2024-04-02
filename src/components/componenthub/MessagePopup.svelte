@@ -15,9 +15,9 @@
     left: 50%;
     transform: translate(-50%, -50%);
     /* background-color:#71BC68; */
-    color: #2a2a2a;
+    color: var(--background-color);
     padding: 1px 5px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--ccc);
     border-radius: 5px;
     line-height: 0;
   }

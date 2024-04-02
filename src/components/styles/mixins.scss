@@ -20,10 +20,6 @@
 
 @mixin add-new() {
 	height: auto;
-	// position: absolute;
-	// right: 10%;
-	// top: 50%;
-	// transform: translateY(-20%);
 	background-color: transparent;
 	border: none;
 	margin: none;
@@ -62,7 +58,7 @@
 }
 
 @mixin bucket() {
-	background-color: #242424;
+	background-color: var(--background-2);
 	border: 1px solid rgba(0, 0, 0, 0.2);
 	border-radius: 6px;
 	padding: 20px;
@@ -83,11 +79,11 @@
 	font-size: 12px;
 	padding: 4px 10px;
 	display: inline-block;
-	background-color: #1a1a1a;
+	background-color: var(--tag-background);
 	font-weight: bold;
 	margin: 0px 4px 0px 0px;
 	border-radius: 4px;
-	color: #ccc;
+	color: var(--text-color);
 }
 
 @mixin last() {
@@ -112,5 +108,5 @@
 @mixin time-i() {
 	margin: 0px;
 	padding: auto;
-	color: #ccc;
+	color: var(--ccc);
 }

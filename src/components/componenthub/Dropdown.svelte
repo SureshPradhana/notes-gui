@@ -32,7 +32,7 @@
 			list-style: none;
 			padding: 0;
 			margin: 0;
-			border: 1px solid #ccc; /* Border style */
+			border: 1px solid var(--ccc); /* Border style */
 			max-height: 200px; /* Optional: Limit maximum height */
 			overflow-y: auto; /* Optional: Add scrollbar if content exceeds height */
 		}
@@ -41,7 +41,7 @@
 		ul li {
 			padding: 10px;
 			cursor: pointer;
-			border-bottom: 1px solid #ccc; /* Optional: Add bottom border between list items */
+			border-bottom: 1px solid var(--ccc); /* Optional: Add bottom border between list items */
 		}
 
 		/* Style for the last <li> to remove bottom border */

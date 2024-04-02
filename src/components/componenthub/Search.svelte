@@ -15,7 +15,7 @@
         padding: 10px;
         margin: 10px;
         border-radius: 5px;
-        border: 1px solid #ccc;
-        background-color: #2b2a23;
+        border: 1px solid var(--ccc);
+        background-color: var(--search-background);
     }
 </style>

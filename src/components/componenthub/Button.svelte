@@ -7,8 +7,8 @@
 		padding: 10px;
 		margin: 10px;
 		border-radius: 5px;
-		border: 1px solid #ccc;
+		border: 1px solid var(--ccc);
 		background-color: #1a1a1a;
-		color: #ccc;
+		color: var(--ccc);
 	}
 </style>

@@ -81,13 +81,13 @@ Card
   .add-checkbox-wrapper input {
     padding: 12px;
     border-radius: 5px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--ccc);
   }
   .add-checkbox-wrapper label {
     padding: 0.2em;
   }
 
   .add-checkbox-wrapper input:focus {
-    color: #ccc;
+    color: var(--ccc);
   }
 </style>

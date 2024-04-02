@@ -46,10 +46,10 @@
 		font-size: 14px;
 		padding: 4px 10px;
 		display: inline-block;
-		background-color: #1a1a1a;
+		background-color: var(--tag-background);
 		font-weight: bold;
 		margin: 4px;
 		border-radius: 2px;
-		color: #ccc;
+		color: var(--ccc);
 	}
 </style>

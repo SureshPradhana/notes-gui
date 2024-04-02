@@ -44,9 +44,9 @@
   padding: 10px;
   margin: 10px;
   border-radius: 5px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--ccc);
   background-color: #1a1a1a;
-  color: #ccc;
+  color: var(--ccc);
 }
 
 .add-tag-wrapper {
@@ -71,7 +71,7 @@
   padding: 12px;
   /* margin: 10px; */
   border-radius: 5px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--ccc);
 }
 
 .add-tag-wrapper button {
@@ -81,12 +81,12 @@
 }
 
 .add-tag-wrapper input:focus {
-  color: #ccc;
+  color: var(--ccc);
 }
 
 .button-wrapper .done {
   background-color: #3f6d41;
-  color: #ccc;
+  color: var(--ccc);
 }
 
 .info2 textarea {

@@ -3,7 +3,7 @@
 		Helvetica, Arial, sans-serif;
 	line-height: 1.5;
 	font-weight: 400;
-	color-scheme: light dark;
+	color-scheme: dark;
 	color: rgba(255, 255, 255, 0.87);
 	background-color: #2a2a2a;
 	font-synthesis: none;
@@ -22,9 +22,7 @@
 	--tan: #ddb892;
 	--blue: #3e80b6;
 	--blue-2: #4c6676;
-	--background: #2E2E2E;
-	--background-color: #2a2a2a;
-	--background-2: #242424;
+
 	--stroke: #444444;
 	--accent: #FF6F61;
 	--black: #121212;
@@ -32,7 +30,6 @@
 	--red: #ff5555;
 	--red-2: #9a3a31;
 	--purple: #2b2a33;
-	--gray: #393e41;
 	--link: #646cff;
 	--link-hover: #535bf2;
 	--border: rgba(0, 0, 0, 0.2);
@@ -54,24 +51,52 @@
 	--h5: calc(var(--h6)*var(--scale));
 	--h6: var(--base-size);
 	--small: calc(var(--base-size)/ var(--scale));
+
+	// dark 
+	--background: white;
+	--background-color: white;
+	--background-2: #f2f3f5;
+	--text-color: black;
+	--ccc: gray;
+
+	--tag-background: #e3e5e8;
+	--tag-color: #64666e;
+
+	--gray: var(--tag-background);
+	--search-background: var(--tag-background);
+	--toggle-switch-bg: #232428;
+	--toggle-border: #232428;
+	--toggle-bg: #fff;
 }
 
-@media (prefers-color-scheme: dark) {
-	:root {
-		color: var(--white);
-		background-color: var(--background-color);
-	}
-
-	a:hover {
-		color: var(--link-hover);
-	}
-
-	button {
-		background-color: transparent;
-	}
-
+:root {
+	--background: #9c88ff;
+	--navbar-width: 256px;
+	--navbar-width-min: 70px;
+	--navbar-dark-primary: var(--background-2);
+	--navbar-dark-secondary: #2c3e50;
+	--navbar-light-primary: #f5f6fa;
+	--navbar-light-secondary: var(--text-color);
 }
 
+[data-theme='dark'] {
+	/* Dark theme colors */
+	--background: #2e2e2e;
+	--text-color: #fff;
+	--background-color: #2a2a2a;
+	--background-2: #242424;
+	--ccc: #ccc;
+	--tag-background: #1a1a1a;
+	--gray: #393e41;
+	--background: #9c88ff;
+	--navbar-width: 256px;
+	--navbar-width-min: 70px;
+	--search-background: #2b2a23;
+	--navbar-dark-primary: var(--background-2);
+	--navbar-dark-secondary: #2c3e50;
+	--navbar-light-primary: #f5f6fa;
+	--navbar-light-secondary: var(--text-color);
+}
 
 @mixin hideScrollbar() {
 	&::-webkit-scrollbar {
@@ -94,6 +119,7 @@ body {
 	padding: 0;
 	margin: 0;
 	background-color: var(--background-color);
+	color: var(--text-color);
 
 }
 
@@ -117,7 +143,7 @@ h1,
 p,
 h2,
 label {
-	color: var(--white);
+	color: var(--text-color);
 }
 
 
@@ -133,7 +159,7 @@ textarea {
 	padding: 10px;
 	font-family: Arial, sans-serif;
 	font-size: 16px;
-	border: 1px solid #ccc;
+	border: 1px solid var(--ccc);
 	border-radius: 5px;
 	box-sizing: border-box;
 }
@@ -175,17 +201,17 @@ input[type="date"] {
 	border-radius: 4px;
 	box-sizing: border-box;
 	font-size: 16px;
-	background-color: var(--purple);
+	background-color: var(--tag-background);
 }
 
 input[type="date"]::-webkit-calendar-picker-indicator {
 	background: transparent;
-	color: var(--background);
+	color: var(--text-color);
 	cursor: pointer;
 }
 
 input[type="date"]::placeholder {
-	color: var(--background-2);
+	color: var(--text-color);
 }
 
 // edit and delete icon
@@ -198,7 +224,7 @@ input[type="date"]::placeholder {
 }
 
 .edit {
-	color: #ccc;
+	color: var(--ccc);
 	background: var(--gray);
 	border: 1px solid var(--gray);
 }
