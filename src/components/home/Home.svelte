@@ -27,7 +27,7 @@
         margin: 0;
         padding: 0;
         font-family: var(--sans);
-        background-color: var(--black);
+        background-color: var(--background-2);
         color: var(--white);
 
         header {
@@ -44,17 +44,17 @@
 
             :global(.login-signup) {
                 float: right;
-                color: var(--white);
+                color: var(--text-color);
                 text-decoration: none;
                 padding: 10px 20px;
-                border: 1px solid var(--white);
+                border: 1px solid var(--text-color);
                 border-radius: 5px;
             }
 
             :global(.login-signup:hover) {
-                background-color: var(--white);
-                color: var(--black);
-                border: 1px solid var(--black);
+                background-color: var(--tag-background);
+                color: var(--text-color);
+                border: 1px solid var(--text-color);
             }
         }
 

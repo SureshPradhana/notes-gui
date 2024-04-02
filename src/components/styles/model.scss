@@ -45,8 +45,8 @@
   margin: 10px;
   border-radius: 5px;
   border: 1px solid var(--ccc);
-  background-color: #1a1a1a;
-  color: var(--ccc);
+  background-color: var(--tag-background);
+  color: var(--text-color);
 }
 
 .add-tag-wrapper {
@@ -75,7 +75,7 @@
 }
 
 .add-tag-wrapper button {
-  background-color: #1a1a1a;
+  background-color: var(--tag-background);
   padding: 12px;
   border-radius: 5px;
 }
@@ -86,7 +86,7 @@
 
 .button-wrapper .done {
   background-color: #3f6d41;
-  color: var(--ccc);
+  color: var(--text-color);
 }
 
 .info2 textarea {
@@ -99,7 +99,7 @@
 }
 
 .shit-wrapper p {
-  background-color: #1a1a1a;
+  background-color: var(--tag-background);
   border-radius: 4px;
   margin-right: 4px;
   padding: 8px;
@@ -112,7 +112,7 @@
 }
 
 .shit-wrapper p button:hover {
-  color: #9a3a31;
+  color: var(--text-color);
   border: none;
 }
 

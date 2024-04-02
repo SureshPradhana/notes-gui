@@ -3,7 +3,7 @@
 		Helvetica, Arial, sans-serif;
 	line-height: 1.5;
 	font-weight: 400;
-	color-scheme: dark;
+	color-scheme: light;
 	color: rgba(255, 255, 255, 0.87);
 	background-color: #2a2a2a;
 	font-synthesis: none;
@@ -66,7 +66,10 @@
 	--search-background: var(--tag-background);
 	--toggle-switch-bg: #232428;
 	--toggle-border: #232428;
-	--toggle-bg: #fff;
+	--toggle-bg: #ccc;
+	--background-1: var(--white);
+	--tag-background-hover: var(--background-2);
+
 }
 
 :root {
@@ -75,8 +78,9 @@
 	--navbar-width-min: 70px;
 	--navbar-dark-primary: var(--background-2);
 	--navbar-dark-secondary: #2c3e50;
-	--navbar-light-primary: #f5f6fa;
+	--navbar-light-primary: var(--text-color);
 	--navbar-light-secondary: var(--text-color);
+
 }
 
 [data-theme='dark'] {
@@ -84,6 +88,7 @@
 	--background: #2e2e2e;
 	--text-color: #fff;
 	--background-color: #2a2a2a;
+	--background-1: var(--black-2);
 	--background-2: #242424;
 	--ccc: #ccc;
 	--tag-background: #1a1a1a;
@@ -96,7 +101,11 @@
 	--navbar-dark-secondary: #2c3e50;
 	--navbar-light-primary: #f5f6fa;
 	--navbar-light-secondary: var(--text-color);
+
+	--tag-background-hover: var(--background-2);
+	color-scheme: dark;
 }
+
 
 @mixin hideScrollbar() {
 	&::-webkit-scrollbar {
@@ -224,7 +233,7 @@ input[type="date"]::placeholder {
 }
 
 .edit {
-	color: var(--ccc);
+	color: var(--text-color);
 	background: var(--gray);
 	border: 1px solid var(--gray);
 }

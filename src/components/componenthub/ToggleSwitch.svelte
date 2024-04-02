@@ -15,8 +15,8 @@
 <style lang="scss">
 	label {
 		background: var(--toggle-bg);
-		width: 80px;
-		height: 30px;
+		width: 60px;
+		height: 25px;
 		border-radius: 50px;
 		border: 2px solid var(--toggle-border);
 		display: flex;
@@ -29,8 +29,8 @@
 	}
 
 	.toggle-switch {
-		width: 30px;
-		height: 20px;
+		width: 20px;
+		height: 15px;
 		margin: 0.4em;
 		margin-bottom: 0.3em;
 		margin-top: 0.3em;

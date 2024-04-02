@@ -37,7 +37,7 @@
 	}
 
 	button.selected {
-		background-color: #242424;
+		background-color: var(--tag-background-hover);
 
 		border: 1px solid rgba(0, 0, 0, 0.2);
 	}
@@ -50,6 +50,6 @@
 		font-weight: bold;
 		margin: 4px;
 		border-radius: 2px;
-		color: var(--ccc);
+		color: var(--text-color);
 	}
 </style>

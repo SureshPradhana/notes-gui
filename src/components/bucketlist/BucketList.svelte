@@ -121,7 +121,7 @@
 
     {#if $loadingServer.status === "LOADING"}
       <div class="loader">
-        <SyncLoader size="45" color="#ff6f61" unit="px" duration="1s" />
+        <SyncLoader size="45" color="#b36f61" unit="px" duration="1s" />
       </div>
     {:else}
       <div class="buckets">
