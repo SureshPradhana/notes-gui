@@ -2,13 +2,11 @@
     export let searchTerm = "";
 </script>
 
-<div>
-    <input
-        type="text"
-        bind:value={searchTerm}
-        placeholder="Search notes by content"
-    />
-</div>
+<input
+    type="text"
+    bind:value={searchTerm}
+    placeholder="Search notes by content"
+/>
 
 <style>
     input {

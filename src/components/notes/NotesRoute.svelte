@@ -19,6 +19,7 @@
 	import Notes from "./Notes.svelte";
 	import Tag from "../componenthub/Tag.svelte";
 	import Search from "../componenthub/Search.svelte";
+	import Dropdown2 from "../componenthub/Dropdown2.svelte";
 	import { derived } from "svelte/store";
 	import { userModal } from "../../stores";
 	import { icons } from "feather-icons";
@@ -36,7 +37,13 @@
 			}
 		}, 400);
 	}
+	let tagsList = [];
 
+	$: tagsList = [...new Set($notesStore.flatMap((note) => note.tags))];
+
+	$: filteredTags = tagsList.filter((tag) =>
+		tag.toLowerCase().includes($selectedTag.toLowerCase()),
+	);
 	onMount(() => {
 		// Fetch data from the server
 		token.set(localStorage.getItem("token"));
@@ -156,6 +163,19 @@
 					})
 				: $filteredNotes,
 	);
+	let select = false;
+	let selectedSuggestion = "";
+
+	function selectSuggestion(suggestion) {
+		selectedSuggestion = suggestion;
+		$selectedTag = suggestion;
+		select = true;
+	}
+	function handleInput(event) {
+		selectedSuggestion = "";
+		select = false;
+		$selectedTag = event.target.value;
+	}
 </script>
 
 {#if Object.keys($userdetails).length != 0}
@@ -177,13 +197,23 @@
 				<SyncLoader size="45" color="#b36f61" unit="px" duration="1s" />
 			</div>
 		{:else}
-			<div class="tag-wrapper">
-				<Tag localStore={$notesStore} bind:selectedTag={$selectedTag} />
-			</div>
+			<div class="tag-wrapper"></div>
 			<div class="search">
+				<input
+					class="input"
+					type="text"
+					bind:value={$selectedTag}
+					on:input={handleInput}
+					placeholder="search by tag"
+				/>
 				<Search bind:searchTerm={$searchTerm} />
 				<input type="date" bind:value={$selectedDate} />
 			</div>
+			{#if $selectedTag && $selectedTag !== "All"}
+				<Dropdown2 {filteredTags} {selectSuggestion} />
+			{:else if $selectedTag == "All" || !$selectedTag}
+				<Dropdown2 filteredTags={tagsList} {selectSuggestion} />
+			{/if}
 			<div class="notes-wrapper">
 				<Notes notesProp={$filteredNotesByDate} />
 			</div>
@@ -204,6 +234,7 @@
 		.loader {
 			@include loader();
 		}
+
 		.header {
 			@include header();
 			.add {
@@ -228,8 +259,23 @@
 
 	.status,
 	.header,
-	.tag-wrapper,
-	.search {
+	.tag-wrapper {
 		@include center();
+	}
+	.search {
+		display: flex;
+	}
+	.input {
+		padding: 10px;
+		margin: 10px;
+		border-radius: 5px;
+		border: 1px solid var(--ccc);
+		background-color: var(--search-background);
+	}
+
+	@media (max-width: 768px) {
+		.search {
+			flex-direction: column;
+		}
 	}
 </style>

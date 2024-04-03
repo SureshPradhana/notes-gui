@@ -21,16 +21,19 @@
 	import MessagePopup from "./components/componenthub/MessagePopup.svelte";
 	import Loading from "./components/componenthub/Loading.svelte";
 	import ToggleSwitch from "./components/componenthub/ToggleSwitch.svelte";
+	import Forgot from "./components/forgotPassword/Forgot.svelte";
 
 	$: msg = $message;
 
 	onMount(() => {
-		let tokenfromlocal: string | null =
-			localStorage.getItem("token");
+		let tokenfromlocal: string | null = localStorage.getItem("token");
+		const currentPath = window.location.pathname;
 		if (tokenfromlocal) {
 			token.set(tokenfromlocal);
 			const decodedToken: any = jwtDecode(tokenfromlocal);
 			userdetails.set(decodedToken.user);
+		} else if (currentPath == "/forgotpassword") {
+			console.log("oh");
 		} else {
 			navigate("/");
 		}
@@ -40,10 +43,7 @@
 		themeStore.update((theme) => {
 			const newTheme = theme === "dark" ? "light" : "dark";
 			localStorage.setItem("theme", newTheme);
-			document.documentElement.setAttribute(
-				"data-theme",
-				newTheme,
-			);
+			document.documentElement.setAttribute("data-theme", newTheme);
 			return newTheme;
 		});
 	}
@@ -74,6 +74,9 @@
 
 	<Route path="/login">
 		<Login />
+	</Route>
+	<Route path="/forgotpassword">
+		<Forgot />
 	</Route>
 
 	<Route path="/notes">

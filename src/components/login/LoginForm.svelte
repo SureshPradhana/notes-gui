@@ -1,6 +1,7 @@
 <script>
 	import Input from "../componenthub/Input.svelte";
 	import Button from "../componenthub/Button.svelte";
+	import Forgot from "../forgotPassword/Forgot.svelte";
 
 	export let data = {};
 	export let login = () => {};
@@ -43,22 +44,31 @@
 	};
 </script>
 
-	<Input
-		type="text"
-		placeholder="email"
-		bind:value={data.email}
-		on:blur={() => (touchedFields.email = true)}
-		error={errors.email}
-	/>
-	<Input
-		type="password"
-		placeholder="password"
-		bind:value={data.password}
-		on:blur={() => (touchedFields.password = true)}
-		error={errors.password}
-	/>
+<Input
+	type="text"
+	placeholder="email"
+	bind:value={data.email}
+	on:blur={() => (touchedFields.email = true)}
+	error={errors.email}
+/>
+<Input
+	type="password"
+	placeholder="password"
+	bind:value={data.password}
+	on:blur={() => (touchedFields.password = true)}
+	error={errors.password}
+/>
 
-	<Button on:click={validateAndSubmit}>Login</Button>
+<Button on:click={validateAndSubmit}>Login</Button>
+<a class="forgot-link" href="/forgotpassword">forgot password?</a>
 
-<style>
+<style lang="scss">
+	.forgot-link {
+		margin: 2px 10px;
+		color: var(--red);
+		text-align: right;
+	}
+	.forgot-link:hover {
+		color: var(--blue);
+	}
 </style>
