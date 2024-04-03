@@ -123,8 +123,12 @@
 	}
 }
 
+html {
+	background: var(--background);
+}
 
 body {
+	height: 100vh;
 	padding: 0;
 	margin: 0;
 	background-color: var(--background-color);
