@@ -22,6 +22,7 @@
 	import Loading from "./components/componenthub/Loading.svelte";
 	import ToggleSwitch from "./components/componenthub/ToggleSwitch.svelte";
 	import Forgot from "./components/forgotPassword/Forgot.svelte";
+	import Reset from "./components/resetPassword/Reset.svelte";
 
 	$: msg = $message;
 
@@ -32,7 +33,10 @@
 			token.set(tokenfromlocal);
 			const decodedToken: any = jwtDecode(tokenfromlocal);
 			userdetails.set(decodedToken.user);
-		} else if (currentPath == "/forgotpassword") {
+		} else if (
+			currentPath == "/forgotpassword" ||
+			currentPath == "/reset-password"
+		) {
 			console.log("oh");
 		} else {
 			navigate("/");
@@ -78,7 +82,9 @@
 	<Route path="/forgotpassword">
 		<Forgot />
 	</Route>
-
+	<Route path="/reset-password">
+		<Reset />
+	</Route>
 	<Route path="/notes">
 		<div class="main-container">
 			<NavBar />
