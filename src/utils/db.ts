@@ -2,13 +2,15 @@ import { get } from "svelte/store";
 import { token } from "../stores";
 import type { Bucket, Note } from "./types";
 
-const path = "https://notes-api-3xdk.onrender.com";
+// const path = "https://notes-api-3xdk.onrender.com";
 // let path = "http://localhost:3000";
+// let path = "http://localhost:8000";
 
+let path = "https://sureshpradh-notes-api-d-38.deno.dev";
 export const deleteNote = (id: string) => {
   const tokenValue = get(token);
 
-  const res = fetch(`${path}/api/byid/`, {
+  const res = fetch(`${path}/api/byid`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
@@ -55,7 +57,7 @@ export const deleteCard = (id: string) => {
 export const addNote = (note: Note) => {
   const tokenValue = get(token);
 
-  const res = fetch(`${path}/api/note/`, {
+  const res = fetch(`${path}/api/note`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -102,7 +104,7 @@ export const addCard = (bucket: Bucket) => {
 export const getNote = (id: string) => {
   const tokenValue = get(token);
 
-  const res = fetch(`${path}/api/note/?id=${id}`, {
+  const res = fetch(`${path}/api/note?id=${id}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -117,7 +119,7 @@ export const getNote = (id: string) => {
 export const getBucket = (id: string) => {
   const tokenValue = get(token);
 
-  const res = fetch(`${path}/api/bucketlist/bybucket/?id=${id}`, {
+  const res = fetch(`${path}/api/bucketlist/bybucket?id=${id}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -131,7 +133,7 @@ export const getBucket = (id: string) => {
 export const getCard = (id: string) => {
   const tokenValue = get(token);
 
-  const res = fetch(`${path}/api/flashcards/bycard/?id=${id}`, {
+  const res = fetch(`${path}/api/flashcards/bycard?id=${id}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -145,7 +147,7 @@ export const getCard = (id: string) => {
 export const updateNote = (note: Note) => {
   const tokenValue = get(token);
 
-  const res = fetch(`${path}/api/note/`, {
+  const res = fetch(`${path}/api/note`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",

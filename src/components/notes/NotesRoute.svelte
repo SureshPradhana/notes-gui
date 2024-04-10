@@ -48,6 +48,7 @@
 		// Fetch data from the server
 		token.set(localStorage.getItem("token"));
 		if ($token) {
+			console.log(jwtDecode($token).user);
 			userdetails.set(jwtDecode($token).user);
 			loadingServer.setLoading(true, "I'm loading");
 			try {
