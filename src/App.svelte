@@ -23,7 +23,6 @@
 	import ToggleSwitch from "./components/componenthub/ToggleSwitch.svelte";
 	import Forgot from "./components/forgotPassword/Forgot.svelte";
 	import Reset from "./components/resetPassword/Reset.svelte";
-
 	$: msg = $message;
 
 	onMount(() => {

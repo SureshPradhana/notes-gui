@@ -15,16 +15,12 @@ export const token = writable("");
 export const user = writable("");
 export const status = writable("");
 export const userdetails = writable("");
-// export const path = readable("http://localhost:3000");
-// export const path = readable("http://localhost:8000");
 export const userModal = writable(false);
 export const modalAction = writable(false);
 export const loadingStatus = writable(false);
 export const message = writable({ message: "", type: "" });
 export const pageStatus = writable("");
-// export const path = readable("https://notes-api-3xdk.onrender.com");
-export const path = readable("https://sureshpradh-notes-api-d-38.deno.dev");
-
+export const path = readable(import.meta.env.VITE_PATH);
 const newLoading = () => {
   const { subscribe, update, set } = writable({
     status: "IDLE", // IDLE, LOADING, NAVIGATING

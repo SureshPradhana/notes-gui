@@ -2,11 +2,7 @@ import { get } from "svelte/store";
 import { token } from "../stores";
 import type { Bucket, Note } from "./types";
 
-// const path = "https://notes-api-3xdk.onrender.com";
-// let path = "http://localhost:3000";
-// let path = "http://localhost:8000";
-
-let path = "https://sureshpradh-notes-api-d-38.deno.dev";
+let path = import.meta.env.VITE_PATH;
 export const deleteNote = (id: string) => {
   const tokenValue = get(token);
 
