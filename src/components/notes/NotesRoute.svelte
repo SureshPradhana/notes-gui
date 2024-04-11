@@ -11,6 +11,7 @@
 		searchTerm,
 		selectedDate,
 		loadingServer,
+		message,
 	} from "../../stores";
 
 	import { jwtDecode } from "jwt-decode";
@@ -58,18 +59,33 @@
 							Authorization: $token,
 						},
 					});
-
+					console.log(response);
 					if (!response.ok) {
-						throw new Error("Failed to fetch data");
+						console.log("Failed to fetch data");
+						console.log("Error occurred:");
+						localStorage.removeItem("token");
+						token.set("");
+						userdetails.set({});
+						console.log("Error occurred:");
+						navigate("/login");
+						$message = {
+							message: "Please login again",
+							type: "error",
+						};
+						setTimeout(() => {
+							$message = { message: "", type: "" };
+						}, 2000);
+						loadingServer.setLoading(false);
 					}
 					const data = await response.json();
 
 					updateNotes(data);
 					updateLoading(false);
+					console.log("Data fetched successfully");
 					loadingServer.setLoading(false);
 				})();
 			} catch (error) {
-				loadingServer.setLoading(true);
+				console.error("Error occurred:", error);
 			}
 		} else {
 			navigate("/login");
