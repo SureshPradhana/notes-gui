@@ -9,6 +9,7 @@
 		message,
 		loadingStatus,
 		themeStore,
+		path,
 	} from "./stores";
 
 	// routes
@@ -31,7 +32,28 @@
 		if (tokenfromlocal) {
 			token.set(tokenfromlocal);
 			const decodedToken: any = jwtDecode(tokenfromlocal);
+			// verify the tokenfromlocal
+			console.log(decodedToken);
+
 			userdetails.set(decodedToken.user);
+			try {
+				(async () => {
+					const response = await fetch(`${$path}/api/notes`, {
+						headers: {
+							Authorization: $token,
+						},
+					});
+					console.log(response);
+					if (!response.ok) {
+						localStorage.removeItem("token");
+						token.set("");
+						userdetails.set({});
+					}
+					const data = await response.json();
+				})();
+			} catch (error) {
+				console.error("Error occurred:", error);
+			}
 		} else if (
 			currentPath == "/forgotpassword" ||
 			currentPath == "/reset-password"
