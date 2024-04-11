@@ -112,9 +112,10 @@
 		flex-direction: row;
 	}
 	.theme {
-		z-index: 99999;
+		z-index: 1000;
 		position: absolute;
-		right: 0;
+		right: 0.5%;
+		margin: 0.2em;
 		color: red;
 		max-width: fit-content;
 	}

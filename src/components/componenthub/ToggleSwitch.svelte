@@ -15,13 +15,14 @@
 <style lang="scss">
 	label {
 		background: var(--toggle-bg);
-		width: 60px;
-		height: 25px;
+		width: 50px;
+		height: 20px;
 		border-radius: 50px;
 		border: 2px solid var(--toggle-border);
 		display: flex;
 		position: relative;
 		cursor: pointer;
+		box-sizing: border-box;
 	}
 
 	.toggle-input {
@@ -30,20 +31,17 @@
 
 	.toggle-switch {
 		width: 20px;
-		height: 15px;
-		margin: 0.4em;
-		margin-bottom: 0.3em;
-		margin-top: 0.3em;
+		height: 100%;
 		background: var(--toggle-switch-bg);
 		border-radius: 50px;
 		position: absolute;
-		left: 0;
+		left: 0%;
 		top: 0;
 		transition: 0.5s;
 	}
 
 	.toggle-input:checked + .toggle-switch {
-		left: 85%;
+		left: 100%;
 		transform: translateX(-85%);
 	}
 </style>
