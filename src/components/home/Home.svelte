@@ -6,10 +6,10 @@
 <div class="home">
     <header>
         <h1>Notes</h1>
-        {#if Object.keys($userdetails).length != 0}
-            <Link to="/notes" class="login-signup">Dashboard</Link>
-        {:else}
+        {#if Object.keys($userdetails).length == 0}
             <Link to="/login" class="login-signup">Login / Sign Up</Link>
+        {:else}
+            <Link to="/notes" class="login-signup">Dashboard</Link>
         {/if}
     </header>
 
