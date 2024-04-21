@@ -20,6 +20,7 @@
 	import UserProfile from "../componenthub/UserProfile.svelte";
 	import Tag from "../componenthub/Tag.svelte";
 	import Search from "../componenthub/Search.svelte";
+	import Dropdown2 from "../componenthub/Dropdown2.svelte";
 	import Card from "./Card.svelte";
 	import { addCard, getCard } from "../../utils/db";
 	import { get, derived } from "svelte/store";
@@ -33,7 +34,13 @@
 			}
 		}, 400);
 	}
+	let tagsList = [];
 
+	$: tagsList = [...new Set($flashCardsStore.flatMap((note) => note.tags))];
+
+	$: filteredTags = tagsList.filter((tag) =>
+		tag.toLowerCase().includes($selectedCardTag.toLowerCase()),
+	);
 	const updateCards = (data) => {
 		flashCardsStore.set(data);
 	};
@@ -148,6 +155,20 @@
 					})
 				: $filteredCards,
 	);
+
+	let select = false;
+	let selectedSuggestion = "";
+
+	function selectSuggestion(suggestion) {
+		selectedSuggestion = suggestion;
+		$selectedCardTag = suggestion;
+		select = true;
+	}
+	function handleInput(event) {
+		selectedSuggestion = "";
+		select = false;
+		$selectedCardTag = event.target.value;
+	}
 </script>
 
 {#if $userdetails}
@@ -176,16 +197,22 @@
 			</div>
 		{:else}
 			<div class="buckets">
-				<div class="tag-wrapper">
-					<Tag
-						localStore={$flashCardsStore}
-						bind:selectedTag={$selectedCardTag}
-					/>
-				</div>
 				<div class="search">
+					<input
+						class="input"
+						type="text"
+						bind:value={$selectedCardTag}
+						on:input={handleInput}
+						placeholder="search by tag"
+					/>
 					<Search bind:searchTerm={$searchCardTerm} />
 					<input type="date" bind:value={$selectedCardDate} />
 				</div>
+				{#if $selectedCardTag && $selectedCardTag !== "All"}
+					<Dropdown2 {filteredTags} {selectSuggestion} />
+				{:else if $selectedCardTag == "All" || !$selectedCardTag}
+					<Dropdown2 filteredTags={tagsList} {selectSuggestion} />
+				{/if}
 				<div class="notes-wrapper">
 					<Card cardsProp={$filteredCardsByDate} />
 				</div>
@@ -227,6 +254,9 @@
 				@include logo();
 			}
 		}
+		.tag-wrapper {
+			@include tag-wrapper();
+		}
 	}
 
 	.notes-wrapper {
@@ -237,5 +267,26 @@
 	.tag-wrapper,
 	.search {
 		@include center();
+	}
+	.status,
+	.header,
+	.tag-wrapper {
+		@include center();
+	}
+	.search {
+		display: flex;
+	}
+	.input {
+		padding: 10px;
+		margin: 10px;
+		border-radius: 5px;
+		border: 1px solid var(--ccc);
+		background-color: var(--search-background);
+	}
+
+	@media (max-width: 768px) {
+		.search {
+			flex-direction: column;
+		}
 	}
 </style>
