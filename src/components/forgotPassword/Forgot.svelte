@@ -8,9 +8,10 @@
 	async function handleSendMail(event) {
 		// Call your sendmail logic here, using the email value
 		const { email } = event.detail;
+		error = "";
 		// Call your sendmail logic here, using the email value
 		try {
-			const response = await fetch(`${$path}/api/forgot-password`, {
+			const response = await fetch(`${$path}/forgot-password`, {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify({ email }),
@@ -23,7 +24,11 @@
 				error = data.message;
 			}
 		} catch (error) {
+			error = "Internal server error";
 		} finally {
+			setTimeout(() => {
+				error = "";
+			}, 1000);
 		}
 	}
 </script>

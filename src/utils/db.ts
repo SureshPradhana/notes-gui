@@ -189,7 +189,7 @@ export const updateCard = (bucket: Bucket) => {
 };
 
 export const resetPassword = (token, password) => {
-  const res = fetch(`${path}/api/reset-password`, {
+  const res = fetch(`${path}/reset-password`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
