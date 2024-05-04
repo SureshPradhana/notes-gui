@@ -31,34 +31,41 @@
 		const currentPath = window.location.pathname;
 		if (tokenfromlocal) {
 			token.set(tokenfromlocal);
-			const decodedToken: any = jwtDecode(tokenfromlocal);
-			// verify the tokenfromlocal
-			console.log(decodedToken);
-
-			userdetails.set(decodedToken.user);
 			try {
 				(async () => {
-					const response = await fetch(`${$path}/api/notes`, {
-						headers: {
-							Authorization: $token,
+					const response = await fetch(
+						`${$path}/api/validate-token`,
+						{
+							headers: {
+								Authorization: $token,
+							},
 						},
-					});
-					console.log(response);
-					if (!response.ok) {
-						localStorage.removeItem("token");
-						token.set("");
-						userdetails.set({});
+					);
+					if (response.ok) {
+						const data = await response.json();
+						token.set(tokenfromlocal);
+						userdetails.set(data.user); // Assuming the API returns user details
+					} else {
+						throw new Error("Token validation failed");
 					}
-					const data = await response.json();
 				})();
 			} catch (error) {
 				console.error("Error occurred:", error);
+				localStorage.removeItem("token");
+				token.set("");
+				userdetails.set({});
+				if (
+					currentPath !== "/forgotpassword" &&
+					currentPath !== "/reset-password"
+				) {
+					navigate("/");
+				}
 			}
 		} else if (
 			currentPath == "/forgotpassword" ||
 			currentPath == "/reset-password"
 		) {
-			console.log("oh");
+			console.log("no need to check token");
 		} else {
 			navigate("/");
 		}
