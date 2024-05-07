@@ -4,7 +4,7 @@
 </script>
 
 <div class="message-popup {msg.type}">
-  <p>{msg.message}</p>
+  <p class="m-2">{msg.message}</p>
 </div>
 
 <style>

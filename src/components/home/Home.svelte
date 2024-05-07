@@ -4,19 +4,126 @@
 </script>
 
 <div class="home">
-    <header>
-        <h1>Notes</h1>
-        {#if Object.keys($userdetails).length == 0}
-            <Link to="/login" class="login-signup">Login / Sign Up</Link>
-        {:else}
-            <Link to="/notes" class="login-signup">Dashboard</Link>
-        {/if}
-    </header>
-
-    <div class="hero">
-        <h2>Manage your notes, bucket list and flash cards efficiently.</h2>
+    <div class="header-wrapper">
+        <header class="container mx-auto p-4">
+            <h1 class="text-2xl font-bold">Notes</h1>
+            {#if Object.keys($userdetails).length == 0}
+                <Link to="/login" class="login-signup">Login / Sign Up</Link>
+            {:else}
+                <Link to="/notes" class="login-signup">Dashboard</Link>
+            {/if}
+        </header>
     </div>
 
+    <div class=" min-h-screen">
+        <div class="container mx-auto p-4">
+            <div class="mt-8">
+                <h1
+                    class="text-3xl font-bold text-zinc-800 dark:text-zinc-200 mb-4"
+                >
+                    Welcome to Notes Bucketlist & Flashcards
+                </h1>
+                <p class="text-zinc-600 dark:text-zinc-300 mb-4">
+                    Manage your notes, bucket list and flash cards efficiently.
+                </p>
+                <a href="/login">
+                    <button class="px-4 py-2 rounded-lg bg-blue-500 text-white"
+                        >Get Started</button
+                    ></a
+                >
+            </div>
+
+            <div class="mt-8">
+                <h2
+                    class="text-2xl font-bold text-zinc-800 dark:text-zinc-200 mb-4"
+                >
+                    Key Features
+                </h2>
+                <div
+                    class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"
+                >
+                    <div
+                        class="bg-white dark:bg-zinc-700 shadow-lg rounded-lg p-4"
+                    >
+                        <h3
+                            class="text-lg font-bold text-zinc-800 dark:text-zinc-200 mb-2"
+                        >
+                            Organize Notes
+                        </h3>
+                        <p class="text-zinc-600 dark:text-zinc-300">
+                            Easily organize your notes into categories and tags
+                            for better management.
+                        </p>
+                    </div>
+
+                    <div
+                        class="bg-white dark:bg-zinc-700 shadow-lg rounded-lg p-4"
+                    >
+                        <h3
+                            class="text-lg font-bold text-zinc-800 dark:text-zinc-200 mb-2"
+                        >
+                            Flashcards
+                        </h3>
+                        <p class="text-zinc-600 dark:text-zinc-300">
+                            Create interactive flashcards to help you study and
+                            memorize important information.
+                        </p>
+                    </div>
+
+                    <div
+                        class="bg-white dark:bg-zinc-700 shadow-lg rounded-lg p-4"
+                    >
+                        <h3
+                            class="text-lg font-bold text-zinc-800 dark:text-zinc-200 mb-2"
+                        >
+                            Collaborate
+                        </h3>
+                        <p class="text-zinc-600 dark:text-zinc-300">
+                            Share your notes and flashcards with friends and
+                            classmates for collaborative learning.
+                        </p>
+                    </div>
+                    <div
+                        class="bg-white dark:bg-zinc-700 shadow-lg rounded-lg p-4"
+                    >
+                        <h3
+                            class="text-lg font-bold text-zinc-800 dark:text-zinc-200 mb-2"
+                        >
+                            Markdown Support
+                        </h3>
+                        <p class="text-zinc-600 dark:text-zinc-300">
+                            Easily format your notes using markdown syntax.
+                        </p>
+                    </div>
+                    <div
+                        class="bg-white dark:bg-zinc-700 shadow-lg rounded-lg p-4"
+                    >
+                        <h3
+                            class="text-lg font-bold text-zinc-800 dark:text-zinc-200 mb-2"
+                        >
+                            Tags Support
+                        </h3>
+                        <p class="text-zinc-600 dark:text-zinc-300">
+                            Organize your notes with tags for easy access.
+                        </p>
+                    </div>
+                    <div
+                        class="bg-white dark:bg-zinc-700 shadow-lg rounded-lg p-4"
+                    >
+                        <h3
+                            class="text-lg font-bold text-zinc-800 dark:text-zinc-200 mb-2"
+                        >
+                            Search Capabilities
+                        </h3>
+                        <p class="text-zinc-600 dark:text-zinc-300">
+                            Quickly find any note using powerful search
+                            functionality.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <footer>
         <p>&copy; 2024. All rights reserved.</p>
     </footer>
@@ -29,9 +136,11 @@
         font-family: var(--sans);
         background-color: var(--background-2);
         color: var(--white);
+        .header-wrapper {
+            background-color: var(--background-color);
+        }
 
         header {
-            background-color: var(--background-color);
             padding: 20px 20px;
             text-align: center;
             height: 80px;

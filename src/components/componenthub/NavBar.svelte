@@ -49,7 +49,7 @@
     </div>
     <div id="nav-content">
         <Link to="/">
-            <div class="nav-button">
+            <div class="nav-button text-center">
                 <i class="fas"
                     >{@html icons["home"].toSvg({
                         class: "feather ",
@@ -337,7 +337,7 @@
 
     #nav-bar .fas {
         min-width: 3rem;
-        text-align: center;
+        text-align: -webkit-center;
     }
 
     #nav-footer {
@@ -374,6 +374,7 @@
         transform: translate(0);
         transition: 0.2s;
         color: white;
+        text-align: -webkit-center;
     }
     #nav-footer-avatar img {
         height: 100%;

@@ -135,7 +135,10 @@
 	</Route>
 </Router>
 
-<style lang="scss">
+<style gloabl lang="postcss">
+	@tailwind utilities;
+	@tailwind components;
+	@tailwind base;
 	.main-container {
 		display: flex;
 		flex-direction: row;
