@@ -15,7 +15,7 @@
         </header>
     </div>
 
-    <div class=" min-h-screen">
+    <div class="hero">
         <div class="container mx-auto p-4">
             <div class="mt-8">
                 <h1
@@ -135,7 +135,10 @@
         padding: 0;
         font-family: var(--sans);
         background-color: var(--background-2);
+        display: flex;
+        flex-direction: column;
         color: var(--white);
+        min-height: 100vh;
         .header-wrapper {
             background-color: var(--background-color);
         }
@@ -170,15 +173,12 @@
         .hero {
             background-size: cover;
             background-position: center;
-            height: 400px;
             display: flex;
             justify-content: center;
-            align-items: center;
-            text-align: center;
-            min-height: calc(100vh - 130px);
+            flex: 1;
+            min-height: 80vh;
             h2 {
                 font-size: 36px;
-                margin: 0;
             }
         }
 
@@ -186,7 +186,7 @@
             background-color: var(--background-color);
             padding: 20px 0;
             text-align: center;
-            position: fixed;
+            position: relative;
             bottom: 0;
             width: 100%;
             height: 50px;

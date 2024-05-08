@@ -3,14 +3,7 @@
 	import { onMount } from "svelte";
 	import { jwtDecode } from "jwt-decode";
 
-	import {
-		userdetails,
-		token,
-		message,
-		loadingStatus,
-		themeStore,
-		path,
-	} from "./stores";
+	import { userdetails, token, message, loadingStatus, path } from "./stores";
 
 	// routes
 	import Home from "./components/home//Home.svelte";
@@ -26,7 +19,22 @@
 	import Reset from "./components/resetPassword/Reset.svelte";
 	$: msg = $message;
 
+	function themeLoadOnStart() {
+		if (
+			localStorage.theme === "dark" ||
+			(!("theme" in localStorage) &&
+				window.matchMedia("(prefers-color-scheme: dark)").matches)
+		) {
+			document.documentElement.classList.add("dark");
+			document.documentElement.setAttribute("data-theme", "dark");
+		} else {
+			document.documentElement.setAttribute("data-theme", "light");
+			document.documentElement.classList.remove("dark");
+		}
+	}
+
 	onMount(() => {
+		themeLoadOnStart();
 		let tokenfromlocal: string | null = localStorage.getItem("token");
 		const currentPath = window.location.pathname;
 		if (tokenfromlocal) {
@@ -72,18 +80,16 @@
 	});
 
 	function toggleTheme() {
-		themeStore.update((theme) => {
-			const newTheme = theme === "dark" ? "light" : "dark";
-			localStorage.setItem("theme", newTheme);
-			document.documentElement.setAttribute("data-theme", newTheme);
-			return newTheme;
-		});
-	}
+		const currentTheme = localStorage.getItem("theme") || "light";
+		const newTheme = currentTheme === "dark" ? "light" : "dark";
+		localStorage.setItem("theme", newTheme);
+		document.documentElement.setAttribute("data-theme", newTheme);
 
-	$: {
-		const savedTheme = localStorage.getItem("theme") || "light";
-		document.documentElement.setAttribute("data-theme", savedTheme);
-		themeStore.set(savedTheme);
+		document.documentElement.classList.toggle("dark", newTheme === "dark");
+		document.documentElement.classList.toggle(
+			"light",
+			newTheme === "light",
+		);
 	}
 </script>
 

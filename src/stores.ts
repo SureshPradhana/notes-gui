@@ -50,4 +50,3 @@ const newLoading = () => {
 
 export const loadingServer = newLoading();
 
-export const themeStore = writable("light");
