@@ -20,17 +20,17 @@
 	$: msg = $message;
 
 	function themeLoadOnStart() {
-		if (
-			localStorage.theme === "dark" ||
-			(!("theme" in localStorage) &&
-				window.matchMedia("(prefers-color-scheme: dark)").matches)
-		) {
+		// if (
+		// 	localStorage.theme === "dark" ||
+		// 	(!("theme" in localStorage) &&
+		// 		window.matchMedia("(prefers-color-scheme: dark)").matches)
+		// ) {
 			document.documentElement.classList.add("dark");
 			document.documentElement.setAttribute("data-theme", "dark");
-		} else {
-			document.documentElement.setAttribute("data-theme", "light");
-			document.documentElement.classList.remove("dark");
-		}
+		// } else {
+		// 	document.documentElement.setAttribute("data-theme", "light");
+		// 	document.documentElement.classList.remove("dark");
+		// }
 	}
 
 	onMount(() => {
@@ -78,19 +78,19 @@
 			navigate("/");
 		}
 	});
-
-	function toggleTheme() {
-		const currentTheme = localStorage.getItem("theme") || "light";
-		const newTheme = currentTheme === "dark" ? "light" : "dark";
-		localStorage.setItem("theme", newTheme);
-		document.documentElement.setAttribute("data-theme", newTheme);
-
-		document.documentElement.classList.toggle("dark", newTheme === "dark");
-		document.documentElement.classList.toggle(
-			"light",
-			newTheme === "light",
-		);
-	}
+	//
+	// function toggleTheme() {
+	// 	const currentTheme = localStorage.getItem("theme") || "light";
+	// 	const newTheme = currentTheme === "dark" ? "light" : "dark";
+	// 	localStorage.setItem("theme", newTheme);
+	// 	document.documentElement.setAttribute("data-theme", newTheme);
+	//
+	// 	document.documentElement.classList.toggle("dark", newTheme === "dark");
+	// 	document.documentElement.classList.toggle(
+	// 		"light",
+	// 		newTheme === "light",
+	// 	);
+	// }
 </script>
 
 <div class="status">
@@ -102,9 +102,9 @@
 {#if msg.message}
 	<MessagePopup {msg} />
 {/if}
-<div class="theme">
-	<ToggleSwitch {toggleTheme} />
-</div>
+<!-- <div class="theme"> -->
+<!-- 	<ToggleSwitch {toggleTheme} /> -->
+<!-- </div> -->
 <Router>
 	<Route path="/">
 		<Home />
