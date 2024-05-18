@@ -6,7 +6,7 @@
 <div class="home">
     <div class="header-wrapper">
         <header class="container mx-auto p-4">
-            <h1 class="text-2xl font-bold">Notes</h1>
+            <h1 class="text-2xl font-bold">NotesHub</h1>
             {#if Object.keys($userdetails).length == 0}
                 <Link to="/login" class="login-signup">Login / Sign Up</Link>
             {:else}
@@ -125,7 +125,30 @@
         </div>
     </div>
     <footer>
-        <p>&copy; 2024. All rights reserved.</p>
+        <div class="container m-auto flex justify-between">
+            <nav class="flex justify-center px-4 space-x-4">
+                <a
+                    class="text-gray-500 hover:text-gray-900 dark:text-gray-400
+          dark:hover:text-gray-50"
+                    href="https://insigh.to/b/noteshub"
+                >
+                    Suggest features
+                </a>
+                <a
+                    class="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
+                    href="#"
+                >
+                    Contribute
+                </a>
+                <a
+                    class="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
+                    href="#"
+                >
+                    Support
+                </a>
+            </nav>
+            <p class="dark:text-gray-400">&copy; 2024. All rights reserved.</p>
+        </div>
     </footer>
 </div>
 
