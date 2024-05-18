@@ -125,29 +125,34 @@
         </div>
     </div>
     <footer>
-        <div class="container m-auto flex justify-between">
-            <nav class="flex justify-center px-4 space-x-4">
+        <div class="container m-auto flex flex-col sm:flex-row justify-between">
+            <nav class="flex justify-center p-1 space-x-4">
                 <a
                     class="text-gray-500 hover:text-gray-900 dark:text-gray-400
           dark:hover:text-gray-50"
                     href="https://insigh.to/b/noteshub"
+                    target="_blank"
                 >
                     Suggest features
                 </a>
                 <a
                     class="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
-                    href="#"
+                    href="https://github.com/SureshPradhana/notes-gui"
+                    target="_blank"
                 >
                     Contribute
                 </a>
                 <a
                     class="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
-                    href="#"
+                    href="https://patreon.com/user?u=75801058&utm_medium=clipboard_copy&utm_source=copyLink&utm_campaign=creatorshare_creator&utm_content=join_link"
+                    target="_blank"
                 >
-                    Support
+                    patreon
                 </a>
             </nav>
-            <p class="dark:text-gray-400">&copy; 2024. All rights reserved.</p>
+            <p class="dark:text-gray-400 p-1">
+                &copy; 2024. All rights reserved.
+            </p>
         </div>
     </footer>
 </div>
@@ -207,15 +212,11 @@
 
         footer {
             background-color: var(--background-color);
-            padding: 20px 0;
+            padding: 0.5rem;
             text-align: center;
             position: relative;
             bottom: 0;
             width: 100%;
-            height: 50px;
-            p {
-                margin: 0;
-            }
         }
     }
 </style>
