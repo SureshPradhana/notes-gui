@@ -25,8 +25,8 @@
 		// 	(!("theme" in localStorage) &&
 		// 		window.matchMedia("(prefers-color-scheme: dark)").matches)
 		// ) {
-			document.documentElement.classList.add("dark");
-			document.documentElement.setAttribute("data-theme", "dark");
+		document.documentElement.classList.add("dark");
+		document.documentElement.setAttribute("data-theme", "dark");
 		// } else {
 		// 	document.documentElement.setAttribute("data-theme", "light");
 		// 	document.documentElement.classList.remove("dark");
@@ -141,7 +141,7 @@
 	</Route>
 </Router>
 
-<style gloabl lang="postcss">
+<style global lang="postcss">
 	@tailwind utilities;
 	@tailwind components;
 	@tailwind base;
@@ -149,12 +149,12 @@
 		display: flex;
 		flex-direction: row;
 	}
-	.theme {
-		z-index: 1000;
-		position: absolute;
-		right: 0.5%;
-		margin: 0.2em;
-		color: red;
-		max-width: fit-content;
-	}
+	/* .theme { */
+	/* 	z-index: 1000; */
+	/* 	position: absolute; */
+	/* 	right: 0.5%; */
+	/* 	margin: 0.2em; */
+	/* 	color: red; */
+	/* 	max-width: fit-content; */
+	/* } */
 </style>
