@@ -254,9 +254,6 @@
 				@include logo();
 			}
 		}
-		.tag-wrapper {
-			@include tag-wrapper();
-		}
 	}
 
 	.notes-wrapper {
@@ -268,7 +265,6 @@
 	.search {
 		@include center();
 	}
-	.status,
 	.header,
 	.tag-wrapper {
 		@include center();

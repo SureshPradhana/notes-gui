@@ -65,32 +65,6 @@
 			text-align: center;
 			font-size: 24px;
 		}
-		.login-swicth {
-			display: flex;
-			justify-content: center;
-			button {
-				padding: 10px;
-				margin: 10px;
-				border-radius: 5px;
-				border: 1px solid var(--white-2);
-				background-color: var(--black-2);
-				color: var(--white);
-			}
-			.active {
-				background-color: var(--green-2);
-				color: var(--background-color);
-			}
-
-			.highlight {
-				border: 2px solid var(--black);
-				pointer-events: none;
-			}
-
-			.dim {
-				opacity: 0.5;
-				cursor: pointer;
-			}
-		}
 		.form {
 			display: flex;
 			justify-content: center;

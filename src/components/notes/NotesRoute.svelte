@@ -259,9 +259,9 @@
 			}
 			.title-wrapper {
 				@include title-wrapper();
-				.logo {
-					@include logo();
-				}
+				/* .logo { */
+				/* 	@include logo(); */
+				/* } */
 			}
 		}
 
@@ -274,7 +274,6 @@
 		@include grid-5-320min();
 	}
 
-	.status,
 	.header,
 	.tag-wrapper {
 		@include center();
