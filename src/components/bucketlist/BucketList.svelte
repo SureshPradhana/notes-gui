@@ -159,8 +159,5 @@
         @include logo();
       }
     }
-    .tag-wrapper {
-      @include tag-wrapper();
-    }
   }
 </style>
