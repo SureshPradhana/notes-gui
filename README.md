@@ -1,6 +1,7 @@
 # Web App for Notes, Bucket Lists, and Flashcards
 
 This web app provides functionality for managing notes, bucket lists, and flashcards effectively. Users can organize their content using tags and dates, making it easy to filter and find information.
+![Screenshot from 2024-07-31 13-19-16](https://github.com/user-attachments/assets/2c4449f7-f24d-4d30-9b26-c48f5748dd88)
 
 ## Features
 
